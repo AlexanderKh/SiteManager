@@ -2,20 +2,17 @@ package entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
-public class User {
+public class UserGroup {
 
     @Id
     private int id;
     private String name;
-    @ManyToOne
-    private UserGroup group;
     @OneToMany
-    private List<Page> pages;
+    private List<User> users;
 
     public int getId() {
         return id;
@@ -33,19 +30,11 @@ public class User {
         this.name = name;
     }
 
-    public UserGroup getGroup() {
-        return group;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setGroup(UserGroup group) {
-        this.group = group;
-    }
-
-    public List<Page> getPages() {
-        return pages;
-    }
-
-    public void setPages(List<Page> pages) {
-        this.pages = pages;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }
