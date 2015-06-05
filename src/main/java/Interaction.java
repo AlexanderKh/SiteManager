@@ -1,4 +1,5 @@
 import entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import service.SiteService;
 
 import java.io.PrintStream;
@@ -6,9 +7,13 @@ import java.util.Scanner;
 
 public class Interaction {
     private static final String INCORRECT_INPUT_MESSAGE = "Incorrect input, please try again: ";
+
     private User currentUser;
+
     private Scanner in;
     private PrintStream out;
+
+    @Autowired
     private SiteService service;
 
     Interaction(){
