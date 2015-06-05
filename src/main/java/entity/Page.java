@@ -7,7 +7,6 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Page {
-
     @Id
     private int id;
     @ManyToOne
