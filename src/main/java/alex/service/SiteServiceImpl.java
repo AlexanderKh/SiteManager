@@ -3,6 +3,7 @@ package alex.service;
 import alex.dao.PageDAO;
 import alex.dao.UserDAO;
 import alex.entity.Page;
+import alex.entity.Permission;
 import alex.entity.User;
 import alex.entity.UserGroup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ public class SiteServiceImpl implements SiteService {
         return userDAO.getUser(input);
     }
 
-    public List<Page> getPages(User currentUser) {
-        return null;
+    public List<Page> getVisiblePages(User currentUser) {
+        return pageDAO.getVisiblePages(currentUser);
     }
 
     public User register(String userName) {
@@ -36,5 +37,56 @@ public class SiteServiceImpl implements SiteService {
         user.setUserGroup(UserGroup.USER);
         userDAO.saveUser(user);
         return user;
+    }
+
+    public Page getPageToEdit(User currentUser, int id) {
+        Page result = pageDAO.getPage(id);
+        if (result.getAuthor().getId() != currentUser.getId()){
+            result = null;
+        }
+        return result;
+    }
+
+    public void deletePage(Page page) {
+        pageDAO.deletePage(page);
+    }
+
+    public void changePermissionLevel(Page page, Permission permission) {
+        page.setPermission(permission);
+        pageDAO.updatePage(page);
+    }
+
+    public void setPageContent(Page page, String content) {
+        page.setContent(content);
+        pageDAO.updatePage(page);
+    }
+
+    public void changePageName(Page page, String input) {
+        page.setTitle(input);
+        pageDAO.updatePage(page);
+    }
+
+    public void createNewPage(String title, Permission permission, User currentUser) {
+        Page page = new Page();
+        page.setTitle(title);
+        page.setPermission(permission);
+        page.setAuthor(currentUser);
+        pageDAO.addPage(page);
+    }
+
+    public Page getPageToView(User currentUser, int id) {
+        Page page = pageDAO.getPage(id);
+        if (page.getPermission() == Permission.NO){
+            page = null;
+        }
+        return page;
+    }
+
+    public List<User> getUsersWithTheirPages() {
+        return userDAO.getUsersWithTheirPages();
+    }
+
+    public void deleteUser(User currentUser) {
+        userDAO.deleteUser(currentUser);
     }
 }

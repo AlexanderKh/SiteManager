@@ -6,6 +6,7 @@ import java.util.List;
 @Entity
 public class User {
     @Id
+    @GeneratedValue
     private int id;
     private String name;
     @OneToMany

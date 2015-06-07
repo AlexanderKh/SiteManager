@@ -52,6 +52,7 @@ public class Interaction {
                         exit = true;
                         break;
                 }
+                continue;
             }
 
             if (currentUser.getUserGroup() == UserGroup.ADMIN){
@@ -88,6 +89,7 @@ public class Interaction {
                         currentUser = null;
                         break;
                 }
+                continue;
             }
 
             if (currentUser.getUserGroup() == UserGroup.USER){
@@ -121,6 +123,7 @@ public class Interaction {
                         currentUser = null;
                         break;
                 }
+                continue;
             }
         }
     }
@@ -139,14 +142,13 @@ public class Interaction {
     private void editSpecificPage(Page page) {
         int ans = 0;
         boolean exit = false;
-        login();
         while (!exit){
-            if (currentUser == null) {
                 out.println("Page id: " + page.getId() +
                         " Title: " + page.getTitle() +
                         " Owner: " + page.getAuthor().getName() +
                         " Permission level: " + page.getPermission());
                 out.println("-----------------------");
+                out.println("1 - Print page content");
                 out.println("2 - Change title");
                 out.println("3 - Change contents");
                 out.println("4 - Change permission level");
@@ -174,7 +176,7 @@ public class Interaction {
                         exit = true;
                         break;
                 }
-            }
+
         }
     }
 
@@ -202,25 +204,26 @@ public class Interaction {
         out.println();
         String content = "";
         do{
-            content += in.next();
-        } while (!content.equals(""));
+            content += in.next() + in.nextLine();
+        } while (!in.nextLine().equals(""));
         service.setPageContent(page, content);
     }
 
     private void changeTitle(Page page) {
         out.print("Enter new title: ");
-        String input = in.next();
+        String input = in.nextLine();
         service.changePageName(page, input);
     }
 
     private void createNewPage() {
         out.println("Enter page title: ");
-        String title = in.next();
+        String title = in.next() + in.nextLine();
         out.println("Enter permission level, possible vars are: ");
         for (Permission permission : Permission.values()){
             out.println(permission.toString());
         }
         String permissionInput = in.next();
+        out.println(permissionInput);
         Permission permission = Permission.valueOf(permissionInput);
         service.createNewPage(title, permission, currentUser);
     }
@@ -239,7 +242,7 @@ public class Interaction {
     private void listAllUsers() {
         List<User> users = service.getUsersWithTheirPages();
         for (User user : users){
-            out.println("User: " + user.getName() + " (id: " + user.getId() + ")");
+            out.println("User: " + user.getName() + " (id: " + user.getId() + ")\n");
             for (Page page : user.getPages()){
                 out.printf("\t%4d\t%s\t%s\n", page.getId(), page.getTitle(), page.getPermission());
             }
@@ -257,7 +260,10 @@ public class Interaction {
     }
 
     private void listAllPages() {
-        List<Page> pages = service.getPages(currentUser);
+        List<Page> pages = service.getVisiblePages(currentUser);
+        for (Page page : pages){
+            out.printf("Id: %4d\tTitle: %s\tAuthor: %s\n",page.getId(),page.getTitle(),page.getAuthor());
+        }
     }
 
     private void createNewUser() {

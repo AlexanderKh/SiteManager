@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Page {
     @Id
+    @GeneratedValue
     private int id;
     @ManyToOne
     private User author;
