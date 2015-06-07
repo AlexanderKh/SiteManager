@@ -9,6 +9,7 @@ public class Page {
     @ManyToOne
     private User author;
     private String content;
+    private String title;
     @Enumerated(value = EnumType.STRING)
     private Permission permission;
 
@@ -42,5 +43,13 @@ public class Page {
 
     public void setPermission(Permission permission) {
         this.permission = permission;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
