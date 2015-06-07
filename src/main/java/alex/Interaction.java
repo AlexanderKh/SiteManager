@@ -1,10 +1,14 @@
-import entity.User;
+package alex;
+
+import org.springframework.stereotype.Controller;
+import alex.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import service.SiteService;
+import alex.service.SiteService;
 
 import java.io.PrintStream;
 import java.util.Scanner;
 
+@Controller
 public class Interaction {
     private static final String INCORRECT_INPUT_MESSAGE = "Incorrect input, please try again: ";
 
@@ -27,7 +31,11 @@ public class Interaction {
         login();
         while (!exit){
             out.println("-----------------------");
-
+            out.println("Current user: " + currentUser);
+            out.println("1 - List all available pages");
+            out.println("2 - List all users and their pages");
+            out.println("3 - Go to page control");
+            ans = getIntFromUser();
         }
     }
 
@@ -35,7 +43,7 @@ public class Interaction {
         String input;
         out.print("Enter name to login as: ");
         input = in.next();
-        service.getUserByName(input);
+        out.println(service.getUsers().toString());
     }
 
     private int getIntFromUser(){
@@ -44,6 +52,7 @@ public class Interaction {
         boolean correct = false;
         while (!correct){
             try {
+                input = in.next();
                 result = Integer.valueOf(input);
                 correct = true;
             } catch (NumberFormatException e){

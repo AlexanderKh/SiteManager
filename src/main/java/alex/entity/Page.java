@@ -1,19 +1,15 @@
-package entity;
+package alex.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class Page {
     @Id
     private int id;
     @ManyToOne
-    @Column(name = "author")
     private User author;
     private String content;
-    @ManyToOne
+    @Enumerated(value = EnumType.STRING)
     private Permission permission;
 
     public int getId() {

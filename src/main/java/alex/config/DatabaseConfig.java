@@ -1,4 +1,4 @@
-package config;
+package alex.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
@@ -19,7 +19,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan()
+@ComponentScan("alex")
 @PropertySource("classpath:database.properties")
 public class DatabaseConfig {
     private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";

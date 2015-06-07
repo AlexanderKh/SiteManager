@@ -1,9 +1,6 @@
-package entity;
+package alex.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -11,10 +8,10 @@ public class User {
     @Id
     private int id;
     private String name;
-    @ManyToOne
-    private UserGroup group;
     @OneToMany
     private List<Page> pages;
+    @Enumerated(value = EnumType.STRING)
+    private UserGroup userGroup;
 
     public int getId() {
         return id;
@@ -32,19 +29,24 @@ public class User {
         this.name = name;
     }
 
-    public UserGroup getGroup() {
-        return group;
-    }
-
-    public void setGroup(UserGroup group) {
-        this.group = group;
-    }
-
     public List<Page> getPages() {
         return pages;
     }
 
     public void setPages(List<Page> pages) {
         this.pages = pages;
+    }
+
+    public UserGroup getUserGroup() {
+        return userGroup;
+    }
+
+    public void setUserGroup(UserGroup userGroup) {
+        this.userGroup = userGroup;
+    }
+
+    @Override
+    public String toString(){
+        return name;
     }
 }

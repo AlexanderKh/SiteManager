@@ -1,4 +1,4 @@
-package dao;
+package alex.dao;
 
 public interface PageDAO {
 
