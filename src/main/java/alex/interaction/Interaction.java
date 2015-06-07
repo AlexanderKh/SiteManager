@@ -1,6 +1,7 @@
 package alex.interaction;
 
 import alex.entity.Page;
+import alex.entity.Permission;
 import alex.entity.UserGroup;
 import org.springframework.stereotype.Controller;
 import alex.entity.User;
@@ -52,38 +53,57 @@ public class Interaction {
                         break;
                 }
             }
+
             if (currentUser.getUserGroup() == UserGroup.ADMIN){
                 out.println("Current user: " + currentUser.getName() + " Group: Admin");
                 out.println("-----------------------");
-                out.println("1 - Show all pages");
-                out.println("2 - Show all users w. their pages");
+                out.println("1 - List all pages");
+                out.println("2 - List all users w. their pages");
                 out.println("3 - View page");
                 out.println("4 - Create new page");
-                out.println("5 - Change page");
-                out.println("9 - Delete profile");
-                out.println("0 - LogOut");
-                out.println("-----------------------");
-                ans = getIntFromUser();
-                switch (ans){
-                    case 0:
-                        currentUser = null;
-                        break;
-                }
-            }
-            if (currentUser.getUserGroup() == UserGroup.USER){
-                out.println("Current user: " + currentUser.getName() + " Group: User");
-                out.println("-----------------------");
-                out.println("1 - Show all pages");
-                out.println("2 - View page");
-                out.println("3 - Create new page");
-                out.println("4 - Change page");
+                out.println("5 - Edit page");
                 out.println("9 - Delete profile");
                 out.println("0 - LogOut");
                 out.println("-----------------------");
                 ans = getIntFromUser();
                 switch (ans){
                     case 1:
-                        showAllPages();
+                        listAllPages();
+                        break;
+                    case 2:
+                        listAllUsers();
+                        break;
+                    case 3:
+                        viewPage();
+                        break;
+                    case 4:
+                        createNewPage();
+                        break;
+                    case 5:
+                        editSpecificPage();
+                        break;
+                    case 9:
+                        deleteProfile();
+                    case 0:
+                        currentUser = null;
+                        break;
+                }
+            }
+
+            if (currentUser.getUserGroup() == UserGroup.USER){
+                out.println("Current user: " + currentUser.getName() + " Group: User");
+                out.println("-----------------------");
+                out.println("1 - List all pages");
+                out.println("2 - View page");
+                out.println("3 - Create new page");
+                out.println("4 - Edit page");
+                out.println("9 - Delete profile");
+                out.println("0 - LogOut");
+                out.println("-----------------------");
+                ans = getIntFromUser();
+                switch (ans){
+                    case 1:
+                        listAllPages();
                         break;
                     case 2:
                         viewPage();
@@ -92,7 +112,7 @@ public class Interaction {
                         createNewPage();
                         break;
                     case 4:
-                        changePage();
+                        editSpecificPage();
                         break;
                     case 9:
                         deleteProfile();
@@ -105,7 +125,138 @@ public class Interaction {
         }
     }
 
-    private void showAllPages() {
+    private void editSpecificPage() {
+        out.println("Enter page id: ");
+        int input = getIntFromUser();
+        Page page = service.getPageToEdit(currentUser, input);
+        if (page == null){
+            out.println("No such page or access denied");
+        } else {
+            editSpecificPage(page);
+        }
+    }
+
+    private void editSpecificPage(Page page) {
+        int ans = 0;
+        boolean exit = false;
+        login();
+        while (!exit){
+            if (currentUser == null) {
+                out.println("Page id: " + page.getId() +
+                        " Title: " + page.getTitle() +
+                        " Owner: " + page.getAuthor().getName() +
+                        " Permission level: " + page.getPermission());
+                out.println("-----------------------");
+                out.println("2 - Change title");
+                out.println("3 - Change contents");
+                out.println("4 - Change permission level");
+                out.println("5 - Delete page");
+                out.println("0 - End editing");
+                out.println("-----------------------");
+                ans = getIntFromUser();
+                switch (ans) {
+                    case 1:
+                        out.println(page.getContent());
+                        break;
+                    case 2:
+                        changeTitle(page);
+                        break;
+                    case 3:
+                        changeContents(page);
+                        break;
+                    case 4:
+                        changePermissionLevel(page);
+                        break;
+                    case 5:
+                        deletePage(page);
+                        break;
+                    case 0:
+                        exit = true;
+                        break;
+                }
+            }
+        }
+    }
+
+    private void deletePage(Page page) {
+        out.print("Really? (y/n): ");
+        String input = in.next();
+        if (input.equals("y")){
+            service.deletePage(page);
+            out.println("Page deleted");
+        }
+    }
+
+    private void changePermissionLevel(Page page) {
+        out.println("Enter permission level, possible vars are: ");
+        for (Permission permission : Permission.values()){
+            out.println(permission.toString());
+        }
+        String permissionInput = in.next();
+        Permission permission = Permission.valueOf(permissionInput);
+        service.changePermissionLevel(page, permission);
+    }
+
+    private void changeContents(Page page) {
+        out.println("Write new content in here: ");
+        out.println();
+        String content = "";
+        do{
+            content += in.next();
+        } while (!content.equals(""));
+        service.setPageContent(page, content);
+    }
+
+    private void changeTitle(Page page) {
+        out.print("Enter new title: ");
+        String input = in.next();
+        service.changePageName(page, input);
+    }
+
+    private void createNewPage() {
+        out.println("Enter page title: ");
+        String title = in.next();
+        out.println("Enter permission level, possible vars are: ");
+        for (Permission permission : Permission.values()){
+            out.println(permission.toString());
+        }
+        String permissionInput = in.next();
+        Permission permission = Permission.valueOf(permissionInput);
+        service.createNewPage(title, permission, currentUser);
+    }
+
+    private void viewPage() {
+        out.println("Enter page id: ");
+        int input = getIntFromUser();
+        Page page = service.getPageToView(currentUser, input);
+        if (page == null){
+            out.println("No such page or access denied");
+        } else {
+            out.println(page.getContent());
+        }
+    }
+
+    private void listAllUsers() {
+        List<User> users = service.getUsersWithTheirPages();
+        for (User user : users){
+            out.println("User: " + user.getName() + " (id: " + user.getId() + ")");
+            for (Page page : user.getPages()){
+                out.printf("\t%4d\t%s\t%s\n", page.getId(), page.getTitle(), page.getPermission());
+            }
+        }
+    }
+
+    private void deleteProfile() {
+        out.print("Really (y/n): ");
+        String input = in.next();
+        if (input.equals("y")){
+            service.deleteUser(currentUser);
+            currentUser = null;
+            out.println("Okay, you are dead");
+        }
+    }
+
+    private void listAllPages() {
         List<Page> pages = service.getPages(currentUser);
     }
 
@@ -137,5 +288,4 @@ public class Interaction {
         }
         return result;
     }
-
 }
