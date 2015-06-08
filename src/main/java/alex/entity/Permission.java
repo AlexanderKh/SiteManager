@@ -1,16 +1,15 @@
 package alex.entity;
 
-import javax.jws.soap.SOAPBinding;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class Permission {
-    @Id
+    @EmbeddedId
+    private PermissionId permissionId;
     @ManyToOne
     private Page page;
-    @Id
     @ManyToOne
     private User user;
     private PermissionType type;
@@ -37,5 +36,13 @@ public class Permission {
 
     public void setType(PermissionType type) {
         this.type = type;
+    }
+
+    public PermissionId getPermissionId() {
+        return permissionId;
+    }
+
+    public void setPermissionId(PermissionId permissionId) {
+        this.permissionId = permissionId;
     }
 }

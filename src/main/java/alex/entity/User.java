@@ -13,6 +13,8 @@ public class User {
     private List<Page> pages;
     @Enumerated(value = EnumType.STRING)
     private UserGroup userGroup;
+    @OneToMany
+    private List<Permission> permissions;
 
     public int getId() {
         return id;
@@ -44,6 +46,14 @@ public class User {
 
     public void setUserGroup(UserGroup userGroup) {
         this.userGroup = userGroup;
+    }
+
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
     }
 
     @Override

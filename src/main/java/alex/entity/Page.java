@@ -1,6 +1,7 @@
 package alex.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Page {
@@ -13,6 +14,8 @@ public class Page {
     private String title;
     @Enumerated(value = EnumType.STRING)
     private PermissionType permissionType;
+    @OneToMany
+    private List<Permission> permissions;
 
     public int getId() {
         return id;
@@ -52,5 +55,13 @@ public class Page {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
     }
 }
