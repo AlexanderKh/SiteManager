@@ -2,11 +2,12 @@ package alex.interaction;
 
 import alex.entity.Page;
 import alex.entity.Permission;
-import alex.entity.UserGroup;
-import org.springframework.stereotype.Controller;
 import alex.entity.User;
+import alex.entity.UserGroup;
+import alex.service.PageService;
+import alex.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import alex.service.SiteService;
+import org.springframework.stereotype.Controller;
 
 import java.io.PrintStream;
 import java.util.List;
@@ -21,7 +22,9 @@ public class Interaction {
     private PrintStream out;
 
     @Autowired
-    private SiteService service;
+    private PageService pageService;
+    @Autowired
+    private UserService userService;
     @Autowired
     private InteractionHelper helper;
     @Autowired
@@ -135,7 +138,7 @@ public class Interaction {
     private void editSpecificPage() {
         out.println("Enter page id: ");
         int input = helper.getIntFromUser();
-        Page page = service.getPageToEdit(currentUser, input);
+        Page page = pageService.getPageToEdit(currentUser, input);
         if (page == null){
             out.println("No such page or access denied");
         } else {
@@ -155,13 +158,13 @@ public class Interaction {
         String permissionInput = in.next();
         out.println(permissionInput);
         Permission permission = Permission.valueOf(permissionInput);
-        service.createNewPage(title, permission, currentUser);
+        pageService.createNewPage(title, permission, currentUser);
     }
 
     private void viewPage() {
         out.println("Enter page id: ");
         int input = helper.getIntFromUser();
-        Page page = service.getPageToView(currentUser, input);
+        Page page = pageService.getPageToView(currentUser, input);
         if (page == null){
             out.println("No such page or access denied");
         } else {
@@ -170,7 +173,7 @@ public class Interaction {
     }
 
     private void listAllUsers() {
-        List<User> users = service.getUsersWithTheirPages();
+        List<User> users = userService.getUsersWithTheirPages();
         for (User user : users){
             out.println("User: " + user.getName() + " (id: " + user.getId() + ")");
             for (Page page : user.getPages()){
@@ -183,14 +186,14 @@ public class Interaction {
         out.print("Really (y/n): ");
         String input = in.next();
         if (input.equals("y")){
-            service.deleteUser(currentUser);
+            userService.deleteUser(currentUser);
             currentUser = null;
             out.println("Okay, you are dead");
         }
     }
 
     private void listAllPages() {
-        List<Page> pages = service.getVisiblePages(currentUser);
+        List<Page> pages = pageService.getVisiblePages(currentUser);
         for (Page page : pages){
             out.printf("Id: %4d\tTitle: %s\tAuthor: %s\n",page.getId(),page.getTitle(),page.getAuthor());
         }
@@ -198,12 +201,12 @@ public class Interaction {
 
     private void createNewUser() {
         out.print("Enter name of new user: ");
-        currentUser = service.register(in.next());
+        currentUser = userService.register(in.next());
     }
 
     private void login() {
         out.print("Enter name to login as: ");
-        currentUser = service.getUserByName(in.next());
+        currentUser = userService.getUserByName(in.next());
         if (currentUser == null)
             out.println("No such user");
     }

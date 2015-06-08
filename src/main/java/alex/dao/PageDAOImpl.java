@@ -54,7 +54,7 @@ public class PageDAOImpl implements PageDAO {
     }
 
     @Transactional
-    public void addPage(Page page) {
+    public void savePage(Page page) {
         sessionFactory.getCurrentSession().save(page);
     }
 }

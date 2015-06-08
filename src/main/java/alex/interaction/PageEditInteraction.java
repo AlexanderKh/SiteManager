@@ -2,7 +2,7 @@ package alex.interaction;
 
 import alex.entity.Page;
 import alex.entity.Permission;
-import alex.service.SiteService;
+import alex.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ public class PageEditInteraction {
     private Page page;
 
     @Autowired
-    private SiteService service;
+    private PageService pageService;
     @Autowired
     private InteractionHelper helper;
     private Scanner in;
@@ -73,7 +73,7 @@ public class PageEditInteraction {
         out.print("Really? (y/n): ");
         String input = in.next();
         if (input.equals("y")){
-            service.deletePage(page);
+            pageService.deletePage(page);
             out.println("Page deleted");
         }
     }
@@ -85,7 +85,7 @@ public class PageEditInteraction {
         }
         String permissionInput = in.next();
         Permission permission = Permission.valueOf(permissionInput);
-        service.changePermissionLevel(page, permission);
+        pageService.changePermissionLevel(page, permission);
     }
 
     private void changeContents() {
@@ -95,13 +95,13 @@ public class PageEditInteraction {
         do{
             content += in.next() + in.nextLine() + "\n";
         } while (!in.nextLine().equals(""));
-        service.setPageContent(page, content);
+        pageService.setPageContent(page, content);
     }
 
     private void changeTitle() {
         out.print("Enter new title: ");
         String input = in.nextLine();
-        service.changePageName(page, input);
+        pageService.changePageName(page, input);
     }
 
     public void setPage(Page page) {

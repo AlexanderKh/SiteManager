@@ -14,10 +14,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import javax.jws.soap.SOAPBinding;
 import javax.transaction.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.hasItem;
@@ -62,7 +60,7 @@ public class UserDAOImplTest {
     @Test
     public void getUsersWithTheirPages() throws Exception {
         userDAO.saveUser(testUser);
-        pageDAO.addPage(testPage);
+        pageDAO.savePage(testPage);
 
         List<User> actualUsers = userDAO.getUsersWithTheirPages();
 
@@ -100,6 +98,15 @@ public class UserDAOImplTest {
     @Test
     public void getUsers() throws Exception {
         userDAO.saveUser(testUser);
+
+        List<User> actualUsers = userDAO.getUsers();
+
+        assertThat(actualUsers, hasItem(testUser));
+    }
+
+    @Test
+    public void updateUser() throws Exception{
+        userDAO.updateUser(testUser);
 
         List<User> actualUsers = userDAO.getUsers();
 

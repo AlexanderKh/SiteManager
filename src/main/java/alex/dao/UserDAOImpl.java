@@ -47,4 +47,9 @@ public class UserDAOImpl implements UserDAO {
         return sessionFactory.getCurrentSession().createCriteria(User.class).list();
     }
 
+    @Transactional
+    public void updateUser(User user) {
+        sessionFactory.getCurrentSession().update(user);
+    }
+
 }

@@ -5,22 +5,15 @@ import alex.entity.Page;
 import alex.entity.Permission;
 import alex.entity.User;
 import alex.entity.UserGroup;
-import alex.interaction.Interaction;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import javax.jws.soap.SOAPBinding;
-import javax.sql.DataSource;
 import javax.transaction.Transactional;
 
 import java.util.List;
@@ -65,7 +58,7 @@ public class PageDAOImplTest {
 
     @Test
     public void getPages() throws Exception {
-        pageDAO.addPage(testPage);
+        pageDAO.savePage(testPage);
         pageDAO.updatePage(testPage);
         List<Page> actualPages = pageDAO.getPages();
 
@@ -74,7 +67,7 @@ public class PageDAOImplTest {
 
     @Test
     public void getPagesByAuthor() throws Exception {
-        pageDAO.addPage(testPage);
+        pageDAO.savePage(testPage);
         List<Page> actualUserPages = pageDAO.getPagesByAuthor(testUser.getId());
 
         assertThat(actualUserPages, hasItem(testPage));
@@ -82,7 +75,7 @@ public class PageDAOImplTest {
 
     @Test
     public void getPage() throws Exception {
-        pageDAO.addPage(testPage);
+        pageDAO.savePage(testPage);
         Page actualPage = pageDAO.getPage(testPage.getId());
 
         assertThat(actualPage, is(testPage));
@@ -90,7 +83,7 @@ public class PageDAOImplTest {
 
     @Test
     public void deletePage() throws Exception {
-        pageDAO.addPage(testPage);
+        pageDAO.savePage(testPage);
         pageDAO.deletePage(testPage);
         List<Page> actualPages = pageDAO.getPages();
 
@@ -99,7 +92,7 @@ public class PageDAOImplTest {
 
     @Test
     public void updatePage() throws Exception {
-        pageDAO.addPage(testPage);
+        pageDAO.savePage(testPage);
         testPage.setTitle("Update Page");
         pageDAO.updatePage(testPage);
 
@@ -109,8 +102,8 @@ public class PageDAOImplTest {
     }
 
     @Test
-    public void addPage() throws Exception {
-        pageDAO.addPage(testPage);
+    public void savePage() throws Exception {
+        pageDAO.savePage(testPage);
 
         List<Page> actualPages = pageDAO.getPages();
 

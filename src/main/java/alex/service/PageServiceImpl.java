@@ -1,7 +1,6 @@
 package alex.service;
 
 import alex.dao.PageDAO;
-import alex.dao.UserDAO;
 import alex.entity.Page;
 import alex.entity.Permission;
 import alex.entity.User;
@@ -12,34 +11,22 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SiteServiceImpl implements SiteService {
-
+public class PageServiceImpl implements PageService {
     @Autowired
     private PageDAO pageDAO;
-    @Autowired
-    private UserDAO userDAO;
 
-    public List<User> getUsers() {
-        return userDAO.getUsers();
+    public void deletePage(Page page) {
+        pageDAO.deletePage(page);
     }
 
-    public User getUserByName(String input) {
-        return userDAO.getUser(input);
+    public void changePermissionLevel(Page page, Permission permission) {
+        page.setPermission(permission);
+        pageDAO.updatePage(page);
     }
 
-    public List<Page> getVisiblePages(User currentUser) {
-        if (currentUser.getUserGroup() == UserGroup.ADMIN)
-            return pageDAO.getPages();
-            else
-            return pageDAO.getPagesByAuthor(currentUser.getId());
-    }
-
-    public User register(String userName) {
-        User user = new User();
-        user.setName(userName);
-        user.setUserGroup(UserGroup.USER);
-        userDAO.saveUser(user);
-        return user;
+    public void setPageContent(Page page, String content) {
+        page.setContent(content);
+        pageDAO.updatePage(page);
     }
 
     public Page getPageToEdit(User currentUser, int id) {
@@ -55,19 +42,11 @@ public class SiteServiceImpl implements SiteService {
         return result;
     }
 
-    public void deletePage(Page page) {
-        pageDAO.deletePage(page);
-    }
-
-    public void changePermissionLevel(Page page, Permission permission) {
-        page.setPermission(permission);
-        pageDAO.updatePage(page);
-    }
-
-    public void setPageContent(Page page, String content) {
-        page.setContent(content);
-        userDAO.saveUser(page.getAuthor());
-        pageDAO.updatePage(page);
+    public List<Page> getVisiblePages(User currentUser) {
+        if (currentUser.getUserGroup() == UserGroup.ADMIN)
+            return pageDAO.getPages();
+        else
+            return pageDAO.getPagesByAuthor(currentUser.getId());
     }
 
     public void changePageName(Page page, String input) {
@@ -80,7 +59,7 @@ public class SiteServiceImpl implements SiteService {
         page.setTitle(title);
         page.setPermission(permission);
         page.setAuthor(currentUser);
-        pageDAO.addPage(page);
+        pageDAO.savePage(page);
     }
 
     public Page getPageToView(User currentUser, int id) {
@@ -95,19 +74,8 @@ public class SiteServiceImpl implements SiteService {
         return page;
     }
 
-    public List<User> getUsersWithTheirPages() {
-        return userDAO.getUsersWithTheirPages();
-    }
-
-    public void deleteUser(User currentUser) {
-        userDAO.deleteUser(currentUser);
-    }
 
     public void setPageDAO(PageDAO pageDAO) {
         this.pageDAO = pageDAO;
-    }
-
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
     }
 }

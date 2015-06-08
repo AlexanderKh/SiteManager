@@ -6,18 +6,12 @@ import alex.entity.User;
 
 import java.util.List;
 
-public interface SiteService {
-    List<User> getUsers();
-
-    User getUserByName(String input);
-
+public interface PageService {
     List<Page> getVisiblePages(User currentUser);
 
-    User register(String userName);
+    Page getPageToView(User currentUser, int input);
 
     Page getPageToEdit(User currentUser, int id);
-
-    void deletePage(Page page);
 
     void changePermissionLevel(Page page, Permission permission);
 
@@ -27,10 +21,5 @@ public interface SiteService {
 
     void createNewPage(String title, Permission permission, User currentUser);
 
-    Page getPageToView(User currentUser, int input);
-
-    List<User> getUsersWithTheirPages();
-
-    void deleteUser(User currentUser);
-
+    void deletePage(Page page);
 }

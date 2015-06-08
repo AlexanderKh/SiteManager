@@ -17,5 +17,5 @@ public interface PageDAO {
 
     void updatePage(Page page);
 
-    void addPage(Page page);
+    void savePage(Page page);
 }
