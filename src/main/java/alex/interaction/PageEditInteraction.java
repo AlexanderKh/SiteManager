@@ -4,12 +4,14 @@ import alex.entity.Page;
 import alex.entity.Permission;
 import alex.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 import java.io.PrintStream;
 import java.util.Scanner;
 
-@Service
+@Controller
 public class PageEditInteraction {
     private Page page;
 

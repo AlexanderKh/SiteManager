@@ -37,16 +37,22 @@ public class PageDAOImpl implements PageDAO {
 
     @Transactional
     public void deletePage(Page page) {
-        sessionFactory.getCurrentSession().delete(page);
+        Session session = sessionFactory.getCurrentSession();
+        session.update(page);
+        session.delete(page);
     }
 
     @Transactional
     public void updatePage(Page page) {
-        sessionFactory.getCurrentSession().update(page);
+        Session session = sessionFactory.getCurrentSession();
+        session.update(page.getAuthor());
+        session.update(page);
     }
 
     @Transactional
     public void savePage(Page page) {
-        sessionFactory.getCurrentSession().save(page);
+        Session session = sessionFactory.getCurrentSession();
+        session.update(page.getAuthor());
+        session.save(page);
     }
 }

@@ -156,7 +156,6 @@ public class Interaction {
             out.println(permission.toString());
         }
         String permissionInput = in.next();
-        out.println(permissionInput);
         Permission permission = Permission.valueOf(permissionInput);
         pageService.createNewPage(title, permission, currentUser);
     }

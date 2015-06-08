@@ -1,11 +1,13 @@
 package alex.interaction;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import sun.misc.Contended;
 
 import java.io.PrintStream;
 import java.util.Scanner;
 
-@Service
+@Controller
 public class InteractionHelper {
     private static final String INCORRECT_INPUT_MESSAGE = "Incorrect input, please try again: ";
 
