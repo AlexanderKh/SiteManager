@@ -14,7 +14,7 @@ public class Page {
     private String title;
     @Enumerated(value = EnumType.STRING)
     private PermissionType permissionType;
-    @OneToMany
+    @OneToMany(mappedBy = "page")
     private List<Permission> permissions;
 
     public int getId() {

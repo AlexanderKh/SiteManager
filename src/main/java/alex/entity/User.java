@@ -13,7 +13,7 @@ public class User {
     private List<Page> pages;
     @Enumerated(value = EnumType.STRING)
     private UserGroup userGroup;
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<Permission> permissions;
 
     public int getId() {
