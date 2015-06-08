@@ -1,6 +1,7 @@
 package alex.dao;
 
 import alex.entity.User;
+import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,10 +20,7 @@ public class UserDAOImpl implements UserDAO {
     @Transactional
     public List<User> getUsersWithTheirPages() {
         Session session = sessionFactory.getCurrentSession();
-        List<User> users = session.createCriteria(User.class).list();
-        for (User user : users){
-            Hibernate.initialize(user);
-        }
+        List<User> users = session.createCriteria(User.class).setFetchMode("pages", FetchMode.JOIN).list();
         return users;
     }
 
