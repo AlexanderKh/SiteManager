@@ -100,4 +100,12 @@ public class SiteServiceImpl implements SiteService {
     public void deleteUser(User currentUser) {
         userDAO.deleteUser(currentUser);
     }
+
+    public void setPageDAO(PageDAO pageDAO) {
+        this.pageDAO = pageDAO;
+    }
+
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 }

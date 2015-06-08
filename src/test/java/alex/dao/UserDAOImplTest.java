@@ -64,9 +64,9 @@ public class UserDAOImplTest {
         userDAO.saveUser(testUser);
         pageDAO.addPage(testPage);
 
-        User actualUser = userDAO.getUser(testUser.getName());
+        List<User> actualUsers = userDAO.getUsersWithTheirPages();
 
-        assertThat(actualUser.getPages(), not(is(Collections.<Page>emptyList())));
+        assertThat(actualUsers, hasItem(testUser));
     }
 
     @Test

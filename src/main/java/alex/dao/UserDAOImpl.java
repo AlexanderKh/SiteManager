@@ -22,7 +22,7 @@ public class UserDAOImpl implements UserDAO {
         Session session = sessionFactory.getCurrentSession();
         List<User> users = session.createCriteria(User.class).list();
         for (User user : users){
-            user.getPages().iterator().hasNext();
+            Hibernate.initialize(user);
         }
         return users;
     }
