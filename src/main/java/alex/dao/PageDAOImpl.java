@@ -1,21 +1,13 @@
 package alex.dao;
 
 import alex.entity.Page;
-import alex.entity.User;
-import alex.entity.UserGroup;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Disjunction;
-import org.hibernate.criterion.Junction;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
-import javax.jws.soap.SOAPBinding;
 import javax.transaction.Transactional;
 import java.util.List;
 

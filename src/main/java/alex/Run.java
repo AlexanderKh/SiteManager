@@ -10,6 +10,5 @@ public class Run {
         ApplicationContext context = new AnnotationConfigApplicationContext("alex/config");
         Interaction interaction = (Interaction) context.getBean(Interaction.class);
         interaction.menu();
-        interaction.toString();
     }
 }

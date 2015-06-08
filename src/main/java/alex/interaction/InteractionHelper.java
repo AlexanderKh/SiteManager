@@ -1,6 +1,5 @@
 package alex.interaction;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.PrintStream;

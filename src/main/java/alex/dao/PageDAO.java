@@ -1,7 +1,6 @@
 package alex.dao;
 
 import alex.entity.Page;
-import alex.entity.User;
 
 import java.util.List;
 

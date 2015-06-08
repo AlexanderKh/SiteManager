@@ -1,7 +1,6 @@
 package alex.service;
 
 import alex.dao.UserDAO;
-import alex.entity.Page;
 import alex.entity.User;
 import alex.entity.UserGroup;
 import org.springframework.beans.factory.annotation.Autowired;
