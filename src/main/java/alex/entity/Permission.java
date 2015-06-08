@@ -1,11 +1,11 @@
 package alex.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-public class Permission implements Serializable {
+public class Permission {
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private int id;
 
     @ManyToOne

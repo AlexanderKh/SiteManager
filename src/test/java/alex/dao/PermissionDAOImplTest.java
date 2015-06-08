@@ -13,7 +13,11 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import javax.transaction.Transactional;
 
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -39,7 +43,7 @@ public class PermissionDAOImplTest {
 
         User user = new User();
         user.setName("Test User");
-        user.setUserGroup(UserGroup.ADMIN);
+        user.setUserGroup(UserGroup.USER);
 
         page.setAuthor(user);
 
@@ -61,6 +65,7 @@ public class PermissionDAOImplTest {
         permission.setPage(testPage);
         permission.setUser(testUser);
         permission.setType(PermissionType.READ);
+
         permissionDAO.savePermission(permission);
 
         Permission actualPermission = permissionDAO.getPermission(testPage.getId(), testUser.getId());
@@ -70,6 +75,25 @@ public class PermissionDAOImplTest {
 
     @Test
     public void getPagesVisibleForUser() throws Exception {
+        Permission permission = new Permission();
+        permission.setPage(testPage);
+        permission.setUser(testUser);
+        permission.setType(PermissionType.READ);
+        permissionDAO.savePermission(permission);
+        Page hiddenPage = new Page();
+        hiddenPage.setAuthor(testUser);
+        hiddenPage.setTitle("Test Hidden Page");
+        hiddenPage.setPermissionType(PermissionType.EDIT);
+        pageDAO.savePage(hiddenPage);
+        Permission hiddenPermission = new Permission();
+        hiddenPermission.setUser(testUser);
+        hiddenPermission.setType(PermissionType.NO);
+        hiddenPermission.setPage(hiddenPage);
+        permissionDAO.savePermission(hiddenPermission);
 
+        List<Page> actualPages = permissionDAO.getPagesVisibleForUser(testUser.getId());
+
+        assertThat(actualPages, hasItem(testPage));
+        assertThat(actualPages, not(hasItem(hiddenPage)));
     }
 }
