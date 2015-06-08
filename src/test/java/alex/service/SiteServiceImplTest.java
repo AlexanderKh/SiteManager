@@ -76,7 +76,19 @@ public class SiteServiceImplTest {
 
     @Test
     public void getVisiblePages() throws Exception {
+        User testUser = new User();
+        testUser.setName("Test User");
+        testUser.setUserGroup(UserGroup.USER);
+        testUser.setId(10);
+        User testAdmin = new User();
+        testAdmin.setUserGroup(UserGroup.ADMIN);
+        testAdmin.setName("Test Admin");
 
+        service.getVisiblePages(testUser);
+        verify(pageDAO).getPagesByAuthor(testUser.getId());
+
+        service.getVisiblePages(testAdmin);
+        verify(pageDAO).getPages();
     }
 
     @Test
@@ -89,12 +101,21 @@ public class SiteServiceImplTest {
 
     @Test
     public void getPageToEdit() throws Exception {
+        User testUser = new User();
+        testUser.setName("Test User");
+        testUser.setUserGroup(UserGroup.USER);
 
+        service.getPageToEdit(testUser, 0);
+        verify(pageDAO).getPage(0);
     }
 
     @Test
     public void deletePage() throws Exception {
+        Page testPage = new Page();
 
+        service.deletePage(testPage);
+
+        verify(pageDAO).deletePage(testPage);
     }
 
     @Test
@@ -166,7 +187,9 @@ public class SiteServiceImplTest {
 
     @Test
     public void getUsersWithTheirPages() throws Exception {
+        service.getUsersWithTheirPages();
 
+        verify(userDAO).getUsersWithTheirPages();
     }
 
     @Test
