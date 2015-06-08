@@ -13,6 +13,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,8 +24,10 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
@@ -115,21 +118,50 @@ public class SiteServiceImplTest {
         service.setPageContent(testPage, content);
 
         assertThat(testPage.getContent(), is(content));
+        verify(pageDAO).updatePage(testPage);
     }
 
     @Test
     public void changePageName() throws Exception {
+        Page testPage = new Page();
+        testPage.setTitle("Test Title");
+        testPage.setPermission(Permission.READ);
 
+        String title = "Updated Title";
+        service.changePageName(testPage, title);
+
+        assertThat(testPage.getTitle(), is(title));
+        verify(pageDAO).updatePage(testPage);
     }
 
     @Test
     public void createNewPage() throws Exception {
-
+        service.createNewPage("Test Title", Permission.READ, new User());
+        verify(pageDAO).addPage(Matchers.any(Page.class));
     }
 
     @Test
     public void getPageToView() throws Exception {
+        User testUser = new User();
+        testUser.setName("Test User");
+        testUser.setUserGroup(UserGroup.USER);
+        User testAdmin = new User();
+        testAdmin.setUserGroup(UserGroup.ADMIN);
+        testAdmin.setName("Test Admin");
 
+        Page page = new Page();
+        page.setPermission(Permission.NO);
+        when(pageDAO.getPage(anyInt())).thenReturn(page);
+
+        Page actualPage = service.getPageToView(testUser, 0);
+        assertThat(actualPage, is(nullValue()));
+
+        actualPage = service.getPageToView(testAdmin, 0);
+        assertThat(actualPage, is(page));
+
+        page.setPermission(Permission.READ);
+        actualPage = service.getPageToView(testUser, 0);
+        assertThat(actualPage, is(page));
     }
 
     @Test
@@ -139,6 +171,10 @@ public class SiteServiceImplTest {
 
     @Test
     public void deleteUser() throws Exception {
+        User testUser = new User();
 
+        service.deleteUser(testUser);
+
+        verify(userDAO).deleteUser(testUser);
     }
 }

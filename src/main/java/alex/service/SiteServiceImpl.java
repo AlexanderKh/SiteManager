@@ -87,7 +87,8 @@ public class SiteServiceImpl implements SiteService {
         if (page == null){
             return null;
         }
-        if (page.getPermission() == Permission.NO){
+        if (page.getPermission() == Permission.NO &&
+                currentUser.getUserGroup() == UserGroup.USER){
             page = null;
         }
         return page;
