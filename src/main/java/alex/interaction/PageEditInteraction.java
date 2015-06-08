@@ -94,9 +94,11 @@ public class PageEditInteraction {
         out.println("Write new content in here: ");
         out.println();
         String content = "";
+        String line = "";
         do{
-            content += in.next() + in.nextLine() + "\n";
-        } while (!in.nextLine().equals(""));
+            line = in.nextLine();
+            content += line + "\n";
+        } while (!line.equals(""));
         pageService.setPageContent(page, content);
     }
 
