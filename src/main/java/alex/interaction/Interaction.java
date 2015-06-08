@@ -172,7 +172,7 @@ public class Interaction {
     private void listAllUsers() {
         List<User> users = service.getUsersWithTheirPages();
         for (User user : users){
-            out.println("User: " + user.getName() + " (id: " + user.getId() + ")\n");
+            out.println("User: " + user.getName() + " (id: " + user.getId() + ")");
             for (Page page : user.getPages()){
                 out.printf("\t%4d\t%s\t%s\n", page.getId(), page.getTitle(), page.getPermission());
             }

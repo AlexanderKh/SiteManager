@@ -9,7 +9,7 @@ public class User {
     @GeneratedValue
     private int id;
     private String name;
-    @OneToMany
+    @OneToMany(mappedBy = "author")
     private List<Page> pages;
     @Enumerated(value = EnumType.STRING)
     private UserGroup userGroup;
