@@ -1,6 +1,5 @@
 package alex.dao;
 
-import alex.entity.Page;
 import alex.entity.User;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -47,4 +46,5 @@ public class UserDAOImpl implements UserDAO {
     public List<User> getUsers() {
         return sessionFactory.getCurrentSession().createCriteria(User.class).list();
     }
+
 }

@@ -66,6 +66,7 @@ public class SiteServiceImpl implements SiteService {
 
     public void setPageContent(Page page, String content) {
         page.setContent(content);
+        userDAO.saveUser(page.getAuthor());
         pageDAO.updatePage(page);
     }
 

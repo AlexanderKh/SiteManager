@@ -14,4 +14,5 @@ public interface UserDAO {
     void deleteUser(User currentUser);
 
     List<User> getUsers();
+
 }

@@ -32,4 +32,5 @@ public interface SiteService {
     List<User> getUsersWithTheirPages();
 
     void deleteUser(User currentUser);
+
 }
