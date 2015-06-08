@@ -52,8 +52,7 @@ public class PageDAOImpl implements PageDAO {
     @Transactional
     public void savePage(Page page) {
         Session session = sessionFactory.getCurrentSession();
-//        session.update(page.getAuthor());
-//        System.out.println(page);
+        session.update(page.getAuthor());
         session.save(page);
     }
 }

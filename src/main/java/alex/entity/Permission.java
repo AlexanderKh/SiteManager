@@ -1,17 +1,20 @@
 package alex.entity;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Permission {
-    @EmbeddedId
-    private PermissionId permissionId;
+public class Permission implements Serializable {
+    @Id
+    private int id;
+
     @ManyToOne
     private Page page;
     @ManyToOne
     private User user;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "PERMISSION_TYPE")
     private PermissionType type;
 
     public Page getPage() {
@@ -38,11 +41,11 @@ public class Permission {
         this.type = type;
     }
 
-    public PermissionId getPermissionId() {
-        return permissionId;
+    public int getId() {
+        return id;
     }
 
-    public void setPermissionId(PermissionId permissionId) {
-        this.permissionId = permissionId;
+    public void setId(int id) {
+        this.id = id;
     }
 }

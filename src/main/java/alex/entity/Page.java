@@ -41,20 +41,20 @@ public class Page {
         this.content = content;
     }
 
-    public PermissionType getPermissionType() {
-        return permissionType;
-    }
-
-    public void setPermissionType(PermissionType permissionType) {
-        this.permissionType = permissionType;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public PermissionType getPermissionType() {
+        return permissionType;
+    }
+
+    public void setPermissionType(PermissionType permissionType) {
+        this.permissionType = permissionType;
     }
 
     public List<Permission> getPermissions() {

@@ -25,7 +25,7 @@ public class PermissionDAOImpl implements PermissionDAO {
     public Permission getPermission(int pageId, int userId) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Permission.class);
-        criteria.add(Restrictions.and( Restrictions.eq("page", pageId), Restrictions.eq("user", userId) ));
+        criteria.add(Restrictions.and( Restrictions.eq("page.id", pageId), Restrictions.eq("user.id", userId) ));
         return (Permission) criteria.uniqueResult();
     }
 }
