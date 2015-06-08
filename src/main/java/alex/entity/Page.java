@@ -12,8 +12,6 @@ public class Page {
     private User author;
     private String content;
     private String title;
-    @Enumerated(value = EnumType.STRING)
-    private PermissionType permissionType;
     @OneToMany(mappedBy = "page")
     private List<Permission> permissions;
 
@@ -47,14 +45,6 @@ public class Page {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public PermissionType getPermissionType() {
-        return permissionType;
-    }
-
-    public void setPermissionType(PermissionType permissionType) {
-        this.permissionType = permissionType;
     }
 
     public List<Permission> getPermissions() {

@@ -58,21 +58,9 @@ public class PageServiceImplTest {
     }
 
     @Test
-    public void changePermissionLevel() throws Exception {
-        Page testPage = new Page();
-        testPage.setTitle("Test Title");
-        testPage.setPermissionType(PermissionType.READ);
-
-        service.changePermissionLevel(testPage, PermissionType.READ);
-
-        verify(pageDAO).updatePage(testPage);
-    }
-
-    @Test
     public void setPageContent() throws Exception {
         Page testPage = new Page();
         testPage.setTitle("Test Title");
-        testPage.setPermissionType(PermissionType.READ);
 
         String content = "Test Content";
         service.setPageContent(testPage, content);
@@ -113,7 +101,6 @@ public class PageServiceImplTest {
     public void changePageName() throws Exception {
         Page testPage = new Page();
         testPage.setTitle("Test Title");
-        testPage.setPermissionType(PermissionType.READ);
 
         String title = "Updated Title";
         service.changePageName(testPage, title);
@@ -124,7 +111,7 @@ public class PageServiceImplTest {
 
     @Test
     public void createNewPage() throws Exception {
-        service.createNewPage("Test Title", PermissionType.READ, new User());
+        service.createNewPage("Test Title", new User());
         verify(pageDAO).savePage(Matchers.any(Page.class));
     }
 
@@ -138,17 +125,9 @@ public class PageServiceImplTest {
         testAdmin.setName("Test Admin");
 
         Page page = new Page();
-        page.setPermissionType(PermissionType.NO);
         when(pageDAO.getPage(anyInt())).thenReturn(page);
 
         Page actualPage = service.getPageToView(testUser, 0);
-        assertThat(actualPage, is(nullValue()));
-
-        actualPage = service.getPageToView(testAdmin, 0);
-        assertThat(actualPage, is(page));
-
-        page.setPermissionType(PermissionType.READ);
-        actualPage = service.getPageToView(testUser, 0);
         assertThat(actualPage, is(page));
     }
 }

@@ -38,7 +38,6 @@ public class UserDAOImplTest {
         Page page = new Page();
         page.setContent("Test Content");
         page.setTitle("Test Title");
-        page.setPermissionType(PermissionType.READ);
 
         User user = new User();
         user.setName("Test User");

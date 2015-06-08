@@ -38,12 +38,13 @@ public class PageDAOImplTest {
         Page page = new Page();
         page.setContent("Test Content");
         page.setTitle("Test Title");
-        page.setPermissionType(PermissionType.READ);
 
         User user = new User();
         user.setName("Test User");
         user.setUserGroup(UserGroup.ADMIN);
         userDAO.saveUser(user);
+
+        page.setAuthor(user);
 
         testUser = user;
         testPage = page;

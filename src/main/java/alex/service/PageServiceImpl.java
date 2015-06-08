@@ -19,11 +19,6 @@ public class PageServiceImpl implements PageService {
         pageDAO.deletePage(page);
     }
 
-    public void changePermissionLevel(Page page, PermissionType permissionType) {
-        page.setPermissionType(permissionType);
-        pageDAO.updatePage(page);
-    }
-
     public void setPageContent(Page page, String content) {
         page.setContent(content);
         pageDAO.updatePage(page);
@@ -54,10 +49,9 @@ public class PageServiceImpl implements PageService {
         pageDAO.updatePage(page);
     }
 
-    public void createNewPage(String title, PermissionType permissionType, User currentUser) {
+    public void createNewPage(String title, User currentUser) {
         Page page = new Page();
         page.setTitle(title);
-        page.setPermissionType(permissionType);
         page.setAuthor(currentUser);
         pageDAO.savePage(page);
     }
@@ -66,10 +60,6 @@ public class PageServiceImpl implements PageService {
         Page page = pageDAO.getPage(id);
         if (page == null){
             return null;
-        }
-        if (page.getPermissionType() == PermissionType.NO &&
-                currentUser.getUserGroup() == UserGroup.USER){
-            page = null;
         }
         return page;
     }

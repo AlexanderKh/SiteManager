@@ -13,13 +13,11 @@ public interface PageService {
 
     Page getPageToEdit(User currentUser, int id);
 
-    void changePermissionLevel(Page page, PermissionType permissionType);
-
     void setPageContent(Page page, String content);
 
     void changePageName(Page page, String input);
 
-    void createNewPage(String title, PermissionType permissionType, User currentUser);
+    void createNewPage(String title, User currentUser);
 
     void deletePage(Page page);
 }

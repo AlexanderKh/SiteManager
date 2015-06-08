@@ -39,7 +39,6 @@ public class PermissionDAOImplTest {
         Page page = new Page();
         page.setContent("Test Content");
         page.setTitle("Test Title");
-        page.setPermissionType(PermissionType.READ);
 
         User user = new User();
         user.setName("Test User");
@@ -83,7 +82,6 @@ public class PermissionDAOImplTest {
         Page hiddenPage = new Page();
         hiddenPage.setAuthor(testUser);
         hiddenPage.setTitle("Test Hidden Page");
-        hiddenPage.setPermissionType(PermissionType.EDIT);
         pageDAO.savePage(hiddenPage);
         Permission hiddenPermission = new Permission();
         hiddenPermission.setUser(testUser);

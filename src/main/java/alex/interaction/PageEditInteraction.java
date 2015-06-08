@@ -32,13 +32,11 @@ public class PageEditInteraction {
             out.println("-----------------------");
             out.println("Page id: " + page.getId() +
                     "\tTitle: " + page.getTitle() +
-                    "\tOwner: " + page.getAuthor().getName() +
-                    "\tPermissionType level: " + page.getPermissionType());
+                    "\tOwner: " + page.getAuthor().getName());
             out.println("-----------------------");
             out.println("1 - Print page content");
             out.println("2 - Change title");
             out.println("3 - Change contents");
-            out.println("4 - Change permissionType level");
             out.println("5 - Delete page");
             out.println("0 - End editing");
             out.println("-----------------------");
@@ -53,9 +51,6 @@ public class PageEditInteraction {
                     break;
                 case 3:
                     changeContents();
-                    break;
-                case 4:
-                    changePermissionLevel();
                     break;
                 case 5:
                     deletePage();
@@ -76,16 +71,6 @@ public class PageEditInteraction {
             pageService.deletePage(page);
             out.println("Page deleted");
         }
-    }
-
-    private void changePermissionLevel() {
-        out.println("Enter permissionType level, possible vars are: ");
-        for (PermissionType permissionType : PermissionType.values()){
-            out.println(permissionType.toString());
-        }
-        String permissionInput = in.next();
-        PermissionType permissionType = PermissionType.valueOf(permissionInput);
-        pageService.changePermissionLevel(page, permissionType);
     }
 
     private void changeContents() {

@@ -26,7 +26,7 @@ public class PageDAOImpl implements PageDAO {
     @Transactional
     public List<Page> getPagesByAuthor(int authorID) {
         Session session = sessionFactory.getCurrentSession();
-        SQLQuery sqlQuery = session.createSQLQuery("SELECT * FROM PAGE WHERE AUTHOR_ID = " + authorID + " UNION SELECT * FROM PAGE WHERE PERMISSIONTYPE = 'EDIT' OR PERMISSIONTYPE = 'READ'");;
+        SQLQuery sqlQuery = session.createSQLQuery("SELECT * FROM PAGE WHERE AUTHOR_ID = " + authorID);;
         return sqlQuery.addEntity(Page.class).list();
     }
 
@@ -45,14 +45,14 @@ public class PageDAOImpl implements PageDAO {
     @Transactional
     public void updatePage(Page page) {
         Session session = sessionFactory.getCurrentSession();
-        session.update(page.getAuthor());
+
         session.update(page);
     }
 
     @Transactional
     public void savePage(Page page) {
         Session session = sessionFactory.getCurrentSession();
-        session.update(page.getAuthor());
+//        session.update(page.getAuthor());
         session.save(page);
     }
 }
