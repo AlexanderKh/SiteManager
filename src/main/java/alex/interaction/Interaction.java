@@ -170,7 +170,7 @@ public class Interaction {
         for (User user : users){
             out.println("User: " + user.getName() + " (id: " + user.getId() + ")");
             for (Page page : user.getPages()){
-                out.printf("\t%4d\t%s\t%s\n", page.getId(), page.getTitle());
+                out.printf("\t%4d\t%s\n", page.getId(), page.getTitle());
             }
         }
     }

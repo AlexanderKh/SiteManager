@@ -20,7 +20,7 @@ public class UserDAOImpl implements UserDAO {
     @Transactional
     public List<User> getUsersWithTheirPages() {
         Session session = sessionFactory.getCurrentSession();
-        List<User> users = session.createCriteria(User.class).setFetchMode("pages", FetchMode.JOIN).list();
+        List<User> users = session.createCriteria(User.class).setFetchMode("pages", FetchMode.JOIN).add(Restrictions.disjunction()).list();
         return users;
     }
 
