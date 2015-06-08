@@ -12,7 +12,7 @@ public class Page {
     private String content;
     private String title;
     @Enumerated(value = EnumType.STRING)
-    private Permission permission;
+    private PermissionType permissionType;
 
     public int getId() {
         return id;
@@ -38,12 +38,12 @@ public class Page {
         this.content = content;
     }
 
-    public Permission getPermission() {
-        return permission;
+    public PermissionType getPermissionType() {
+        return permissionType;
     }
 
-    public void setPermission(Permission permission) {
-        this.permission = permission;
+    public void setPermissionType(PermissionType permissionType) {
+        this.permissionType = permissionType;
     }
 
     public String getTitle() {

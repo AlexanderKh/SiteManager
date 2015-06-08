@@ -1,12 +1,10 @@
 package alex.interaction;
 
 import alex.entity.Page;
-import alex.entity.Permission;
+import alex.entity.PermissionType;
 import alex.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -35,12 +33,12 @@ public class PageEditInteraction {
             out.println("Page id: " + page.getId() +
                     "\tTitle: " + page.getTitle() +
                     "\tOwner: " + page.getAuthor().getName() +
-                    "\tPermission level: " + page.getPermission());
+                    "\tPermissionType level: " + page.getPermissionType());
             out.println("-----------------------");
             out.println("1 - Print page content");
             out.println("2 - Change title");
             out.println("3 - Change contents");
-            out.println("4 - Change permission level");
+            out.println("4 - Change permissionType level");
             out.println("5 - Delete page");
             out.println("0 - End editing");
             out.println("-----------------------");
@@ -81,13 +79,13 @@ public class PageEditInteraction {
     }
 
     private void changePermissionLevel() {
-        out.println("Enter permission level, possible vars are: ");
-        for (Permission permission : Permission.values()){
-            out.println(permission.toString());
+        out.println("Enter permissionType level, possible vars are: ");
+        for (PermissionType permissionType : PermissionType.values()){
+            out.println(permissionType.toString());
         }
         String permissionInput = in.next();
-        Permission permission = Permission.valueOf(permissionInput);
-        pageService.changePermissionLevel(page, permission);
+        PermissionType permissionType = PermissionType.valueOf(permissionInput);
+        pageService.changePermissionLevel(page, permissionType);
     }
 
     private void changeContents() {

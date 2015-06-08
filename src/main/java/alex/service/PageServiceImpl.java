@@ -2,7 +2,7 @@ package alex.service;
 
 import alex.dao.PageDAO;
 import alex.entity.Page;
-import alex.entity.Permission;
+import alex.entity.PermissionType;
 import alex.entity.User;
 import alex.entity.UserGroup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,8 @@ public class PageServiceImpl implements PageService {
         pageDAO.deletePage(page);
     }
 
-    public void changePermissionLevel(Page page, Permission permission) {
-        page.setPermission(permission);
+    public void changePermissionLevel(Page page, PermissionType permissionType) {
+        page.setPermissionType(permissionType);
         pageDAO.updatePage(page);
     }
 
@@ -54,10 +54,10 @@ public class PageServiceImpl implements PageService {
         pageDAO.updatePage(page);
     }
 
-    public void createNewPage(String title, Permission permission, User currentUser) {
+    public void createNewPage(String title, PermissionType permissionType, User currentUser) {
         Page page = new Page();
         page.setTitle(title);
-        page.setPermission(permission);
+        page.setPermissionType(permissionType);
         page.setAuthor(currentUser);
         pageDAO.savePage(page);
     }
@@ -67,7 +67,7 @@ public class PageServiceImpl implements PageService {
         if (page == null){
             return null;
         }
-        if (page.getPermission() == Permission.NO &&
+        if (page.getPermissionType() == PermissionType.NO &&
                 currentUser.getUserGroup() == UserGroup.USER){
             page = null;
         }

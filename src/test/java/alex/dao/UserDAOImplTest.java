@@ -2,7 +2,7 @@ package alex.dao;
 
 import alex.config.AppConfig;
 import alex.entity.Page;
-import alex.entity.Permission;
+import alex.entity.PermissionType;
 import alex.entity.User;
 import alex.entity.UserGroup;
 import org.junit.After;
@@ -38,7 +38,7 @@ public class UserDAOImplTest {
         Page page = new Page();
         page.setContent("Test Content");
         page.setTitle("Test Title");
-        page.setPermission(Permission.READ);
+        page.setPermissionType(PermissionType.READ);
 
         User user = new User();
         user.setName("Test User");

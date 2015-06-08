@@ -1,7 +1,7 @@
 package alex.interaction;
 
 import alex.entity.Page;
-import alex.entity.Permission;
+import alex.entity.PermissionType;
 import alex.entity.User;
 import alex.entity.UserGroup;
 import alex.service.PageService;
@@ -151,13 +151,13 @@ public class Interaction {
     private void createNewPage() {
         out.println("Enter page title: ");
         String title = in.next() + in.nextLine();
-        out.println("Enter permission level, possible vars are: ");
-        for (Permission permission : Permission.values()){
-            out.println(permission.toString());
+        out.println("Enter permissionType level, possible vars are: ");
+        for (PermissionType permissionType : PermissionType.values()){
+            out.println(permissionType.toString());
         }
         String permissionInput = in.next();
-        Permission permission = Permission.valueOf(permissionInput);
-        pageService.createNewPage(title, permission, currentUser);
+        PermissionType permissionType = PermissionType.valueOf(permissionInput);
+        pageService.createNewPage(title, permissionType, currentUser);
     }
 
     private void viewPage() {
@@ -176,7 +176,7 @@ public class Interaction {
         for (User user : users){
             out.println("User: " + user.getName() + " (id: " + user.getId() + ")");
             for (Page page : user.getPages()){
-                out.printf("\t%4d\t%s\t%s\n", page.getId(), page.getTitle(), page.getPermission());
+                out.printf("\t%4d\t%s\t%s\n", page.getId(), page.getTitle(), page.getPermissionType());
             }
         }
     }
