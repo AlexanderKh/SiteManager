@@ -28,7 +28,10 @@ public class SiteServiceImpl implements SiteService {
     }
 
     public List<Page> getVisiblePages(User currentUser) {
-        return pageDAO.getVisiblePages(currentUser);
+        if (currentUser.getUserGroup() == UserGroup.ADMIN)
+            return pageDAO.getPages();
+            else
+            return pageDAO.getPagesByAuthor(currentUser.getId());
     }
 
     public User register(String userName) {
@@ -41,9 +44,14 @@ public class SiteServiceImpl implements SiteService {
 
     public Page getPageToEdit(User currentUser, int id) {
         Page result = pageDAO.getPage(id);
+        if (result == null)
+            return null;
+        if (currentUser.getUserGroup() == UserGroup.ADMIN)
+            return result;
         if (result.getAuthor().getId() != currentUser.getId()){
             result = null;
         }
+
         return result;
     }
 
@@ -76,6 +84,9 @@ public class SiteServiceImpl implements SiteService {
 
     public Page getPageToView(User currentUser, int id) {
         Page page = pageDAO.getPage(id);
+        if (page == null){
+            return null;
+        }
         if (page.getPermission() == Permission.NO){
             page = null;
         }

@@ -42,10 +42,6 @@ public class UserDAOImpl implements UserDAO {
     @Transactional
     public void deleteUser(User currentUser) {
         Session session = sessionFactory.getCurrentSession();
-        for (Page page : currentUser.getPages()){
-            session.update(page);
-            session.delete(page);
-        }
         session.delete(currentUser);
     }
 

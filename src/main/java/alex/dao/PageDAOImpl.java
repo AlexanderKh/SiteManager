@@ -2,6 +2,7 @@ package alex.dao;
 
 import alex.entity.Page;
 import alex.entity.User;
+import alex.entity.UserGroup;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import javax.jws.soap.SOAPBinding;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -22,9 +24,16 @@ public class PageDAOImpl implements PageDAO {
     private SessionFactory sessionFactory;
 
     @Transactional
-    public List<Page> getVisiblePages(User currentUser) {
+    public List<Page> getPages() {
         Session session = sessionFactory.getCurrentSession();
-        SQLQuery sqlQuery = session.createSQLQuery("SELECT * FROM PAGE WHERE AUTHOR_ID = " + currentUser.getId() + " UNION SELECT * FROM PAGE WHERE PERMISSION = 'EDIT' OR PERMISSION = 'VIEW'");
+        Criteria criteria = session.createCriteria(Page.class);
+        return criteria.list();
+    }
+
+    @Transactional
+    public List<Page> getPagesByAuthor(int authorID) {
+        Session session = sessionFactory.getCurrentSession();
+        SQLQuery sqlQuery = session.createSQLQuery("SELECT * FROM PAGE WHERE AUTHOR_ID = " + authorID + " UNION SELECT * FROM PAGE WHERE PERMISSION = 'EDIT' OR PERMISSION = 'READ'");;
         return sqlQuery.addEntity(Page.class).list();
     }
 
