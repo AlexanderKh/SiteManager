@@ -69,7 +69,6 @@ public class Interaction {
                 out.println("Current user: " + currentUser.getName() + "\tGroup: Admin");
                 out.println("-----------------------");
                 out.println("1 - List all pages");
-                out.println("2 - List all users w. their pages");
                 out.println("3 - View page");
                 out.println("4 - Create new page");
                 out.println("5 - Edit page");
@@ -80,9 +79,6 @@ public class Interaction {
                 switch (ans){
                     case 1:
                         listAllPages();
-                        break;
-                    case 2:
-                        listAllUsers();
                         break;
                     case 3:
                         viewPage();
@@ -166,16 +162,6 @@ public class Interaction {
             out.println("No such page or access denied");
         } else {
             out.println(page.getContent());
-        }
-    }
-
-    private void listAllUsers() {
-        List<User> users = userService.getUsersWithTheirPages(new User());
-        for (User user : users){
-            out.println("User: " + user.getName() + " (id: " + user.getId() + ")");
-            for (Page page : user.getPages()){
-                out.printf("\t%4d\t%s\n", page.getId(), page.getTitle());
-            }
         }
     }
 

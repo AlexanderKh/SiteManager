@@ -18,9 +18,6 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserGroup userGroup;
 
-    @OneToMany(mappedBy = "user")
-    private List<Permission> permissions;
-
     public User(){};
 
     public User(String name, UserGroup userGroup){
@@ -59,14 +56,6 @@ public class User {
 
     public void setUserGroup(UserGroup userGroup) {
         this.userGroup = userGroup;
-    }
-
-    public List<Permission> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(List<Permission> permissions) {
-        this.permissions = permissions;
     }
 
     @Override

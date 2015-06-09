@@ -37,17 +37,6 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public List<User> getUsersWithTheirPages(User user) {
-
-        if (user.getUserGroup() == UserGroup.ADMIN) {
-            return userDAO.getUsers();
-        } else {
-            List<User> result = new ArrayList<User>();
-            result.add(user);
-            return result;
-        }
-    }
-
     public void deleteUser(User currentUser) {
         userDAO.deleteUser(currentUser);
     }

@@ -74,20 +74,6 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void getUsersWithTheirPages() throws Exception {
-        User testUser = new User();
-        testUser.setName("Test User");
-        testUser.setUserGroup(UserGroup.USER);
-        User testAdmin = new User();
-        testAdmin.setName("Test Admin");
-        testAdmin.setUserGroup(UserGroup.ADMIN);
-
-        service.getUsersWithTheirPages(testAdmin);
-
-        verify(userDAO).getUsers();
-    }
-
-    @Test
     public void deleteUser() throws Exception {
         User testUser = new User();
 
