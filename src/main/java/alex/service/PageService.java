@@ -21,5 +21,5 @@ public interface PageService {
 
     void deletePage(Page page);
 
-    List<Page> getPermissionNotVisibleForUser(User user);
+    List<Page> getPagesNotVisibleForUser(User user);
 }

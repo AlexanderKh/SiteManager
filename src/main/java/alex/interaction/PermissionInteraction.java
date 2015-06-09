@@ -72,7 +72,20 @@ public class PermissionInteraction {
     private void changePermission() {
         out.println("Select user");
         User user = selectUser();
-
+        out.println("Permissions for user: " + user.getName());
+        List<Permission> permissions = permissionService.getUserPermissions(user);
+        for (int i = 0; i < permissions.size(); i++) {
+            Permission permission = permissions.get(i);
+            Page page = permission.getPage();
+            out.printf("%3d\t%20s\t%5s\n", i, page.getTitle(), permission.getType());
+        }
+        out.print("Select permission: ");
+        int permNO = helper.getIntFromUser();
+        Permission permission = permissions.get(permNO);
+        out.print("Enter new permission level: ");
+        String input = in.next();
+        PermissionType type = PermissionType.valueOf(input);
+        permissionService.changePermissionType(permission, type);
     }
 
     private void removePermission() {
@@ -95,7 +108,7 @@ public class PermissionInteraction {
         out.println("Select user");
         User user = selectUser();
         out.println("Permissions for user: " + user.getName());
-        List<Page> pages = pageService.getPermissionNotVisibleForUser(user);
+        List<Page> pages = pageService.getPagesNotVisibleForUser(user);
         for (int i = 0; i < pages.size(); i++) {
             Page page = pages.get(i);
             out.printf("%3d\t%20s\n", i, page.getTitle());
@@ -117,7 +130,10 @@ public class PermissionInteraction {
         for (Permission permission : permissions){
             Page tempPage = permission.getPage();
             User tempUser = permission.getUser();
-            out.printf("%15s\t%4d\t%20s\t%5s\n", tempUser.getName(), tempPage.getId(), tempPage.getTitle(), permission.getType());
+            if (tempPage == null)
+                out.printf("%15s\tNO PAGES\n", tempUser.getName());
+                else
+                out.printf("%15s\t%4d\t%20s\t%5s\n", tempUser.getName(), tempPage.getId(), tempPage.getTitle(), permission.getType());
         }
     }
 

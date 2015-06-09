@@ -19,4 +19,8 @@ public interface PermissionService {
     void deletePermission(Permission permission);
 
     void addNewPermission(User user, Page page, PermissionType type);
+
+    void changePermissionType(Permission permission, PermissionType newType);
+
+
 }

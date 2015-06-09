@@ -21,4 +21,5 @@ public interface PermissionDAO {
 
     void deletePermission(Permission permission);
 
+    List<Permission> getPermissionsAndUsers();
 }
