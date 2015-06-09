@@ -55,4 +55,13 @@ public class PageDAOImpl implements PageDAO {
 //        session.update(page.getAuthor());
         session.save(page);
     }
+
+    @Transactional
+    public List<Page> getPagesVisibleForUser(int userId) {
+        Session session = sessionFactory.getCurrentSession();
+        SQLQuery sqlQuery = session.createSQLQuery("SELECT * FROM PAGE INNER JOIN PERMISSION ON PAGE.ID = PERMISSION.PAGE_ID " +
+                "WHERE PERMISSION.USER_ID = :userID AND (PERMISSION_TYPE = 'EDIT' OR PERMISSION_TYPE = 'READ')").addEntity(Page.class);
+        return sqlQuery.setParameter("userID", userId).list();
+
+    }
 }

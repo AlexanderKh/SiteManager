@@ -1,10 +1,7 @@
 package alex.dao;
 
 import alex.config.AppConfig;
-import alex.entity.Page;
-import alex.entity.PermissionType;
-import alex.entity.User;
-import alex.entity.UserGroup;
+import alex.entity.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +14,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import javax.transaction.Transactional;
 import java.util.List;
 
+import static java.util.Collections.emptyList;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
@@ -30,37 +28,22 @@ public class UserDAOImplTest {
     PageDAO pageDAO;
     @Autowired
     UserDAO userDAO;
+    @Autowired
+    PermissionDAO permissionDAO;
     Page testPage;
     User testUser;
+    Permission testPermission;
 
     @Before
     public void setUp() throws Exception {
-        Page page = new Page();
-        page.setContent("Test Content");
-        page.setTitle("Test Title");
+        testPage = new Page();
+        testPage.setContent("Test Content");
+        testPage.setTitle("Test Title");
 
-        User user = new User();
-        user.setName("Test User");
-        user.setUserGroup(UserGroup.ADMIN);
+        testUser = new User();
+        testUser.setName("Test User");
+        testUser.setUserGroup(UserGroup.ADMIN);
 
-        testUser = user;
-        testPage = page;
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        pageDAO.deletePage(testPage);
-        userDAO.deleteUser(testUser);
-    }
-
-    @Test
-    public void getUsersWithTheirPages() throws Exception {
-        userDAO.saveUser(testUser);
-        pageDAO.savePage(testPage);
-
-        List<User> actualUsers = userDAO.getUsersWithTheirPages();
-
-        assertThat(actualUsers, hasItem(testUser));
     }
 
     @Test
@@ -102,6 +85,8 @@ public class UserDAOImplTest {
 
     @Test
     public void updateUser() throws Exception{
+        userDAO.saveUser(testUser);
+        testUser.setName("Update");
         userDAO.updateUser(testUser);
 
         List<User> actualUsers = userDAO.getUsers();

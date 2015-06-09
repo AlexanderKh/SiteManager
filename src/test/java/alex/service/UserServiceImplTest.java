@@ -1,12 +1,8 @@
 package alex.service;
 
 import alex.config.AppConfig;
-import alex.dao.PageDAO;
-import alex.dao.PageDAOImpl;
-import alex.dao.UserDAO;
-import alex.dao.UserDAOImpl;
-import alex.entity.User;
-import alex.entity.UserGroup;
+import alex.dao.*;
+import alex.entity.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +27,8 @@ public class UserServiceImplTest {
     PageDAO pageDAO;
     @Mock
     UserDAO userDAO;
+    @Mock
+    PermissionDAO permissionDAO;
     @Autowired
     UserServiceImpl service;
 
@@ -76,9 +75,17 @@ public class UserServiceImplTest {
 
     @Test
     public void getUsersWithTheirPages() throws Exception {
-        service.getUsersWithTheirPages();
+        User testUser = new User();
+        testUser.setName("Test User");
+        testUser.setUserGroup(UserGroup.USER);
+        User testAdmin = new User();
+        testAdmin.setName("Test Admin");
+        testAdmin.setUserGroup(UserGroup.ADMIN);
 
-        verify(userDAO).getUsersWithTheirPages();
+
+        service.getUsersWithTheirPages(testAdmin);
+
+        verify(userDAO).getUsers();
     }
 
     @Test
@@ -89,4 +96,5 @@ public class UserServiceImplTest {
 
         verify(userDAO).deleteUser(testUser);
     }
+
 }

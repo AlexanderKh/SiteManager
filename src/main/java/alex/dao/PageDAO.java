@@ -17,4 +17,6 @@ public interface PageDAO {
     void updatePage(Page page);
 
     void savePage(Page page);
+
+    List<Page> getPagesVisibleForUser(int userId);
 }

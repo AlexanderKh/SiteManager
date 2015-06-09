@@ -2,12 +2,12 @@ package alex.dao;
 
 import alex.entity.Page;
 import alex.entity.Permission;
+import alex.entity.User;
 import org.hibernate.Criteria;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.engine.internal.JoinSequence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -29,16 +29,38 @@ public class PermissionDAOImpl implements PermissionDAO {
     public Permission getPermission(int pageId, int userId) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Permission.class);
-        criteria.add(Restrictions.and( Restrictions.eq("page.id", pageId), Restrictions.eq("user.id", userId) ));
+        criteria.add(Restrictions.and(Restrictions.eq("page.id", pageId), Restrictions.eq("user.id", userId)));
         return (Permission) criteria.uniqueResult();
     }
 
     @Transactional
-    public List<Page> getPagesVisibleForUser(int userId) {
-        Session session = sessionFactory.getCurrentSession();
-        SQLQuery sqlQuery = session.createSQLQuery("SELECT * FROM PAGE INNER JOIN PERMISSION ON PAGE.ID = PERMISSION.PAGE_ID " +
-                "WHERE PERMISSION.USER_ID = :userID AND (PERMISSION_TYPE = 'EDIT' OR PERMISSION_TYPE = 'READ')").addEntity(Page.class);
-        return sqlQuery.setParameter("userID", userId).list();
-
+    public void updatePermission(Permission permission) {
+        sessionFactory.getCurrentSession().update(permission);
     }
+
+    @Transactional
+    public List<Permission> getPermissionsByUser(User user) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Permission.class);
+        criteria.add(Restrictions.eq("user", user));
+        return criteria.list();
+    }
+
+    @Transactional
+    public List<Permission> getPermissionsByPage(Page page) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Permission.class);
+        criteria.add(Restrictions.eq("page", page));
+        return criteria.list();
+    }
+
+    @Transactional
+    public List<Permission> getPermissions() {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Permission.class);
+        criteria.addOrder(Order.asc("user"));
+        return criteria.list();
+    }
+
+
 }

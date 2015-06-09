@@ -1,7 +1,6 @@
 package alex.interaction;
 
 import alex.entity.Page;
-import alex.entity.PermissionType;
 import alex.entity.User;
 import alex.entity.UserGroup;
 import alex.service.PageService;
@@ -166,7 +165,7 @@ public class Interaction {
     }
 
     private void listAllUsers() {
-        List<User> users = userService.getUsersWithTheirPages();
+        List<User> users = userService.getUsersWithTheirPages(new User());
         for (User user : users){
             out.println("User: " + user.getName() + " (id: " + user.getId() + ")");
             for (Page page : user.getPages()){

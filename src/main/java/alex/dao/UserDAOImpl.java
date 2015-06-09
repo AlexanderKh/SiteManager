@@ -1,10 +1,9 @@
 package alex.dao;
 
+import alex.entity.Page;
+import alex.entity.Permission;
 import alex.entity.User;
-import org.hibernate.FetchMode;
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,13 +15,6 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO {
     @Autowired
     private SessionFactory sessionFactory;
-
-    @Transactional
-    public List<User> getUsersWithTheirPages() {
-        Session session = sessionFactory.getCurrentSession();
-        List<User> users = session.createCriteria(User.class).setFetchMode("pages", FetchMode.JOIN).add(Restrictions.disjunction()).list();
-        return users;
-    }
 
     @Transactional
     public User getUser(String input) {

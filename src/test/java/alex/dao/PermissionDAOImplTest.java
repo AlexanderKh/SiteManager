@@ -73,25 +73,66 @@ public class PermissionDAOImplTest {
     }
 
     @Test
-    public void getPagesVisibleForUser() throws Exception {
+    public void getPermissions() throws Exception {
         Permission permission = new Permission();
         permission.setPage(testPage);
         permission.setUser(testUser);
         permission.setType(PermissionType.READ);
+
         permissionDAO.savePermission(permission);
-        Page hiddenPage = new Page();
-        hiddenPage.setAuthor(testUser);
-        hiddenPage.setTitle("Test Hidden Page");
-        pageDAO.savePage(hiddenPage);
-        Permission hiddenPermission = new Permission();
-        hiddenPermission.setUser(testUser);
-        hiddenPermission.setType(PermissionType.NO);
-        hiddenPermission.setPage(hiddenPage);
-        permissionDAO.savePermission(hiddenPermission);
 
-        List<Page> actualPages = permissionDAO.getPagesVisibleForUser(testUser.getId());
+        List<Permission> actualPermissions = permissionDAO.getPermissions();
 
-        assertThat(actualPages, hasItem(testPage));
-        assertThat(actualPages, not(hasItem(hiddenPage)));
+        assertThat(actualPermissions, hasItem(permission));
+    }
+
+    @Test
+    public void updatePermission() throws Exception {
+        Permission permission = new Permission();
+        permission.setUser(testUser);
+        permission.setPage(testPage);
+        permission.setType(PermissionType.READ);
+
+        permissionDAO.savePermission(permission);
+
+        Permission actualPermission = permissionDAO.getPermission(testPage.getId(), testUser.getId());
+
+        assertThat(actualPermission, is(permission));
+
+        permission.setType(PermissionType.EDIT);
+
+        permissionDAO.updatePermission(permission);
+
+        actualPermission = permissionDAO.getPermission(testPage.getId(), testUser.getId());
+
+        assertThat(actualPermission.getType(), is(PermissionType.EDIT));
+    }
+
+    @Test
+    public void getPermissionsByUser() throws Exception {
+        Permission permission = new Permission();
+        permission.setUser(testUser);
+        permission.setPage(testPage);
+        permission.setType(PermissionType.READ);
+
+        permissionDAO.savePermission(permission);
+
+        List<Permission> actualPermissions = permissionDAO.getPermissionsByUser(testUser);
+
+        assertThat(actualPermissions.get(0).getUser(), is(testUser));
+    }
+
+    @Test
+    public void getPermissionsByPage() throws Exception {
+        Permission permission = new Permission();
+        permission.setUser(testUser);
+        permission.setPage(testPage);
+        permission.setType(PermissionType.READ);
+
+        permissionDAO.savePermission(permission);
+
+        List<Permission> actualPermissions = permissionDAO.getPermissionsByPage(testPage);
+
+        assertThat(actualPermissions.get(0).getPage(), is(testPage));
     }
 }

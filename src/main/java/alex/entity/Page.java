@@ -15,6 +15,13 @@ public class Page {
     @OneToMany(mappedBy = "page")
     private List<Permission> permissions;
 
+    public Page(){}
+
+    public Page(String title, User author){
+        this.title = title;
+        this.author = author;
+    }
+
     public int getId() {
         return id;
     }

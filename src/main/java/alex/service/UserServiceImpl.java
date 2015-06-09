@@ -1,18 +1,25 @@
 package alex.service;
 
+import alex.dao.PageDAO;
+import alex.dao.PermissionDAO;
 import alex.dao.UserDAO;
 import alex.entity.User;
 import alex.entity.UserGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.jws.soap.SOAPBinding;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private PermissionDAO permissionDAO;
 
     public List<User> getUsers() {
         return userDAO.getUsers();
@@ -30,8 +37,15 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public List<User> getUsersWithTheirPages() {
-        return userDAO.getUsersWithTheirPages();
+    public List<User> getUsersWithTheirPages(User user) {
+
+        if (user.getUserGroup() == UserGroup.ADMIN) {
+            return userDAO.getUsers();
+        } else {
+            List<User> result = new ArrayList<User>();
+            result.add(user);
+            return result;
+        }
     }
 
     public void deleteUser(User currentUser) {

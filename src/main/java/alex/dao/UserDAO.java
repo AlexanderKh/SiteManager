@@ -5,7 +5,6 @@ import alex.entity.User;
 import java.util.List;
 
 public interface UserDAO {
-    List<User> getUsersWithTheirPages();
 
     User getUser(String input);
 

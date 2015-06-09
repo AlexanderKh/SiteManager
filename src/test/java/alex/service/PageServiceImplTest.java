@@ -130,4 +130,9 @@ public class PageServiceImplTest {
         Page actualPage = service.getPageToView(testUser, 0);
         assertThat(actualPage, is(page));
     }
+
+    @Test
+    public void getUserPages() throws Exception{
+
+    }
 }

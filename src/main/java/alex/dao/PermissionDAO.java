@@ -2,6 +2,7 @@ package alex.dao;
 
 import alex.entity.Page;
 import alex.entity.Permission;
+import alex.entity.User;
 
 import java.util.List;
 
@@ -10,5 +11,11 @@ public interface PermissionDAO {
 
     Permission getPermission(int pageId, int userId);
 
-    List<Page> getPagesVisibleForUser(int userId);
+    void updatePermission(Permission permission);
+
+    List<Permission> getPermissionsByUser(User user);
+
+    List<Permission> getPermissionsByPage(Page page);
+
+    List<Permission> getPermissions();
 }

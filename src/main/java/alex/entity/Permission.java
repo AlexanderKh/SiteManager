@@ -17,6 +17,14 @@ public class Permission {
     @Column(name = "PERMISSION_TYPE")
     private PermissionType type;
 
+    public Permission(){}
+
+    public Permission(User user, Page page, PermissionType type){
+        this.page = page;
+        this.user = user;
+        this.type = type;
+    }
+
     public Page getPage() {
         return page;
     }
@@ -48,4 +56,5 @@ public class Permission {
     public void setId(int id) {
         this.id = id;
     }
+
 }

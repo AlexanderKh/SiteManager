@@ -12,7 +12,7 @@ public interface UserService {
 
     User register(String userName);
 
-    List<User> getUsersWithTheirPages();
+    List<User> getUsersWithTheirPages(User testUser);
 
     void deleteUser(User currentUser);
 }

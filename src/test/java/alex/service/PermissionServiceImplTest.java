@@ -1,0 +1,64 @@
+package alex.service;
+
+import alex.config.AppConfig;
+import alex.dao.*;
+import alex.entity.*;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.jws.soap.SOAPBinding;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {AppConfig.class})
+public class PermissionServiceImplTest {
+    @Mock
+    PageDAO pageDAO;
+    @Mock
+    UserDAO userDAO;
+    @Mock
+    PermissionDAO permissionDAO;
+    @Autowired
+    PermissionDAO actualPermissionDAO;
+    @Autowired
+    PermissionService service;
+
+    @Before
+    public void setUp() throws Exception {
+        permissionDAO = mock(PermissionDAO.class);
+        service.setPermissionDAO(permissionDAO);
+    }
+
+    @Test
+    public void getPermissionsVisibleByUser() throws Exception{
+        User firstUser = new User("First User", UserGroup.USER);
+        User admin = new User("Admin", UserGroup.ADMIN);
+
+        service.getPermissionsVisibleByUser(firstUser);
+        verify(permissionDAO).getPermissionsByUser(firstUser);
+
+        service.getPermissionsVisibleByUser(admin);
+        verify(permissionDAO).getPermissions();
+    }
+
+    @Test
+    public void getUserPermissions() throws Exception {
+        User firstUser = new User("First User", UserGroup.USER);
+        User admin = new User("Admin", UserGroup.ADMIN);
+
+        service.getUserPermissions(firstUser);
+        verify(permissionDAO).getPermissionsByUser(firstUser);
+
+        service.getUserPermissions(admin);
+        verify(permissionDAO).getPermissionsByUser(admin);
+    }
+
+}

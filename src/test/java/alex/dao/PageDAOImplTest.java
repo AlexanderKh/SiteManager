@@ -1,10 +1,7 @@
 package alex.dao;
 
 import alex.config.AppConfig;
-import alex.entity.Page;
-import alex.entity.PermissionType;
-import alex.entity.User;
-import alex.entity.UserGroup;
+import alex.entity.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +14,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import javax.transaction.Transactional;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
@@ -30,6 +29,8 @@ public class PageDAOImplTest {
     PageDAO pageDAO;
     @Autowired
     UserDAO userDAO;
+    @Autowired
+    PermissionDAO permissionDAO;
     Page testPage;
     User testUser;
 
@@ -45,6 +46,7 @@ public class PageDAOImplTest {
         userDAO.saveUser(user);
 
         page.setAuthor(user);
+        pageDAO.savePage(page);
 
         testUser = user;
         testPage = page;
@@ -108,5 +110,28 @@ public class PageDAOImplTest {
         List<Page> actualPages = pageDAO.getPages();
 
         assertThat(actualPages, hasItem(testPage));
+    }
+
+    @Test
+    public void getPagesVisibleForUser() throws Exception {
+        Permission permission = new Permission();
+        permission.setPage(testPage);
+        permission.setUser(testUser);
+        permission.setType(PermissionType.READ);
+        permissionDAO.savePermission(permission);
+        Page hiddenPage = new Page();
+        hiddenPage.setAuthor(testUser);
+        hiddenPage.setTitle("Test Hidden Page");
+        pageDAO.savePage(hiddenPage);
+        Permission hiddenPermission = new Permission();
+        hiddenPermission.setUser(testUser);
+        hiddenPermission.setType(PermissionType.NO);
+        hiddenPermission.setPage(hiddenPage);
+        permissionDAO.savePermission(hiddenPermission);
+
+        List<Page> actualPages = pageDAO.getPagesVisibleForUser(testUser.getId());
+
+        assertThat(actualPages, hasItem(testPage));
+        assertThat(actualPages, not(hasItem(hiddenPage)));
     }
 }

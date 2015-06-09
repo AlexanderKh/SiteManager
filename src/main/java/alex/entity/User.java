@@ -1,6 +1,10 @@
 package alex.entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,8 +17,17 @@ public class User {
     private List<Page> pages;
     @Enumerated(value = EnumType.STRING)
     private UserGroup userGroup;
+
     @OneToMany(mappedBy = "user")
     private List<Permission> permissions;
+
+    public User(){};
+
+    public User(String name, UserGroup userGroup){
+        this.name = name;
+        this.userGroup = userGroup;
+    }
+
 
     public int getId() {
         return id;
