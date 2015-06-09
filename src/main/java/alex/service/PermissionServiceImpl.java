@@ -1,9 +1,7 @@
 package alex.service;
 
 import alex.dao.PermissionDAO;
-import alex.entity.Permission;
-import alex.entity.User;
-import alex.entity.UserGroup;
+import alex.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,4 +27,14 @@ public class PermissionServiceImpl implements PermissionService {
     public List<Permission> getUserPermissions(User user) {
         return permissionDAO.getPermissionsByUser(user);
     }
+
+    public void deletePermission(Permission permission) {
+        permissionDAO.deletePermission(permission);
+    }
+
+    public void addNewPermission(User user, Page page, PermissionType type) {
+        Permission permission = new Permission(user, page, type);
+        permissionDAO.savePermission(permission);
+    }
+
 }

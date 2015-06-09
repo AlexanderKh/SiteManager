@@ -1,6 +1,7 @@
 package alex.dao;
 
 import alex.entity.Page;
+import alex.entity.User;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface PageDAO {
     void savePage(Page page);
 
     List<Page> getPagesVisibleForUser(int userId);
+
+    List<Page> getPagesNotVisibleForUser(User user);
 }

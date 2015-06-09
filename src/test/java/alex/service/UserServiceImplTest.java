@@ -82,7 +82,6 @@ public class UserServiceImplTest {
         testAdmin.setName("Test Admin");
         testAdmin.setUserGroup(UserGroup.ADMIN);
 
-
         service.getUsersWithTheirPages(testAdmin);
 
         verify(userDAO).getUsers();

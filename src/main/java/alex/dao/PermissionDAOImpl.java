@@ -14,6 +14,9 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.util.List;
 
+import static org.hibernate.criterion.Restrictions.eq;
+import static org.hibernate.criterion.Restrictions.not;
+
 @Repository
 public class PermissionDAOImpl implements PermissionDAO {
 
@@ -29,7 +32,7 @@ public class PermissionDAOImpl implements PermissionDAO {
     public Permission getPermission(int pageId, int userId) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Permission.class);
-        criteria.add(Restrictions.and(Restrictions.eq("page.id", pageId), Restrictions.eq("user.id", userId)));
+        criteria.add(Restrictions.and(eq("page.id", pageId), eq("user.id", userId)));
         return (Permission) criteria.uniqueResult();
     }
 
@@ -42,7 +45,7 @@ public class PermissionDAOImpl implements PermissionDAO {
     public List<Permission> getPermissionsByUser(User user) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Permission.class);
-        criteria.add(Restrictions.eq("user", user));
+        criteria.add(eq("user", user));
         return criteria.list();
     }
 
@@ -50,7 +53,7 @@ public class PermissionDAOImpl implements PermissionDAO {
     public List<Permission> getPermissionsByPage(Page page) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Permission.class);
-        criteria.add(Restrictions.eq("page", page));
+        criteria.add(eq("page", page));
         return criteria.list();
     }
 
@@ -60,6 +63,11 @@ public class PermissionDAOImpl implements PermissionDAO {
         Criteria criteria = session.createCriteria(Permission.class);
         criteria.addOrder(Order.asc("user"));
         return criteria.list();
+    }
+
+    @Transactional
+    public void deletePermission(Permission permission) {
+        sessionFactory.getCurrentSession().delete(permission);
     }
 
 

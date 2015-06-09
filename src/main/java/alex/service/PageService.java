@@ -20,4 +20,6 @@ public interface PageService {
     void createNewPage(String title, User currentUser);
 
     void deletePage(Page page);
+
+    List<Page> getPermissionNotVisibleForUser(User user);
 }

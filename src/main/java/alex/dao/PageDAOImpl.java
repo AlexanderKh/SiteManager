@@ -1,6 +1,7 @@
 package alex.dao;
 
 import alex.entity.Page;
+import alex.entity.User;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -63,5 +64,13 @@ public class PageDAOImpl implements PageDAO {
                 "WHERE PERMISSION.USER_ID = :userID AND (PERMISSION_TYPE = 'EDIT' OR PERMISSION_TYPE = 'READ')").addEntity(Page.class);
         return sqlQuery.setParameter("userID", userId).list();
 
+    }
+
+    @Transactional
+    public List<Page> getPagesNotVisibleForUser(User user) {
+        Session session = sessionFactory.getCurrentSession();
+        SQLQuery sqlQuery = session.createSQLQuery("SELECT PAGE.* FROM PAGE LEFT JOIN PERMISSION ON PAGE.ID = PERMISSION.PAGE_ID " +
+                "WHERE (PERMISSION.USER_ID <> :userID) OR (PERMISSION.USER_ID IS NULL)").addEntity(Page.class);
+        return sqlQuery.setParameter("userID", user.getId()).list();
     }
 }

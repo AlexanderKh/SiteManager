@@ -18,4 +18,7 @@ public interface PermissionDAO {
     List<Permission> getPermissionsByPage(Page page);
 
     List<Permission> getPermissions();
+
+    void deletePermission(Permission permission);
+
 }

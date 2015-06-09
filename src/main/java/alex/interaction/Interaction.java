@@ -28,6 +28,8 @@ public class Interaction {
     private InteractionHelper helper;
     @Autowired
     private PageEditInteraction pageEditInteraction;
+    @Autowired
+    private PermissionInteraction permissionInteraction;
 
     Interaction(){
         in = IOContainer.in;
@@ -42,6 +44,7 @@ public class Interaction {
                 out.println("-----------------------");
                 out.println("1 - LogIn");
                 out.println("2 - Create new user");
+                out.println("3 - Permission Editor");
                 out.println("0 - Exit");
                 out.println("-----------------------");
                 ans = helper.getIntFromUser();
@@ -52,6 +55,8 @@ public class Interaction {
                     case 2:
                         createNewUser();
                         break;
+                    case 3:
+                        permissionInteraction.interact();
                     case 0:
                         exit = true;
                         break;
