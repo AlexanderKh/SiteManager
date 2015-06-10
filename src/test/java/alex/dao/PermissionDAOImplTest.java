@@ -59,6 +59,21 @@ public class PermissionDAOImplTest {
     }
 
     @Test
+    public void deletePermission() throws Exception {
+        Permission permission = new Permission();
+        permission.setPage(testPage);
+        permission.setUser(testUser);
+        permission.setType(PermissionType.READ);
+        permissionDAO.savePermission(permission);
+
+        permissionDAO.deletePermission(permission);
+
+        List<Permission> actualPermissions = permissionDAO.getPermissions();
+
+        assertThat(actualPermissions, not(hasItem(permission)));
+    }
+
+    @Test
     public void addPermission() throws Exception {
         Permission permission = new Permission();
         permission.setPage(testPage);

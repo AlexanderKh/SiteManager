@@ -134,4 +134,27 @@ public class PageDAOImplTest {
         assertThat(actualPages, hasItem(testPage));
         assertThat(actualPages, not(hasItem(hiddenPage)));
     }
+
+    @Test
+    public void getPagesNotVisibleForUser() throws Exception {
+        Permission permission = new Permission();
+        permission.setPage(testPage);
+        permission.setUser(testUser);
+        permission.setType(PermissionType.READ);
+        permissionDAO.savePermission(permission);
+        Page hiddenPage = new Page();
+        hiddenPage.setAuthor(testUser);
+        hiddenPage.setTitle("Test Hidden Page");
+        pageDAO.savePage(hiddenPage);
+        Permission hiddenPermission = new Permission();
+        hiddenPermission.setUser(testUser);
+        hiddenPermission.setType(PermissionType.NO);
+        hiddenPermission.setPage(hiddenPage);
+        permissionDAO.savePermission(hiddenPermission);
+
+        List<Page> actualPages = pageDAO.getPagesNotVisibleForUser(testUser);
+
+        assertThat(actualPages, not(hasItem(testPage)));
+        assertThat(actualPages, hasItem(hiddenPage));
+    }
 }

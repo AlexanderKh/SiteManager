@@ -18,8 +18,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDAO userDAO;
-    @Autowired
-    private PermissionDAO permissionDAO;
 
     public List<User> getUsers() {
         return userDAO.getUsers();

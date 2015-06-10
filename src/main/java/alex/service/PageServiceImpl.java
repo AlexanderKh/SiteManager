@@ -19,7 +19,7 @@ public class PageServiceImpl implements PageService {
         pageDAO.deletePage(page);
     }
 
-    public List<Page> getPermissionNotVisibleForUser(User user) {
+    public List<Page> getPagesNotVisibleForUser(User user) {
         return pageDAO.getPagesNotVisibleForUser(user);
     }
 

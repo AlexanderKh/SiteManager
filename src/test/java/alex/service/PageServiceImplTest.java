@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
@@ -41,11 +43,6 @@ public class PageServiceImplTest {
         pageDAO = mock(PageDAOImpl.class);
         userDAO = mock(UserDAOImpl.class);
         service.setPageDAO(pageDAO);
-    }
-
-    @After
-    public void tearDown() throws Exception {
-
     }
 
     @Test
@@ -71,9 +68,7 @@ public class PageServiceImplTest {
 
     @Test
     public void getPageToEdit() throws Exception {
-        User testUser = new User();
-        testUser.setName("Test User");
-        testUser.setUserGroup(UserGroup.USER);
+        User testUser = new User("Test User", UserGroup.USER);
 
         service.getPageToEdit(testUser, 0);
         verify(pageDAO).getPage(0);
@@ -82,13 +77,9 @@ public class PageServiceImplTest {
 
     @Test
     public void getVisiblePages() throws Exception {
-        User testUser = new User();
-        testUser.setName("Test User");
-        testUser.setUserGroup(UserGroup.USER);
+        User testUser = new User("Test User", UserGroup.USER);
         testUser.setId(10);
-        User testAdmin = new User();
-        testAdmin.setUserGroup(UserGroup.ADMIN);
-        testAdmin.setName("Test Admin");
+        User testAdmin = new User("Test Admin", UserGroup.ADMIN);
 
         service.getVisiblePages(testUser);
         verify(pageDAO).getPagesByAuthor(testUser.getId());
@@ -112,17 +103,14 @@ public class PageServiceImplTest {
     @Test
     public void createNewPage() throws Exception {
         service.createNewPage("Test Title", new User());
+
         verify(pageDAO).savePage(Matchers.any(Page.class));
     }
 
     @Test
     public void getPageToView() throws Exception {
-        User testUser = new User();
-        testUser.setName("Test User");
-        testUser.setUserGroup(UserGroup.USER);
-        User testAdmin = new User();
-        testAdmin.setUserGroup(UserGroup.ADMIN);
-        testAdmin.setName("Test Admin");
+        User testUser = new User("Test User", UserGroup.USER);
+        User testAdmin = new User("Test Admin", UserGroup.ADMIN);
 
         Page page = new Page();
         when(pageDAO.getPage(anyInt())).thenReturn(page);
@@ -132,7 +120,11 @@ public class PageServiceImplTest {
     }
 
     @Test
-    public void getUserPages() throws Exception{
+    public void getPagesNotVisibleForUser() throws Exception {
+        User user = new User("Test User", UserGroup.USER);
 
+        service.getPagesNotVisibleForUser(user);
+
+        verify(pageDAO).getPagesNotVisibleForUser(user);
     }
 }

@@ -95,7 +95,7 @@ public class PermissionInteraction {
         out.println("Select user");
         User user = selectUser();
         out.println("Permissions for user: " + user.getName());
-        List<Page> pages = pageService.getPermissionNotVisibleForUser(user);
+        List<Page> pages = pageService.getPagesNotVisibleForUser(user);
         for (int i = 0; i < pages.size(); i++) {
             Page page = pages.get(i);
             out.printf("%3d\t%20s\n", i, page.getTitle());
