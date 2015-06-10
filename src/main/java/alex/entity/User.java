@@ -1,10 +1,6 @@
 package alex.entity;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,6 +11,8 @@ public class User {
     private String name;
     @Enumerated(value = EnumType.STRING)
     private UserGroup userGroup;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Permission> permissions;
 
     public User(){};
 
@@ -66,6 +64,14 @@ public class User {
 
     public void setUserGroup(UserGroup userGroup) {
         this.userGroup = userGroup;
+    }
+
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
     }
 
     @Override

@@ -12,7 +12,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import javax.transaction.Transactional;
-
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.hasItem;
@@ -53,8 +52,13 @@ public class PermissionDAOImplTest {
         flush();
     }
 
-    private void evict(Object o) {
+
+    protected void evict(Object o) {
         sessionFactory.getCurrentSession().evict(o);
+    }
+
+    protected void flush() {
+        sessionFactory.getCurrentSession().flush();
     }
 
     @Test
@@ -109,9 +113,5 @@ public class PermissionDAOImplTest {
         List<Permission> actualPermissions = permissionDAO.getPermissionsByPage(page);
 
         assertThat(actualPermissions.get(0).getPage(), is(page));
-    }
-
-    private void flush() {
-        sessionFactory.getCurrentSession().flush();
     }
 }

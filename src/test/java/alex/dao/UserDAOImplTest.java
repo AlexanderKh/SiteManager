@@ -22,7 +22,6 @@ import static org.junit.Assert.assertThat;
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
 public class UserDAOImplTest {
-
     @Autowired
     PageDAO pageDAO;
     @Autowired
@@ -33,6 +32,7 @@ public class UserDAOImplTest {
     SessionFactory sessionFactory;
     Page page;
     User user;
+    Permission permission;
 
     @Before
     public void setUp() throws Exception {
@@ -44,10 +44,19 @@ public class UserDAOImplTest {
         page.setContent("Test Content");
         pageDAO.savePage(page);
         evict(page);
+
+        permission = new Permission(user, page, PermissionType.READ);
+        permissionDAO.savePermission(permission);
+        flush();
     }
 
-    private void evict(Object o) {
+
+    protected void evict(Object o) {
         sessionFactory.getCurrentSession().evict(o);
+    }
+
+    protected void flush() {
+        sessionFactory.getCurrentSession().flush();
     }
 
     @Test
@@ -66,6 +75,8 @@ public class UserDAOImplTest {
 
     @Test
     public void deleteUser() throws Exception {
+        permissionDAO.deletePermission(permission);
+
         userDAO.deleteUser(user);
 
         List<User> actualUsers = userDAO.getUsers();

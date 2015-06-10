@@ -1,7 +1,9 @@
 package alex.service;
 
 import alex.config.AppConfig;
-import alex.dao.*;
+import alex.dao.PageDAO;
+import alex.dao.PermissionDAO;
+import alex.dao.UserDAO;
 import alex.entity.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,9 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.jws.soap.SOAPBinding;
-
-import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;

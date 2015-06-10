@@ -4,7 +4,6 @@ import alex.config.AppConfig;
 import alex.entity.*;
 import org.hamcrest.Matchers;
 import org.hibernate.SessionFactory;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,12 +20,12 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
 public class PageDAOImplTest {
+
     @Autowired
     PageDAO pageDAO;
     @Autowired
@@ -37,6 +36,7 @@ public class PageDAOImplTest {
     SessionFactory sessionFactory;
     Page page;
     User user;
+    Permission permission;
 
     @Before
     public void setUp() throws Exception {
@@ -48,10 +48,19 @@ public class PageDAOImplTest {
         page.setContent("Test Content");
         pageDAO.savePage(page);
         evict(page);
+
+        permission = new Permission(user, page, PermissionType.READ);
+        permissionDAO.savePermission(permission);
+        flush();
     }
 
-    private void evict(Object o) {
+
+    protected void evict(Object o) {
         sessionFactory.getCurrentSession().evict(o);
+    }
+
+    protected void flush() {
+        sessionFactory.getCurrentSession().flush();
     }
 
     @Test
@@ -108,10 +117,7 @@ public class PageDAOImplTest {
     public void getPagesNotVisibleForUser() throws Exception {
         List<Page> actualPages = pageDAO.getPagesNotVisibleForUser(user);
 
-        assertThat(actualPages, Matchers.hasItem(page));
+        assertThat(actualPages,not(hasItem(page)));
     }
 
-    private void flush() {
-        sessionFactory.getCurrentSession().flush();
-    }
 }
