@@ -2,7 +2,6 @@ package alex.service;
 
 import alex.dao.PageDAO;
 import alex.entity.Page;
-import alex.entity.PermissionType;
 import alex.entity.User;
 import alex.entity.UserGroup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +64,7 @@ public class PageServiceImpl implements PageService {
         if (page == null){
             return null;
         }
+
         return page;
     }
 

@@ -70,7 +70,17 @@ public class PermissionServiceImplTest {
         verify(permissionDAO).getPermissionsByUser(firstUser);
 
         service.getPermissionsVisibleByUser(admin);
-        verify(permissionDAO).getPermissions();
+        verify(permissionDAO).getPermissionsAndUsers();
+    }
+
+    @Test
+    public void changePermissionType() throws Exception {
+        User user = new User("Test User", UserGroup.USER);
+        Page page = new Page("Test Page", user);
+        Permission permission = new Permission(user, page, PermissionType.READ);
+        service.changePermissionType(permission, PermissionType.EDIT);
+
+        verify(permissionDAO).updatePermission(permission);
     }
 
     @Test

@@ -37,7 +37,6 @@ public class PermissionServiceImpl implements PermissionService {
         permissionDAO.savePermission(permission);
     }
 
-    @Override
     public void changePermissionType(Permission permission, PermissionType newType) {
         permission.setType(newType);
         permissionDAO.updatePermission(permission);
