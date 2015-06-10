@@ -4,13 +4,16 @@ import alex.entity.Page;
 import alex.entity.Permission;
 import alex.entity.User;
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.management.Query;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -68,6 +71,13 @@ public class PermissionDAOImpl implements PermissionDAO {
     @Transactional
     public void deletePermission(Permission permission) {
         sessionFactory.getCurrentSession().delete(permission);
+    }
+
+    @Transactional
+    public List<Permission> getPermissionsAndUsers() {
+        Session session = sessionFactory.getCurrentSession();
+        SQLQuery sqlQuery = session.createSQLQuery("SELECT NVL(PERMISSION.ID, 0) AS ID, PERMISSION.PAGE_ID, PERMISSION.PERMISSION_TYPE, NVL(PERMISSION.USER_ID, USER.ID) AS USER_ID FROM PERMISSION RIGHT JOIN USER ON USER.ID = PERMISSION.USER_ID ORDER BY USER_ID");
+        return sqlQuery.addEntity(Permission.class).list();
     }
 
 

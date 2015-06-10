@@ -19,7 +19,7 @@ public class PermissionServiceImpl implements PermissionService {
 
     public List<Permission> getPermissionsVisibleByUser(User user) {
         if (user.getUserGroup() == UserGroup.ADMIN)
-            return permissionDAO.getPermissions();
+            return permissionDAO.getPermissionsAndUsers();
         else
             return permissionDAO.getPermissionsByUser(user);
     }
@@ -35,6 +35,12 @@ public class PermissionServiceImpl implements PermissionService {
     public void addNewPermission(User user, Page page, PermissionType type) {
         Permission permission = new Permission(user, page, type);
         permissionDAO.savePermission(permission);
+    }
+
+    @Override
+    public void changePermissionType(Permission permission, PermissionType newType) {
+        permission.setType(newType);
+        permissionDAO.updatePermission(permission);
     }
 
 }
