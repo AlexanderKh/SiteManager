@@ -41,7 +41,7 @@ public class PermissionServiceImplTest {
     @Test
     public void deletePermission() throws Exception {
         User user = new User("Test User", UserGroup.USER);
-        Page page = new Page("Test Page", user);
+        Page page = new Page("Test Page");
         PermissionType type = PermissionType.EDIT;
         Permission permission = new Permission(user, page, type);
 
@@ -53,7 +53,7 @@ public class PermissionServiceImplTest {
     @Test
     public void addNewPermission() throws Exception{
         User user = new User("Test User", UserGroup.USER);
-        Page page = new Page("Test Page", user);
+        Page page = new Page("Test Page");
         PermissionType type = PermissionType.EDIT;
 
         service.addNewPermission(user, page, type);
@@ -76,7 +76,7 @@ public class PermissionServiceImplTest {
     @Test
     public void changePermissionType() throws Exception {
         User user = new User("Test User", UserGroup.USER);
-        Page page = new Page("Test Page", user);
+        Page page = new Page("Test Page");
         Permission permission = new Permission(user, page, PermissionType.READ);
         service.changePermissionType(permission, PermissionType.EDIT);
 

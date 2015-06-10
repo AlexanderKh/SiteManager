@@ -13,8 +13,6 @@ public class User {
     @GeneratedValue
     private int id;
     private String name;
-    @OneToMany(mappedBy = "author")
-    private List<Page> pages;
     @Enumerated(value = EnumType.STRING)
     private UserGroup userGroup;
 
@@ -25,6 +23,26 @@ public class User {
         this.userGroup = userGroup;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (id != user.id) return false;
+        if (name != null ? !name.equals(user.name) : user.name != null) return false;
+        return userGroup == user.userGroup;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (userGroup != null ? userGroup.hashCode() : 0);
+        return result;
+    }
 
     public int getId() {
         return id;
@@ -40,14 +58,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Page> getPages() {
-        return pages;
-    }
-
-    public void setPages(List<Page> pages) {
-        this.pages = pages;
     }
 
     public UserGroup getUserGroup() {

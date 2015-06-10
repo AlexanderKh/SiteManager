@@ -31,8 +31,7 @@ public class PageEditInteraction {
         while (!exit){
             out.println("-----------------------");
             out.println("Page id: " + page.getId() +
-                    "\tTitle: " + page.getTitle() +
-                    "\tOwner: " + page.getAuthor().getName());
+                    "\tTitle: " + page.getTitle());
             out.println("-----------------------");
             out.println("1 - Print page content");
             out.println("2 - Change title");

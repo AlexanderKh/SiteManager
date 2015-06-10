@@ -30,7 +30,6 @@ import static org.mockito.Mockito.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
 public class PageServiceImplTest {
-
     @Mock
     PageDAO pageDAO;
     @Mock
@@ -102,21 +101,9 @@ public class PageServiceImplTest {
 
     @Test
     public void createNewPage() throws Exception {
-        service.createNewPage("Test Title", new User());
+        service.createNewPage("Test Title");
 
         verify(pageDAO).savePage(Matchers.any(Page.class));
-    }
-
-    @Test
-    public void getPageToView() throws Exception {
-        User testUser = new User("Test User", UserGroup.USER);
-        User testAdmin = new User("Test Admin", UserGroup.ADMIN);
-
-        Page page = new Page();
-        when(pageDAO.getPage(anyInt())).thenReturn(page);
-
-        Page actualPage = service.getPageToView(testUser, 0);
-        assertThat(actualPage, is(page));
     }
 
     @Test

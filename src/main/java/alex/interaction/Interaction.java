@@ -69,7 +69,6 @@ public class Interaction {
                 out.println("Current user: " + currentUser.getName() + "\tGroup: Admin");
                 out.println("-----------------------");
                 out.println("1 - List all pages");
-                out.println("3 - View page");
                 out.println("4 - Create new page");
                 out.println("5 - Edit page");
                 out.println("9 - Delete profile");
@@ -79,9 +78,6 @@ public class Interaction {
                 switch (ans){
                     case 1:
                         listAllPages();
-                        break;
-                    case 3:
-                        viewPage();
                         break;
                     case 4:
                         createNewPage();
@@ -103,7 +99,6 @@ public class Interaction {
                 out.println("Current user: " + currentUser.getName() + "\tGroup: User");
                 out.println("-----------------------");
                 out.println("1 - List all pages");
-                out.println("2 - View page");
                 out.println("3 - Create new page");
                 out.println("4 - Edit page");
                 out.println("9 - Delete profile");
@@ -113,9 +108,6 @@ public class Interaction {
                 switch (ans){
                     case 1:
                         listAllPages();
-                        break;
-                    case 2:
-                        viewPage();
                         break;
                     case 3:
                         createNewPage();
@@ -151,18 +143,7 @@ public class Interaction {
     private void createNewPage() {
         out.println("Enter page title: ");
         String title = in.next() + in.nextLine();
-        pageService.createNewPage(title, currentUser);
-    }
-
-    private void viewPage() {
-        out.println("Enter page id: ");
-        int input = helper.getIntFromUser();
-        Page page = pageService.getPageToView(currentUser, input);
-        if (page == null){
-            out.println("No such page or access denied");
-        } else {
-            out.println(page.getContent());
-        }
+        pageService.createNewPage(title);
     }
 
     private void deleteProfile() {
@@ -171,14 +152,13 @@ public class Interaction {
         if (input.equals("y")){
             userService.deleteUser(currentUser);
             currentUser = null;
-            out.println("Okay, you are dead");
         }
     }
 
     private void listAllPages() {
         List<Page> pages = pageService.getVisiblePages(currentUser);
         for (Page page : pages){
-            out.printf("Id: %4d\tTitle: %s\tAuthor: %s\n",page.getId(),page.getTitle(),page.getAuthor());
+            out.printf("Id: %4d\tTitle: %s\tAuthor: %s\n",page.getId(),page.getTitle());
         }
     }
 

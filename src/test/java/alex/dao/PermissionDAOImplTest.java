@@ -2,7 +2,7 @@ package alex.dao;
 
 import alex.config.AppConfig;
 import alex.entity.*;
-import org.junit.After;
+import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,41 +31,34 @@ public class PermissionDAOImplTest {
     UserDAO userDAO;
     @Autowired
     PermissionDAO permissionDAO;
-    Page testPage;
-    User testUser;
+    @Autowired
+    SessionFactory sessionFactory;
+    Page page;
+    User user;
+    Permission permission;
 
     @Before
     public void setUp() throws Exception {
-        Page page = new Page();
-        page.setContent("Test Content");
-        page.setTitle("Test Title");
-
-        User user = new User();
-        user.setName("Test User");
-        user.setUserGroup(UserGroup.USER);
-
-        page.setAuthor(user);
-
+        user = new User("Test User", UserGroup.ADMIN);
         userDAO.saveUser(user);
-        pageDAO.savePage(page);
+        evict(user);
 
-        testUser = user;
-        testPage = page;
+        page = new Page("Test Title");
+        page.setContent("Test Content");
+        pageDAO.savePage(page);
+        evict(page);
+
+        permission = new Permission(user, page, PermissionType.READ);
+        permissionDAO.savePermission(permission);
+        flush();
     }
 
-    @After
-    public void tearDown() throws Exception {
-
+    private void evict(Object o) {
+        sessionFactory.getCurrentSession().evict(o);
     }
 
     @Test
     public void deletePermission() throws Exception {
-        Permission permission = new Permission();
-        permission.setPage(testPage);
-        permission.setUser(testUser);
-        permission.setType(PermissionType.READ);
-        permissionDAO.savePermission(permission);
-
         permissionDAO.deletePermission(permission);
 
         List<Permission> actualPermissions = permissionDAO.getPermissions();
@@ -75,27 +68,13 @@ public class PermissionDAOImplTest {
 
     @Test
     public void addPermission() throws Exception {
-        Permission permission = new Permission();
-        permission.setPage(testPage);
-        permission.setUser(testUser);
-        permission.setType(PermissionType.READ);
-
-        permissionDAO.savePermission(permission);
-
-        Permission actualPermission = permissionDAO.getPermission(testPage.getId(), testUser.getId());
+        Permission actualPermission = permissionDAO.getPermission(page, user);
 
         assertThat(actualPermission, is(permission));
     }
 
     @Test
     public void getPermissions() throws Exception {
-        Permission permission = new Permission();
-        permission.setPage(testPage);
-        permission.setUser(testUser);
-        permission.setType(PermissionType.READ);
-
-        permissionDAO.savePermission(permission);
-
         List<Permission> actualPermissions = permissionDAO.getPermissions();
 
         assertThat(actualPermissions, hasItem(permission));
@@ -103,51 +82,36 @@ public class PermissionDAOImplTest {
 
     @Test
     public void updatePermission() throws Exception {
-        Permission permission = new Permission();
-        permission.setUser(testUser);
-        permission.setPage(testPage);
-        permission.setType(PermissionType.READ);
-
-        permissionDAO.savePermission(permission);
-
-        Permission actualPermission = permissionDAO.getPermission(testPage.getId(), testUser.getId());
+        Permission actualPermission = permissionDAO.getPermission(page, user);
 
         assertThat(actualPermission, is(permission));
 
         permission.setType(PermissionType.EDIT);
 
         permissionDAO.updatePermission(permission);
+        flush();
+        evict(permission);
 
-        actualPermission = permissionDAO.getPermission(testPage.getId(), testUser.getId());
+        actualPermission = permissionDAO.getPermission(page, user);
 
         assertThat(actualPermission.getType(), is(PermissionType.EDIT));
     }
 
+    private void flush() {
+        sessionFactory.getCurrentSession().flush();
+    }
+
     @Test
     public void getPermissionsByUser() throws Exception {
-        Permission permission = new Permission();
-        permission.setUser(testUser);
-        permission.setPage(testPage);
-        permission.setType(PermissionType.READ);
+        List<Permission> actualPermissions = permissionDAO.getPermissionsByUser(user);
 
-        permissionDAO.savePermission(permission);
-
-        List<Permission> actualPermissions = permissionDAO.getPermissionsByUser(testUser);
-
-        assertThat(actualPermissions.get(0).getUser(), is(testUser));
+        assertThat(actualPermissions.get(0).getUser(), is(user));
     }
 
     @Test
     public void getPermissionsByPage() throws Exception {
-        Permission permission = new Permission();
-        permission.setUser(testUser);
-        permission.setPage(testPage);
-        permission.setType(PermissionType.READ);
+        List<Permission> actualPermissions = permissionDAO.getPermissionsByPage(page);
 
-        permissionDAO.savePermission(permission);
-
-        List<Permission> actualPermissions = permissionDAO.getPermissionsByPage(testPage);
-
-        assertThat(actualPermissions.get(0).getPage(), is(testPage));
+        assertThat(actualPermissions.get(0).getPage(), is(page));
     }
 }

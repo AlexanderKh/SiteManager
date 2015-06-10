@@ -2,6 +2,7 @@ package alex.dao;
 
 import alex.config.AppConfig;
 import alex.entity.*;
+import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,130 +32,78 @@ public class PageDAOImplTest {
     UserDAO userDAO;
     @Autowired
     PermissionDAO permissionDAO;
-    Page testPage;
-    User testUser;
+    @Autowired
+    SessionFactory sessionFactory;
+    Page page;
+    User user;
 
     @Before
     public void setUp() throws Exception {
-        Page page = new Page();
-        page.setContent("Test Content");
-        page.setTitle("Test Title");
-
-        User user = new User();
-        user.setName("Test User");
-        user.setUserGroup(UserGroup.ADMIN);
+        user = new User("Test User", UserGroup.ADMIN);
         userDAO.saveUser(user);
+        evict(user);
 
-        page.setAuthor(user);
+        page = new Page("Test Title");
+        page.setContent("Test Content");
         pageDAO.savePage(page);
-
-        testUser = user;
-        testPage = page;
+        evict(page);
     }
 
-    @After
-    public void tearDown() throws Exception {
-        pageDAO.deletePage(testPage);
-        userDAO.deleteUser(testUser);
+    private void evict(Object o) {
+        sessionFactory.getCurrentSession().evict(o);
     }
 
     @Test
     public void getPages() throws Exception {
-        pageDAO.savePage(testPage);
-        pageDAO.updatePage(testPage);
         List<Page> actualPages = pageDAO.getPages();
 
-        assertThat(actualPages, hasItem(testPage));
-    }
-
-    @Test
-    public void getPagesByAuthor() throws Exception {
-        pageDAO.savePage(testPage);
-        List<Page> actualUserPages = pageDAO.getPagesByAuthor(testUser.getId());
-
-        assertThat(actualUserPages, hasItem(testPage));
+        assertThat(actualPages, hasItem(page));
     }
 
     @Test
     public void getPage() throws Exception {
-        pageDAO.savePage(testPage);
-        Page actualPage = pageDAO.getPage(testPage.getId());
+        Page actualPage = pageDAO.getPage(page.getId());
 
-        assertThat(actualPage, is(testPage));
+        assertThat(actualPage, is(page));
     }
 
     @Test
     public void deletePage() throws Exception {
-        pageDAO.savePage(testPage);
-        pageDAO.deletePage(testPage);
+        pageDAO.deletePage(page);
         List<Page> actualPages = pageDAO.getPages();
 
-        assertThat(actualPages, not(hasItem(testPage)));
+        assertThat(actualPages, not(hasItem(page)));
     }
 
     @Test
     public void updatePage() throws Exception {
-        pageDAO.savePage(testPage);
-        testPage.setTitle("Update Page");
-        pageDAO.updatePage(testPage);
+        page.setTitle("Update Page");
+        pageDAO.updatePage(page);
 
-        Page actualPage = pageDAO.getPage(testPage.getId());
+        Page actualPage = pageDAO.getPage(page.getId());
 
-        assertThat(actualPage, is(testPage));
+        assertThat(actualPage, is(page));
     }
 
     @Test
     public void savePage() throws Exception {
-        pageDAO.savePage(testPage);
-
         List<Page> actualPages = pageDAO.getPages();
 
-        assertThat(actualPages, hasItem(testPage));
-    }
-
-    @Test
-    public void getPagesVisibleForUser() throws Exception {
-        Permission permission = new Permission();
-        permission.setPage(testPage);
-        permission.setUser(testUser);
-        permission.setType(PermissionType.READ);
-        permissionDAO.savePermission(permission);
-        Page hiddenPage = new Page();
-        hiddenPage.setAuthor(testUser);
-        hiddenPage.setTitle("Test Hidden Page");
-        pageDAO.savePage(hiddenPage);
-        Permission hiddenPermission = new Permission();
-        hiddenPermission.setUser(testUser);
-        hiddenPermission.setType(PermissionType.NO);
-        hiddenPermission.setPage(hiddenPage);
-        permissionDAO.savePermission(hiddenPermission);
-
-        List<Page> actualPages = pageDAO.getPagesVisibleForUser(testUser.getId());
-
-        assertThat(actualPages, hasItem(testPage));
-        assertThat(actualPages, not(hasItem(hiddenPage)));
+        assertThat(actualPages, hasItem(page));
     }
 
     @Test
     public void getPagesNotVisibleForUser() throws Exception {
-        Permission permission = new Permission();
-        permission.setPage(testPage);
-        permission.setUser(testUser);
-        permission.setType(PermissionType.READ);
+        Permission permission = new Permission(user, page, PermissionType.READ);
         permissionDAO.savePermission(permission);
-        Page hiddenPage = new Page();
-        hiddenPage.setAuthor(testUser);
-        hiddenPage.setTitle("Test Hidden Page");
+        Page hiddenPage = new Page("Test Hidden Page");
         pageDAO.savePage(hiddenPage);
-        Permission hiddenPermission = new Permission();
-        hiddenPermission.setUser(testUser);
-        hiddenPermission.setType(PermissionType.NO);
-        hiddenPermission.setPage(hiddenPage);
+        Permission hiddenPermission = new Permission(user, hiddenPage, PermissionType.NO);
         permissionDAO.savePermission(hiddenPermission);
 
-        List<Page> actualPages = pageDAO.getPagesNotVisibleForUser(testUser);
+        List<Page> actualPages = pageDAO.getPagesNotVisibleForUser(user);
 
-        assertThat(actualPages, not(hasItem(testPage)));
+        assertThat(actualPages, not(hasItem(page)));
         assertThat(actualPages, hasItem(hiddenPage));
     }
 }

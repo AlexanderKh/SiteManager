@@ -8,8 +8,6 @@ public class Page {
     @Id
     @GeneratedValue
     private int id;
-    @ManyToOne
-    private User author;
     private String content;
     private String title;
     @OneToMany(mappedBy = "page")
@@ -17,9 +15,27 @@ public class Page {
 
     public Page(){}
 
-    public Page(String title, User author){
+    public Page(String title){
         this.title = title;
-        this.author = author;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Page page = (Page) o;
+
+        if (content != null ? !content.equals(page.content) : page.content != null) return false;
+        return !(title != null ? !title.equals(page.title) : page.title != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = content != null ? content.hashCode() : 0;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        return result;
     }
 
     public int getId() {
@@ -28,14 +44,6 @@ public class Page {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
     }
 
     public String getContent() {

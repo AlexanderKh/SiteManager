@@ -22,7 +22,6 @@ import static org.mockito.Mockito.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
 public class UserServiceImplTest {
-
     @Mock
     PageDAO pageDAO;
     @Mock
@@ -37,10 +36,6 @@ public class UserServiceImplTest {
         pageDAO = mock(PageDAOImpl.class);
         userDAO = mock(UserDAOImpl.class);
         service.setUserDAO(userDAO);
-    }
-    @After
-    public void tearDown() throws Exception {
-
     }
 
     @Test

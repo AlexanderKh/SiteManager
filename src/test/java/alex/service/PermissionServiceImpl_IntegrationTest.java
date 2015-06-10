@@ -50,7 +50,7 @@ public class PermissionServiceImpl_IntegrationTest {
         userDAO.saveUser(secondUser);
         User admin = new User("Admin", UserGroup.ADMIN);
         userDAO.saveUser(admin);
-        Page page = new Page("Page", firstUser);
+        Page page = new Page("Page");
         pageDAO.savePage(page);
         Permission firstUsersPage = new Permission(firstUser, page, PermissionType.EDIT);
         permissionDAO.savePermission(firstUsersPage);
@@ -74,7 +74,7 @@ public class PermissionServiceImpl_IntegrationTest {
         userDAO.saveUser(secondUser);
         User admin = new User("Admin", UserGroup.ADMIN);
         userDAO.saveUser(admin);
-        Page page = new Page("Page", firstUser);
+        Page page = new Page("Page");
         pageDAO.savePage(page);
         Permission firstUsersPage = new Permission(firstUser, page, PermissionType.EDIT);
         permissionDAO.savePermission(firstUsersPage);

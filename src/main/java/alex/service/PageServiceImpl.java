@@ -33,9 +33,6 @@ public class PageServiceImpl implements PageService {
             return null;
         if (currentUser.getUserGroup() == UserGroup.ADMIN)
             return result;
-        if (result.getAuthor().getId() != currentUser.getId()){
-            result = null;
-        }
 
         return result;
     }
@@ -52,20 +49,10 @@ public class PageServiceImpl implements PageService {
         pageDAO.updatePage(page);
     }
 
-    public void createNewPage(String title, User currentUser) {
+    public void createNewPage(String title) {
         Page page = new Page();
         page.setTitle(title);
-        page.setAuthor(currentUser);
         pageDAO.savePage(page);
-    }
-
-    public Page getPageToView(User currentUser, int id) {
-        Page page = pageDAO.getPage(id);
-        if (page == null){
-            return null;
-        }
-
-        return page;
     }
 
 

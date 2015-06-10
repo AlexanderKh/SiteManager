@@ -2,7 +2,7 @@ package alex.dao;
 
 import alex.config.AppConfig;
 import alex.entity.*;
-import org.junit.After;
+import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +14,6 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import javax.transaction.Transactional;
 import java.util.List;
 
-import static java.util.Collections.emptyList;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
@@ -30,67 +29,64 @@ public class UserDAOImplTest {
     UserDAO userDAO;
     @Autowired
     PermissionDAO permissionDAO;
-    Page testPage;
-    User testUser;
-    Permission testPermission;
+    @Autowired
+    SessionFactory sessionFactory;
+    Page page;
+    User user;
 
     @Before
     public void setUp() throws Exception {
-        testPage = new Page();
-        testPage.setContent("Test Content");
-        testPage.setTitle("Test Title");
+        user = new User("Test User", UserGroup.ADMIN);
+        userDAO.saveUser(user);
+        evict(user);
 
-        testUser = new User();
-        testUser.setName("Test User");
-        testUser.setUserGroup(UserGroup.ADMIN);
+        page = new Page("Test Title");
+        page.setContent("Test Content");
+        pageDAO.savePage(page);
+        evict(page);
+    }
 
+    private void evict(Object o) {
+        sessionFactory.getCurrentSession().evict(o);
     }
 
     @Test
     public void getUser() throws Exception {
-        userDAO.saveUser(testUser);
+        User actualUser = userDAO.getUser(user.getName());
 
-        User actualUser = userDAO.getUser(testUser.getName());
-
-        assertThat(actualUser, is(testUser));
+        assertThat(actualUser, is(user));
     }
 
     @Test
     public void saveUser() throws Exception {
-        userDAO.saveUser(testUser);
-
         List<User> actualUsers = userDAO.getUsers();
 
-        assertThat(actualUsers, hasItem(testUser));
+        assertThat(actualUsers, hasItem(user));
     }
 
     @Test
     public void deleteUser() throws Exception {
-        userDAO.saveUser(testUser);
-        userDAO.deleteUser(testUser);
+        userDAO.deleteUser(user);
 
         List<User> actualUsers = userDAO.getUsers();
 
-        assertThat(actualUsers, not(hasItem(testUser)));
+        assertThat(actualUsers, not(hasItem(user)));
     }
 
     @Test
     public void getUsers() throws Exception {
-        userDAO.saveUser(testUser);
-
         List<User> actualUsers = userDAO.getUsers();
 
-        assertThat(actualUsers, hasItem(testUser));
+        assertThat(actualUsers, hasItem(user));
     }
 
     @Test
     public void updateUser() throws Exception{
-        userDAO.saveUser(testUser);
-        testUser.setName("Update");
-        userDAO.updateUser(testUser);
+        user.setName("Update");
+        userDAO.updateUser(user);
 
         List<User> actualUsers = userDAO.getUsers();
 
-        assertThat(actualUsers, hasItem(testUser));
+        assertThat(actualUsers, hasItem(user));
     }
 }
