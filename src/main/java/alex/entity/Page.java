@@ -10,8 +10,6 @@ public class Page {
     private int id;
     private String content;
     private String title;
-    @OneToMany(mappedBy = "page")
-    private List<Permission> permissions;
 
     public Page(){}
 
@@ -60,13 +58,5 @@ public class Page {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public List<Permission> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(List<Permission> permissions) {
-        this.permissions = permissions;
     }
 }

@@ -7,12 +7,10 @@ public class Permission {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private int id;
-
     @ManyToOne
     private Page page;
     @ManyToOne
     private User user;
-
     @Enumerated(value = EnumType.STRING)
     @Column(name = "PERMISSION_TYPE")
     private PermissionType type;

@@ -12,7 +12,6 @@ import java.util.Scanner;
 @Controller
 public class PageEditInteraction {
     private Page page;
-
     @Autowired
     private PageService pageService;
     @Autowired
@@ -26,7 +25,7 @@ public class PageEditInteraction {
     }
 
     public void edit() {
-        int ans = 0;
+        int ans;
         boolean exit = false;
         while (!exit){
             out.println("-----------------------");
@@ -36,11 +35,10 @@ public class PageEditInteraction {
             out.println("1 - Print page content");
             out.println("2 - Change title");
             out.println("3 - Change contents");
-            out.println("5 - Delete page");
+            out.println("4 - Delete page");
             out.println("0 - End editing");
             out.println("-----------------------");
             ans = helper.getIntFromUser();
-
             switch (ans) {
                 case 1:
                     out.println(page.getContent());
@@ -51,7 +49,7 @@ public class PageEditInteraction {
                 case 3:
                     changeContents();
                     break;
-                case 5:
+                case 4:
                     deletePage();
                     exit = true;
                     break;
@@ -59,7 +57,6 @@ public class PageEditInteraction {
                     exit = true;
                     break;
             }
-
         }
     }
 
@@ -74,9 +71,8 @@ public class PageEditInteraction {
 
     private void changeContents() {
         out.println("Write new content in here: ");
-        out.println();
         String content = "";
-        String line = "";
+        String line;
         do{
             line = in.nextLine();
             content += line + "\n";

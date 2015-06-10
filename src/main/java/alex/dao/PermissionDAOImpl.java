@@ -35,8 +35,6 @@ public class PermissionDAOImpl implements PermissionDAO {
     @Transactional
     public Permission getPermission(Page page, User user) {
         Session session = sessionFactory.getCurrentSession();
-//        SQLQuery sqlQuery = session.createSQLQuery("SELECT * FROM PERMISSION WHERE USER_ID = :userID AND PAGE_ID = :pageID");
-//        return (Permission) sqlQuery.addEntity(Permission.class).setParameter("userID", user.getId()).setParameter("pageID", page.getId()).uniqueResult();
         Criteria criteria = session.createCriteria(Permission.class);
         criteria.add(and( eq("page", page), eq("user", user) ));
         return (Permission) criteria.uniqueResult();

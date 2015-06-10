@@ -97,10 +97,6 @@ public class PermissionDAOImplTest {
         assertThat(actualPermission.getType(), is(PermissionType.EDIT));
     }
 
-    private void flush() {
-        sessionFactory.getCurrentSession().flush();
-    }
-
     @Test
     public void getPermissionsByUser() throws Exception {
         List<Permission> actualPermissions = permissionDAO.getPermissionsByUser(user);
@@ -113,5 +109,9 @@ public class PermissionDAOImplTest {
         List<Permission> actualPermissions = permissionDAO.getPermissionsByPage(page);
 
         assertThat(actualPermissions.get(0).getPage(), is(page));
+    }
+
+    private void flush() {
+        sessionFactory.getCurrentSession().flush();
     }
 }

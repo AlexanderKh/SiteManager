@@ -37,7 +37,7 @@ public class Interaction {
     }
 
     public void menu(){
-        int ans = 0;
+        int ans;
         boolean exit = false;
         while (!exit){
             if (currentUser == null) {
@@ -63,66 +63,32 @@ public class Interaction {
                 }
                 continue;
             }
-
-            if (currentUser.getUserGroup() == UserGroup.ADMIN){
-                out.println("-----------------------");
-                out.println("Current user: " + currentUser.getName() + "\tGroup: Admin");
-                out.println("-----------------------");
-                out.println("1 - List all pages");
-                out.println("4 - Create new page");
-                out.println("5 - Edit page");
-                out.println("9 - Delete profile");
-                out.println("0 - LogOut");
-                out.println("-----------------------");
-                ans = helper.getIntFromUser();
-                switch (ans){
-                    case 1:
-                        listAllPages();
-                        break;
-                    case 4:
-                        createNewPage();
-                        break;
-                    case 5:
-                        editSpecificPage();
-                        break;
-                    case 9:
-                        deleteProfile();
-                    case 0:
-                        currentUser = null;
-                        break;
-                }
-                continue;
-            }
-
-            if (currentUser.getUserGroup() == UserGroup.USER){
-                out.println("-----------------------");
-                out.println("Current user: " + currentUser.getName() + "\tGroup: User");
-                out.println("-----------------------");
-                out.println("1 - List all pages");
-                out.println("3 - Create new page");
-                out.println("4 - Edit page");
-                out.println("9 - Delete profile");
-                out.println("0 - LogOut");
-                out.println("-----------------------");
-                ans = helper.getIntFromUser();
-                switch (ans){
-                    case 1:
-                        listAllPages();
-                        break;
-                    case 3:
-                        createNewPage();
-                        break;
-                    case 4:
-                        editSpecificPage();
-                        break;
-                    case 9:
-                        deleteProfile();
-                        break;
-                    case 0:
-                        currentUser = null;
-                        break;
-                }
-                continue;
+            out.println("-----------------------");
+            out.println("Current user: " + currentUser.getName() +
+                    "\tGroup: " + currentUser.getUserGroup());
+            out.println("-----------------------");
+            out.println("1 - List all pages");
+            out.println("2 - Create new page");
+            out.println("3 - Edit page");
+            out.println("9 - Delete profile");
+            out.println("0 - LogOut");
+            out.println("-----------------------");
+            ans = helper.getIntFromUser();
+            switch (ans){
+                case 1:
+                    listAllPages();
+                    break;
+                case 2:
+                    createNewPage();
+                    break;
+                case 3:
+                    editSpecificPage();
+                    break;
+                case 9:
+                    deleteProfile();
+                case 0:
+                    currentUser = null;
+                    break;
             }
         }
     }
@@ -138,7 +104,6 @@ public class Interaction {
             pageEditInteraction.edit();
         }
     }
-
 
     private void createNewPage() {
         out.println("Enter page title: ");
@@ -158,7 +123,7 @@ public class Interaction {
     private void listAllPages() {
         List<Page> pages = pageService.getVisiblePages(currentUser);
         for (Page page : pages){
-            out.printf("Id: %4d\tTitle: %s\tAuthor: %s\n",page.getId(),page.getTitle());
+            out.printf("Id: %4d\tTitle: %s\n", page.getId(), page.getTitle());
         }
     }
 
