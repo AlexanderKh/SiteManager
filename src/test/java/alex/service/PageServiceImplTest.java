@@ -1,49 +1,22 @@
 package alex.service;
 
-import alex.config.AppConfig;
-import alex.dao.PageDAO;
-import alex.dao.PageDAOImpl;
-import alex.dao.UserDAO;
-import alex.dao.UserDAOImpl;
 import alex.entity.Page;
 import alex.entity.User;
 import alex.entity.UserGroup;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Matchers;
-import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppConfig.class})
-public class PageServiceImplTest {
-    @Mock
-    PageDAO pageDAO;
-    @Mock
-    UserDAO userDAO;
-    @Autowired
-    PageServiceImpl service;
 
-    @Before
-    public void setUp() throws Exception {
-        pageDAO = mock(PageDAOImpl.class);
-        userDAO = mock(UserDAOImpl.class);
-        service.setPageDAO(pageDAO);
-    }
-
+public class PageServiceImplTest extends AbstractServiceTest {
     @Test
     public void deletePage() throws Exception {
         Page testPage = new Page();
 
-        service.deletePage(testPage);
+        pageService.deletePage(testPage);
 
         verify(pageDAO).deletePage(testPage);
     }
@@ -54,7 +27,7 @@ public class PageServiceImplTest {
         testPage.setTitle("Test Title");
 
         String content = "Test Content";
-        service.setPageContent(testPage, content);
+        pageService.setPageContent(testPage, content);
 
         assertThat(testPage.getContent(), is(content));
         verify(pageDAO).updatePage(testPage);
@@ -64,10 +37,9 @@ public class PageServiceImplTest {
     public void getPageToEdit() throws Exception {
         User testUser = new User("Test User", UserGroup.USER);
 
-        service.getPageToEdit(testUser, 0);
+        pageService.getPageToEdit(testUser, 0);
         verify(pageDAO).getPage(0);
     }
-
 
     @Test
     public void getVisiblePages() throws Exception {
@@ -75,10 +47,10 @@ public class PageServiceImplTest {
         testUser.setId(10);
         User testAdmin = new User("Test Admin", UserGroup.ADMIN);
 
-        service.getVisiblePages(testUser);
+        pageService.getVisiblePages(testUser);
         verify(pageDAO).getPagesByAuthor(testUser.getId());
 
-        service.getVisiblePages(testAdmin);
+        pageService.getVisiblePages(testAdmin);
         verify(pageDAO).getPages();
     }
 
@@ -88,7 +60,7 @@ public class PageServiceImplTest {
         testPage.setTitle("Test Title");
 
         String title = "Updated Title";
-        service.changePageName(testPage, title);
+        pageService.changePageName(testPage, title);
 
         assertThat(testPage.getTitle(), is(title));
         verify(pageDAO).updatePage(testPage);
@@ -96,7 +68,7 @@ public class PageServiceImplTest {
 
     @Test
     public void createNewPage() throws Exception {
-        service.createNewPage("Test Title");
+        pageService.createNewPage("Test Title");
 
         verify(pageDAO).savePage(Matchers.any(Page.class));
     }
@@ -105,7 +77,7 @@ public class PageServiceImplTest {
     public void getPagesNotVisibleForUser() throws Exception {
         User user = new User("Test User", UserGroup.USER);
 
-        service.getPagesNotVisibleForUser(user);
+        pageService.getPagesNotVisibleForUser(user);
 
         verify(pageDAO).getPagesNotVisibleForUser(user);
     }

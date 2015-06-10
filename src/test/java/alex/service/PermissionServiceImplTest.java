@@ -1,42 +1,12 @@
 package alex.service;
 
-import alex.config.AppConfig;
-import alex.dao.PageDAO;
-import alex.dao.PermissionDAO;
-import alex.dao.UserDAO;
 import alex.entity.*;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppConfig.class})
-public class PermissionServiceImplTest {
-    @Mock
-    PageDAO pageDAO;
-    @Mock
-    UserDAO userDAO;
-    @Mock
-    PermissionDAO permissionDAO;
-    @Autowired
-    PermissionDAO actualPermissionDAO;
-    @Autowired
-    PermissionService service;
-
-    @Before
-    public void setUp() throws Exception {
-        permissionDAO = mock(PermissionDAO.class);
-        service.setPermissionDAO(permissionDAO);
-    }
-
+public class PermissionServiceImplTest extends AbstractServiceTest {
     @Test
     public void deletePermission() throws Exception {
         User user = new User("Test User", UserGroup.USER);
@@ -44,7 +14,7 @@ public class PermissionServiceImplTest {
         PermissionType type = PermissionType.EDIT;
         Permission permission = new Permission(user, page, type);
 
-        service.deletePermission(permission);
+        permissionService.deletePermission(permission);
 
         verify(permissionDAO).deletePermission(permission);
     }
@@ -55,7 +25,7 @@ public class PermissionServiceImplTest {
         Page page = new Page("Test Page");
         PermissionType type = PermissionType.EDIT;
 
-        service.addNewPermission(user, page, type);
+        permissionService.addNewPermission(user, page, type);
 
         verify(permissionDAO).savePermission(any(Permission.class));
     }
@@ -65,10 +35,10 @@ public class PermissionServiceImplTest {
         User firstUser = new User("First User", UserGroup.USER);
         User admin = new User("Admin", UserGroup.ADMIN);
 
-        service.getPermissionsVisibleByUser(firstUser);
+        permissionService.getPermissionsVisibleByUser(firstUser);
         verify(permissionDAO).getPermissionsByUser(firstUser);
 
-        service.getPermissionsVisibleByUser(admin);
+        permissionService.getPermissionsVisibleByUser(admin);
         verify(permissionDAO).getPermissionsAndUsers();
     }
 
@@ -77,7 +47,7 @@ public class PermissionServiceImplTest {
         User user = new User("Test User", UserGroup.USER);
         Page page = new Page("Test Page");
         Permission permission = new Permission(user, page, PermissionType.READ);
-        service.changePermissionType(permission, PermissionType.EDIT);
+        permissionService.changePermissionType(permission, PermissionType.EDIT);
 
         verify(permissionDAO).updatePermission(permission);
     }
@@ -87,10 +57,10 @@ public class PermissionServiceImplTest {
         User firstUser = new User("First User", UserGroup.USER);
         User admin = new User("Admin", UserGroup.ADMIN);
 
-        service.getUserPermissions(firstUser);
+        permissionService.getUserPermissions(firstUser);
         verify(permissionDAO).getPermissionsByUser(firstUser);
 
-        service.getUserPermissions(admin);
+        permissionService.getUserPermissions(admin);
         verify(permissionDAO).getPermissionsByUser(admin);
     }
 

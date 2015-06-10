@@ -20,48 +20,9 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppConfig.class})
-@Transactional
-@TransactionConfiguration(defaultRollback = true)
-public class PageDAOImplTest {
 
-    @Autowired
-    PageDAO pageDAO;
-    @Autowired
-    UserDAO userDAO;
-    @Autowired
-    PermissionDAO permissionDAO;
-    @Autowired
-    SessionFactory sessionFactory;
-    Page page;
-    User user;
-    Permission permission;
+public class PageDAOImplTest extends AbstractDAOTest {
 
-    @Before
-    public void setUp() throws Exception {
-        user = new User("Test User", UserGroup.ADMIN);
-        userDAO.saveUser(user);
-        evict(user);
-
-        page = new Page("Test Title");
-        page.setContent("Test Content");
-        pageDAO.savePage(page);
-        evict(page);
-
-        permission = new Permission(user, page, PermissionType.READ);
-        permissionDAO.savePermission(permission);
-        flush();
-    }
-
-
-    protected void evict(Object o) {
-        sessionFactory.getCurrentSession().evict(o);
-    }
-
-    protected void flush() {
-        sessionFactory.getCurrentSession().flush();
-    }
 
     @Test
     public void getPages() throws Exception {

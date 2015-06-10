@@ -1,6 +1,6 @@
 package alex.service;
 
-import alex.config.AppConfig;
+import alex.config.AppTestConfig;
 import alex.dao.PageDAO;
 import alex.dao.PermissionDAO;
 import alex.dao.UserDAO;
@@ -21,7 +21,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppConfig.class})
+@ContextConfiguration(classes = {AppTestConfig.class})
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
 public class PermissionServiceImpl_IntegrationTest {
