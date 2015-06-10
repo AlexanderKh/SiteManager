@@ -20,7 +20,7 @@ public class PermissionServiceImplTest extends AbstractServiceTest {
     }
 
     @Test
-    public void addNewPermission() throws Exception{
+    public void addNewPermission() throws Exception {
         User user = new User("Test User", UserGroup.USER);
         Page page = new Page("Test Page");
         PermissionType type = PermissionType.EDIT;
