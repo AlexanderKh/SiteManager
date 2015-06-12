@@ -8,17 +8,22 @@
 </head>
 <body>
 <a href="/">Back to index</a>
-<table class="table">
-    <jstl:forEach var="permission" items="${users}">
+<table class="table table-condensed">
+    <jstl:forEach var="user" items="${users}">
         <tr>
             <td>
-                ${permission.id}
+                ${user.id}
             </td>
             <td>
-                ${permission.name}
+                ${user.name}
             </td>
             <td>
-                ${permission.userGroup}
+                ${user.userGroup}
+            </td>
+            <td>
+                <form action="/users/${user.id}">
+                    <input type="submit" value="Show Visible Permissions">
+                </form>
             </td>
         </tr>
     </jstl:forEach>

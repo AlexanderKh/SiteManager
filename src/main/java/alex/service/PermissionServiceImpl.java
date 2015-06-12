@@ -46,4 +46,10 @@ public class PermissionServiceImpl implements PermissionService {
         return permissionDAO.getPermissions();
     }
 
+    @Override
+    public void deletePermission(int id) {
+        Permission permission = permissionDAO.getPermission(id);
+        permissionDAO.deletePermission(permission);
+    }
+
 }

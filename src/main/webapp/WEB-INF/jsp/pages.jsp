@@ -7,16 +7,16 @@
 <body>
 <a href="/">Back to index</a>
 <table border=1>
-    <jstl:forEach var="permission" items="${pages}">
+    <jstl:forEach var="user" items="${pages}">
         <tr>
             <td>
-                    ${permission.id}
+                    ${user.id}
             </td>
             <td>
-                    ${permission.title}
+                    ${user.title}
             </td>
             <td>
-                    ${permission.content}
+                    ${user.content}
             </td>
         </tr>
     </jstl:forEach>

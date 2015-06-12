@@ -2,16 +2,20 @@
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Permissions</title>
+    <title>Users</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
 <body>
 <a href="/">Back to index</a>
-<table border=1>
+<table class="table table-condensed table-bordered">
+    <tr>
+        <th>User</th>
+        <th>Page</th>
+        <th>Permission</th>
+    </tr>
     <jstl:forEach var="permission" items="${permissions}">
         <tr>
-            <td>
-                ${permission.id}
-            </td>
             <td>
                 ${permission.user}
             </td>
@@ -21,14 +25,9 @@
             <td>
                 ${permission.type}
             </td>
-            <td>
-                <form action="/permissions/${permission.id}" method="post">
-                    <input type="submit" value="Delete Permission">
-                </form>
-            </td>
         </tr>
     </jstl:forEach>
 </table>
-<a href="/permissions/new">new</a>
+<br>
 </body>
 </html>

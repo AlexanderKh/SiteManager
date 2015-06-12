@@ -2,6 +2,7 @@ package alex.dao;
 
 import alex.entity.User;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 public interface UserDAO {
@@ -15,4 +16,6 @@ public interface UserDAO {
     List<User> getUsers();
 
     void updateUser(User user);
+
+    User getUser(int id);
 }

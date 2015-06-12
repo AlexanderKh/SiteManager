@@ -77,8 +77,14 @@ public class PermissionDAOImpl implements PermissionDAO {
     @Transactional
     public List<Permission> getPermissionsAndUsers() {
         Session session = sessionFactory.getCurrentSession();
-        SQLQuery sqlQuery = session.createSQLQuery("SELECT NVL(PERMISSION.ID, 0) AS ID, PERMISSION.PAGE_ID, PERMISSION.PERMISSION_TYPE, NVL(PERMISSION.USER_ID, USER.ID) AS USER_ID FROM PERMISSION RIGHT JOIN USER ON USER.ID = PERMISSION.USER_ID ORDER BY USER_ID");
+        SQLQuery sqlQuery = session.createSQLQuery("SELECT DISTINCT NVL(P.ID, USER.ID) AS ID, P.PAGE_ID, P.PERMISSION_TYPE, NVL(P.USER_ID, USER.ID) AS USER_ID " +
+                "FROM PERMISSION P RIGHT JOIN USER ON USER.ID = P.USER_ID ORDER BY USER_ID");
         return sqlQuery.addEntity(Permission.class).list();
+    }
+
+    @Transactional
+    public Permission getPermission(int id) {
+        return (Permission) sessionFactory.getCurrentSession().get(Permission.class, id);
     }
 
 

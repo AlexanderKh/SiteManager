@@ -42,4 +42,9 @@ public class UserDAOImpl implements UserDAO {
         sessionFactory.getCurrentSession().update(user);
     }
 
+    @Transactional
+    public User getUser(int id) {
+        return (User) sessionFactory.getCurrentSession().get(User.class, id);
+    }
+
 }
