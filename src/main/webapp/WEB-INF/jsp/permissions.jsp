@@ -2,21 +2,24 @@
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Pages</title>
+    <title>Permissions</title>
 </head>
 <body>
 <a href="/">Back to index</a>
 <table border=1>
-    <jstl:forEach var="permission" items="${pages}">
+    <jstl:forEach var="permission" items="${permissions}">
         <tr>
             <td>
-                    ${permission.id}
+                ${permission.id}
             </td>
             <td>
-                    ${permission.title}
+                ${permission.user}
             </td>
             <td>
-                    ${permission.content}
+                ${permission.page}
+            </td>
+            <td>
+                ${permission.type}
             </td>
         </tr>
     </jstl:forEach>

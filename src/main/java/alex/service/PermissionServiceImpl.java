@@ -42,4 +42,8 @@ public class PermissionServiceImpl implements PermissionService {
         permissionDAO.updatePermission(permission);
     }
 
+    public List<Permission> getPermissions() {
+        return permissionDAO.getPermissions();
+    }
+
 }

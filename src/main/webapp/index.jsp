@@ -6,5 +6,6 @@
 <body>
     <a href="/users">Users List</a>
     <a href="/pages">Pages List</a>
+    <a href="/permissions">Permissions List</a>
 </body>
 </html>
