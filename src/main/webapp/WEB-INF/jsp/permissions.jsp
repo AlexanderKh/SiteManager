@@ -6,8 +6,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
-<body>
-<a href="/">Back to index</a>
+<body class="container">
+<a href="/" class="btn btn-primary">Back to index</a>
 <table class="table table-condensed table-bordered">
     <jstl:forEach var="permission" items="${permissions}">
         <tr>
@@ -31,7 +31,6 @@
         </tr>
     </jstl:forEach>
 </table>
-
-<a href="/permissions/new">new</a>
+<a href="/permissions/new" class="btn btn-success">New permission</a>
 </body>
 </html>

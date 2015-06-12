@@ -43,12 +43,12 @@ public class UsersController {
                          @RequestParam("usergroup") String userGroup){
         User user = new User(name, UserGroup.valueOf(userGroup));
         userDAO.saveUser(user);
-        return "success";
+        return "redirect:users";
     }
 
     @RequestMapping("users/new")
     public String newUser(ModelMap model){
-        return "adduser";
+        return "addUser";
     }
 
     @RequestMapping("users/{id}")

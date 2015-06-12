@@ -4,7 +4,8 @@
 <head>
     <title>Add user</title>
 </head>
-<body>
+<body class="container">
+<a href="/" class="btn btn-primary">Back to index</a>
 <form action="/users" method="post">
     <table width=100%>
         <tr>

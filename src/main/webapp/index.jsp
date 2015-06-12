@@ -5,9 +5,9 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
-<body>
-    <a href="/users">Users List</a><br>
-    <a href="/pages">Pages List</a><br>
-    <a href="/permissions">Permissions List</a>
+<body class="container">
+    <a href="/users" class="btn btn-primary">Users List</a><br>
+    <a href="/pages" class="btn btn-primary">Pages List</a><br>
+    <a href="/permissions" class="btn btn-primary">Permissions List</a>
 </body>
 </html>

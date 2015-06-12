@@ -5,7 +5,7 @@
 <head>
     <title>Add user</title>
 </head>
-<body>
+<body class="container">
 <form action="/permissions" method="post">
     <table width=100%>
         <tr>

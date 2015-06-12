@@ -3,7 +3,7 @@
 <head>
     <title>Success</title>
 </head>
-<body>
-    <a href="/">back to index</a>
+<body class="container">
+    <a href="/" class="btn btn-primary">back to index</a>
 </body>
 </html>

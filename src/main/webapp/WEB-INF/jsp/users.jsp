@@ -6,8 +6,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
-<body>
-<a href="/">Back to index</a>
+<body class="container">
+<a href="/"  class="btn btn-primary">Back to index</a><br>
 <table class="table table-condensed">
     <jstl:forEach var="user" items="${users}">
         <tr>
@@ -34,6 +34,6 @@
     </jstl:forEach>
 </table>
 <br>
-<a href="users/new">Add new user</a>
+<a href="users/new" class="btn btn-success">Add new user</a>
 </body>
 </html>

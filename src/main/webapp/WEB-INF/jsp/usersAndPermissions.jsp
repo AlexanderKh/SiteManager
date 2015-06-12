@@ -7,7 +7,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
 <body>
-<a href="/">Back to index</a>
+<a href="/" class="btn btn-primary">Back to index</a>
 <table class="table table-condensed table-bordered">
     <tr>
         <th>User</th>
