@@ -26,8 +26,8 @@
                 </form>
             </td>
             <td>
-                <form action="/users/${user.id}/pages" method="get">
-                    <input type="submit" value="Pages">
+                <form action="/users/${user.id}/permissions" method="get">
+                    <input type="submit" value="Own pages">
                 </form>
             </td>
         </tr>

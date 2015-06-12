@@ -1,6 +1,5 @@
 package alex.controller;
 
-import alex.dao.PageDAO;
 import alex.dao.UserDAO;
 import alex.entity.Permission;
 import alex.entity.User;
@@ -44,7 +43,7 @@ public class UsersController {
                          @RequestParam("usergroup") String userGroup){
         User user = new User(name, UserGroup.valueOf(userGroup));
         userDAO.saveUser(user);
-        return "added";
+        return "success";
     }
 
     @RequestMapping("users/new")
@@ -62,7 +61,7 @@ public class UsersController {
         return "usersAndPermissions";
     }
 
-    @RequestMapping("users/{id}/pages")
+    @RequestMapping("users/{id}/permissions")
     public String index(ModelMap modelMap,
                         @PathVariable("id") String id){
         int userId = Integer.valueOf(id);

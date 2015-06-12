@@ -4,6 +4,6 @@
     <title>Success</title>
 </head>
 <body>
-    <a href="/users">back to users list</a>
+    <a href="/">back to index</a>
 </body>
 </html>
