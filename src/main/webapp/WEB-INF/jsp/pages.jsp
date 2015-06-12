@@ -12,16 +12,19 @@
     <jstl:forEach var="page" items="${pages}">
         <tr>
             <td>
-                    ${page.id}
+                ${page.id}
             </td>
             <td>
-                    ${page.title}
+                ${page.title}
             </td>
             <td>
-                    ${page.content}
+                <form action="/pages/${page.id}" method="get">
+                    <input type="submit" value="Edit">
+                </form>
             </td>
         </tr>
     </jstl:forEach>
 </table>
+<a href="pages/new" class="btn btn-success">New Page</a>
 </body>
 </html>

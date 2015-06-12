@@ -34,6 +34,6 @@
     </jstl:forEach>
 </table>
 <br>
-<a href="users/new" class="btn btn-success">Add new user</a>
+<a href="users/new" class="btn btn-success">New user</a>
 </body>
 </html>
