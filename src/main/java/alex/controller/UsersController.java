@@ -1,9 +1,11 @@
 package alex.controller;
 
+import alex.dao.PageDAO;
 import alex.dao.UserDAO;
 import alex.entity.Permission;
 import alex.entity.User;
 import alex.entity.UserGroup;
+import alex.service.PageService;
 import alex.service.PermissionService;
 import alex.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class UsersController {
 
     @Autowired
     UserDAO userDAO;
+
+    @Autowired
+    PageService pageService;
 
     @RequestMapping(value = "users", method = RequestMethod.GET)
     public String index(ModelMap model){
@@ -55,5 +60,14 @@ public class UsersController {
         List<Permission> permissionList = permissionService.getPermissionsVisibleByUser(user);
         modelMap.addAttribute("permissions", permissionList);
         return "usersAndPermissions";
+    }
+
+    @RequestMapping("users/{id}/pages")
+    public String index(ModelMap modelMap,
+                        @PathVariable("id") String id){
+        int userId = Integer.valueOf(id);
+        User user = userDAO.getUser(userId);
+        modelMap.addAttribute("permissions", permissionService.getUserPermissions(user));
+        return "permissions";
     }
 }

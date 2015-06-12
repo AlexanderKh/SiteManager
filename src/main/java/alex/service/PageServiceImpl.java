@@ -45,7 +45,7 @@ public class PageServiceImpl implements PageService {
         if (currentUser.getUserGroup() == UserGroup.ADMIN)
             return pageDAO.getPages();
         else
-            return pageDAO.getPagesByAuthor(currentUser.getId());
+            return pageDAO.getPagesByUser(currentUser.getId());
     }
 
     public void changePageName(Page page, String input) {

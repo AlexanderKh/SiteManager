@@ -48,7 +48,7 @@ public class PageServiceImplTest extends AbstractServiceTest {
         User testAdmin = new User("Test Admin", UserGroup.ADMIN);
 
         pageService.getVisiblePages(testUser);
-        verify(pageDAO).getPagesByAuthor(testUser.getId());
+        verify(pageDAO).getPagesByUser(testUser.getId());
 
         pageService.getVisiblePages(testAdmin);
         verify(pageDAO).getPages();

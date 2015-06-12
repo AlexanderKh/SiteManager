@@ -21,8 +21,13 @@
                 ${user.userGroup}
             </td>
             <td>
-                <form action="/users/${user.id}">
+                <form action="/users/${user.id}" method="get">
                     <input type="submit" value="Show Visible Permissions">
+                </form>
+            </td>
+            <td>
+                <form action="/users/${user.id}/pages" method="get">
+                    <input type="submit" value="Pages">
                 </form>
             </td>
         </tr>

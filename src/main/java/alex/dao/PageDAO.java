@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PageDAO {
 
-    List<Page> getPagesByAuthor(int authorID);
+    List<Page> getPagesByUser(int userID);
 
     List<Page> getPages();
 
