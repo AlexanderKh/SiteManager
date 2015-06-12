@@ -1,20 +1,19 @@
 package alex.controller;
 
-import alex.service.UserService;
+import alex.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class UsersController {
-
+public class PagesController {
     @Autowired
-    UserService userService;
+    PageService pageService;
 
-    @RequestMapping(value = "users")
+    @RequestMapping("pages")
     public String index(ModelMap model){
-        model.addAttribute("users", userService.getUsers());
-        return "users";
+        model.addAttribute("pages", pageService.getPages());
+        return "pages";
     }
 }

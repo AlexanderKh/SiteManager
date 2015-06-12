@@ -5,14 +5,18 @@
     <title>Users</title>
 </head>
 <body>
- <table border=1, >
-     <jstl:forEach var="user" items="${users}">
+<a href="/">Back to index</a>
+ <table border=1>
+     <jstl:forEach var="page" items="${users}">
          <tr>
              <td>
-                 ${user.getName()}
+                 ${page.id}
              </td>
              <td>
-                 ${user.getUserGroup()}
+                 ${page.name}
+             </td>
+             <td>
+                 ${page.userGroup}
              </td>
          </tr>
      </jstl:forEach>

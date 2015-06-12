@@ -22,6 +22,10 @@ public class PageServiceImpl implements PageService {
         return pageDAO.getPagesNotVisibleForUser(user);
     }
 
+    public List<Page> getPages() {
+        return pageDAO.getPages();
+    }
+
     public void setPageContent(Page page, String content) {
         page.setContent(content);
         pageDAO.updatePage(page);

@@ -20,4 +20,6 @@ public interface PageService {
     void deletePage(Page page);
 
     List<Page> getPagesNotVisibleForUser(User user);
+
+    List<Page> getPages();
 }
