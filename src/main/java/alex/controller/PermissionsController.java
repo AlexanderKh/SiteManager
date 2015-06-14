@@ -43,7 +43,7 @@ public class PermissionsController {
         Page page = pageDAO.getPage(Integer.valueOf(pageID));
         PermissionType type = PermissionType.valueOf(typeNAME);
         permissionService.addNewPermission(user, page, type);
-        return "success";
+        return "redirect:/permissions";
     }
 
     @RequestMapping("permissions/new")
@@ -58,6 +58,6 @@ public class PermissionsController {
     public String destroy(@PathVariable("id") String permissionID){
         int id = Integer.valueOf(permissionID);
         permissionService.deletePermission(id);
-        return "success";
+        return "redirect:/permissions";
     }
 }
