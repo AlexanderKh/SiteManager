@@ -22,6 +22,11 @@
                     <input type="submit" value="Edit">
                 </form>
             </td>
+            <td>
+                <form action="/pages/${page.id}/delete" method="post">
+                    <input type="submit" value="Delete">
+                </form>
+            </td>
         </tr>
     </jstl:forEach>
 </table>

@@ -87,5 +87,19 @@ public class PermissionDAOImpl implements PermissionDAO {
         return (Permission) sessionFactory.getCurrentSession().get(Permission.class, id);
     }
 
+    @Transactional
+    public void deleteByUser(User user) {
+        Session session = sessionFactory.getCurrentSession();
+        SQLQuery sqlQuery = session.createSQLQuery("DELETE FROM PERMISSION WHERE USER_ID = :userID");
+        sqlQuery.setParameter("userID", user.getId()).executeUpdate();
+    }
+
+    @Transactional
+    public void deleteByPage(Page page) {
+        Session session = sessionFactory.getCurrentSession();
+        SQLQuery sqlQuery = session.createSQLQuery("DELETE FROM PERMISSION WHERE PAGE_ID= :pageID");
+        sqlQuery.setParameter("pageID", page.getId()).executeUpdate();
+    }
+
 
 }

@@ -1,6 +1,8 @@
 package alex.controller;
 
+import alex.dao.PermissionDAO;
 import alex.dao.UserDAO;
+import alex.entity.Page;
 import alex.entity.Permission;
 import alex.entity.User;
 import alex.entity.UserGroup;
@@ -19,16 +21,14 @@ import java.util.List;
 
 @Controller
 public class UsersController {
-
     @Autowired
     UserService userService;
-
     @Autowired
     PermissionService permissionService;
-
     @Autowired
     UserDAO userDAO;
-
+    @Autowired
+    PermissionDAO permissionDAO;
     @Autowired
     PageService pageService;
 
@@ -68,5 +68,14 @@ public class UsersController {
         User user = userDAO.getUser(userId);
         modelMap.addAttribute("permissions", permissionService.getUserPermissions(user));
         return "permissions";
+    }
+
+    @RequestMapping(value = "users/{id}/delete", method = RequestMethod.POST)
+    public String destroy(@PathVariable("id") String pageID) {
+        int id = Integer.valueOf(pageID);
+        User user = userDAO.getUser(id);
+        permissionDAO.deleteByUser(user);
+        userDAO.deleteUser(user);
+        return "redirect:/users";
     }
 }

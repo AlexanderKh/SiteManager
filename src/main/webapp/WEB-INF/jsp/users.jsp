@@ -30,6 +30,11 @@
                     <input type="submit" value="Own pages">
                 </form>
             </td>
+            <td>
+                <form action="/users/${user.id}/delete" method="post">
+                    <input type="submit" value="Delete">
+                </form>
+            </td>
         </tr>
     </jstl:forEach>
 </table>

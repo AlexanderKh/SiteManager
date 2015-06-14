@@ -24,4 +24,8 @@ public interface PermissionDAO {
     List<Permission> getPermissionsAndUsers();
 
     Permission getPermission(int id);
+
+    void deleteByUser(User user);
+
+    void deleteByPage(Page page);
 }

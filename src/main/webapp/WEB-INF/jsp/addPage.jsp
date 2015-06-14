@@ -5,7 +5,7 @@
     <title>Add page</title>
 </head>
 <body class="container">
-<a href="/" class="btn btn-primary">Back to index</a>
+<a href="/pages" class="btn btn-primary">Back to index</a>
 <form action="/pages" method="post">
     <table width=100%>
         <tr>

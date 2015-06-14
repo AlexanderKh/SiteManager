@@ -3,8 +3,9 @@
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Add user</title>
+    <title>Add permission</title>
 </head>
+<a href="/permissions" class="btn btn-primary">Back to index</a>
 <body class="container">
 <form action="/permissions" method="post">
     <table width=100%>

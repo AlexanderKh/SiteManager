@@ -1,6 +1,7 @@
 package alex.controller;
 
 import alex.dao.PageDAO;
+import alex.dao.PermissionDAO;
 import alex.entity.Page;
 import alex.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class PagesController {
     PageService pageService;
     @Autowired
     PageDAO pageDAO;
+    @Autowired
+    PermissionDAO permissionDAO;
 
     @RequestMapping(value = "pages", method = RequestMethod.GET)
     public String index(ModelMap model){
@@ -53,5 +56,15 @@ public class PagesController {
         pageService.setPageContent(page, content);
         model.addAttribute("page", page);
         return "redirect:";
+    }
+
+    @RequestMapping(value = "pages/{id}/delete", method = RequestMethod.POST)
+    public String destroy(@PathVariable("id") String pageID) {
+        int id = Integer.valueOf(pageID);
+        Page page = pageDAO.getPage(id);
+        permissionDAO.deleteByPage(page);
+        pageDAO.deletePage(page);
+
+        return "redirect:/pages";
     }
 }
