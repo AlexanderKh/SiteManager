@@ -25,12 +25,12 @@ public class PagesController {
     @RequestMapping(method = RequestMethod.GET)
     public String index(ModelMap model){
         model.addAttribute("pages", pageService.getPages());
-        return "pages";
+        return "pages/index";
     }
 
     @RequestMapping("/new")
     public String newPage(ModelMap model){
-        return "addPage";
+        return "pages/new";
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -45,7 +45,7 @@ public class PagesController {
         int id = Integer.valueOf(pageID);
         Page page = pageDAO.getPage(id);
         model.addAttribute("page", page);
-        return "pageEdit";
+        return "pages/edit";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)

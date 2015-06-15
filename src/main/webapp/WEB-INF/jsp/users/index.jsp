@@ -3,13 +3,13 @@
 <html>
 <head>
     <title>Users</title>
-    <jsp:include page="includeBootstrap.jsp"/>
+    <jsp:include page="../includeBootstrap.jsp"></jsp:include>
 </head>
 <body class="container">
-<jsp:include page="header.jsp"/>
+<jsp:include page="../header.jsp"/>
 <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
-        <jsp:include page="sidebar.jsp"/>
+        <jsp:include page="../sidebar.jsp"/>
         <hr>
         <ul class="nav sidebar-nav">
             <li>
@@ -18,13 +18,14 @@
         </ul>
     </div>
     <div class="col-sm-9 col-md-10">
+        <h1>Users index</h1>
+        <hr>
         <table class="table table-bordered">
-            <h1>Users index</h1>
-            <hr>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Group</th>
+                <th/>
             </tr>
             <jstl:forEach var="user" items="${users}">
                 <tr>
@@ -33,17 +34,7 @@
                     <td>${user.userGroup}</td>
                     <td>
                         <form action="/users/${user.id}" method="get">
-                            <input type="submit" value="Show Visible Permissions">
-                        </form>
-                    </td>
-                    <td>
-                        <form action="/users/${user.id}/permissions" method="get">
-                            <input type="submit" value="Own pages">
-                        </form>
-                    </td>
-                    <td>
-                        <form action="/users/${user.id}/delete" method="post">
-                            <input type="submit" value="Delete">
+                            <input type="submit" value="View">
                         </form>
                     </td>
                 </tr>

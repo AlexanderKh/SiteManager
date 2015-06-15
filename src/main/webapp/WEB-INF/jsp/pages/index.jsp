@@ -3,13 +3,13 @@
 <html>
 <head>
     <title>Pages</title>
-    <jsp:include page="includeBootstrap.jsp"/>
+    <jsp:include page="../includeBootstrap.jsp"/>
 </head>
 <body class="container">
-<jsp:include page="header.jsp"/>
+<jsp:include page="../header.jsp"/>
 <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
-        <jsp:include page="sidebar.jsp"/>
+        <jsp:include page="../sidebar.jsp"/>
         <hr>
         <ul class="nav sidebar-nav">
             <li>

@@ -32,7 +32,7 @@ public class UsersController {
     @RequestMapping(value = "users", method = RequestMethod.GET)
     public String index(ModelMap model){
         model.addAttribute("users", userService.getUsers());
-        return "users";
+        return "users/index";
     }
 
     @RequestMapping(value = "users", method = RequestMethod.POST)
@@ -54,7 +54,7 @@ public class UsersController {
         model.addAttribute("userGroups", UserGroup.values());
 //        User user = new User();
 //        model.addAttribute(user);
-        return "addUser";
+        return "users/new";
     }
 
     @RequestMapping("users/{id}")
