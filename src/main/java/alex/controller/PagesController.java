@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping("pages")
 public class PagesController {
     @Autowired
     PageService pageService;
@@ -21,24 +22,24 @@ public class PagesController {
     @Autowired
     PermissionDAO permissionDAO;
 
-    @RequestMapping(value = "pages", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String index(ModelMap model){
         model.addAttribute("pages", pageService.getPages());
         return "pages";
     }
 
-    @RequestMapping("pages/new")
+    @RequestMapping("/new")
     public String newPage(ModelMap model){
         return "addPage";
     }
 
-    @RequestMapping(value = "pages", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String create(@RequestParam("title") String title){
         pageService.createNewPage(title);
         return "redirect:pages";
     }
 
-    @RequestMapping(value = "pages/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String show(@PathVariable("id") String pageID,
                        ModelMap model){
         int id = Integer.valueOf(pageID);
@@ -47,7 +48,7 @@ public class PagesController {
         return "pageEdit";
     }
 
-    @RequestMapping(value = "pages/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public String update(@PathVariable("id") String pageID,
                          @RequestParam("content") String content,
                          ModelMap model){
@@ -58,7 +59,7 @@ public class PagesController {
         return "redirect:";
     }
 
-    @RequestMapping(value = "pages/{id}/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public String destroy(@PathVariable("id") String pageID) {
         int id = Integer.valueOf(pageID);
         Page page = pageDAO.getPage(id);
