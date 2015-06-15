@@ -10,9 +10,21 @@
 <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
         <jsp:include page="sidebar.jsp"/>
+        <hr>
+        <ul class="nav sidebar-nav">
+            <li>
+                <a href="/pages/new" class="btn btn-success">New page</a>
+            </li>
+        </ul>
     </div>
     <div class="col-sm-9 col-md-10">
+        <h1>Pages index</h1>
+        <hr>
         <table class="table table-condensed table-bordered">
+            <th>
+                <th>ID</th>
+                <th>Title</th>
+            </tr>
             <jstl:forEach var="page" items="${pages}">
                 <tr>
                     <td>${page.id}</td>
@@ -30,7 +42,6 @@
                 </tr>
             </jstl:forEach>
         </table>
-        <a href="pages/new" class="btn btn-success">New Page</a>
     </div>
 </div>
 </body>

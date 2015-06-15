@@ -1,11 +1,11 @@
-  <ul class="nav sidebar-nav">
+<ul class="nav sidebar-nav">
     <li>
-      <a href="/users" class="btn btn-primary">Users</a>
+        <a href="/users" class="btn">Users</a>
     </li>
     <li>
-      <a href="/pages" class="btn btn-primary">Pages</a>
+        <a href="/pages" class="btn">Pages</a>
     </li>
     <li>
-      <a href="/permissions" class="btn btn-primary">Permissions</a>
+        <a href="/permissions" class="btn">Permissions</a>
     </li>
-  </ul>
+</ul>
