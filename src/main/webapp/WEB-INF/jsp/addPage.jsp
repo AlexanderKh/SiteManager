@@ -3,21 +3,27 @@
 <html>
 <head>
     <title>Add page</title>
+    <jsp:include page="includeBootstrap.jsp"/>
 </head>
 <body class="container">
-<a href="/pages" class="btn btn-primary">Back to index</a>
-<form action="/pages" method="post">
-    <table width=100%>
-        <tr>
-            <td>
-                Title
-            </td>
-            <td>
-                <input name="title" value="">
-            </td>
-        </tr>
-    </table>
-    <input type="submit" value="Add page">
-</form>
+<jsp:include page="header.jsp"/>
+<div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+        <jsp:include page="sidebar.jsp"/>
+    </div>
+    <div class="col-sm-9 col-md-10">
+        <form action="/pages" method="post">
+            <table width=100%>
+                <tr>
+                    <td>Title</td>
+                    <td>
+                        <input name="title" value="">
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="Add page">
+        </form>
+    </div>
+</div>
 </body>
 </html>

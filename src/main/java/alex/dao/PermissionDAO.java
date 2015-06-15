@@ -9,7 +9,7 @@ import java.util.List;
 public interface PermissionDAO {
     void savePermission(Permission permission);
 
-    Permission getPermission(Page page, User user);
+    Permission getPermission(User user, Page page);
 
     void updatePermission(Permission permission);
 

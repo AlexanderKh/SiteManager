@@ -33,7 +33,7 @@ public class PermissionDAOImpl implements PermissionDAO {
     }
 
     @Transactional
-    public Permission getPermission(Page page, User user) {
+    public Permission getPermission(User user, Page page) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Permission.class);
         criteria.add(and( eq("page", page), eq("user", user) ));

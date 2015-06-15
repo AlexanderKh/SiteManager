@@ -32,7 +32,7 @@ public class PermissionDAOImplTest extends AbstractDAOTest {
 
     @Test
     public void addPermission() throws Exception {
-        Permission actualPermission = permissionDAO.getPermission(page, user);
+        Permission actualPermission = permissionDAO.getPermission(user, page);
 
         assertThat(actualPermission, is(permission));
     }
@@ -46,7 +46,7 @@ public class PermissionDAOImplTest extends AbstractDAOTest {
 
     @Test
     public void updatePermission() throws Exception {
-        Permission actualPermission = permissionDAO.getPermission(page, user);
+        Permission actualPermission = permissionDAO.getPermission(user, page);
 
         assertThat(actualPermission, is(permission));
 
@@ -56,7 +56,7 @@ public class PermissionDAOImplTest extends AbstractDAOTest {
         flush();
         evict(permission);
 
-        actualPermission = permissionDAO.getPermission(page, user);
+        actualPermission = permissionDAO.getPermission(user, page);
 
         assertThat(actualPermission.getType(), is(PermissionType.EDIT));
     }

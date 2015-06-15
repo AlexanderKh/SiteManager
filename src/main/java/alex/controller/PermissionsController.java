@@ -1,8 +1,10 @@
 package alex.controller;
 
 import alex.dao.PageDAO;
+import alex.dao.PermissionDAO;
 import alex.dao.UserDAO;
 import alex.entity.Page;
+import alex.entity.Permission;
 import alex.entity.PermissionType;
 import alex.entity.User;
 import alex.service.PageService;
@@ -28,6 +30,8 @@ public class PermissionsController {
     UserDAO userDAO;
     @Autowired
     PageDAO pageDAO;
+    @Autowired
+    PermissionDAO permissionDAO;
 
     @RequestMapping(name = "permissions", method = RequestMethod.GET)
     public String index(ModelMap model){
@@ -38,12 +42,17 @@ public class PermissionsController {
     @RequestMapping(value = "permissions", method = RequestMethod.POST)
     public String create(@RequestParam("user") String userID,
                          @RequestParam("page") String pageID,
-                         @RequestParam("type") String typeNAME){
+                         @RequestParam("type") String typeNAME,
+                         ModelMap model){
         User user = userDAO.getUser(Integer.valueOf(userID));
         Page page = pageDAO.getPage(Integer.valueOf(pageID));
         PermissionType type = PermissionType.valueOf(typeNAME);
-        permissionService.addNewPermission(user, page, type);
-        return "redirect:/permissions";
+        Permission existingPermission = permissionDAO.getPermission(user, page);
+        if (existingPermission == null)
+            permissionService.addNewPermission(user, page, type);
+        else
+            model.addAttribute("message", "This permission already exists, choose other user or page");
+        return index(model);
     }
 
     @RequestMapping("permissions/new")

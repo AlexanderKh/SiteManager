@@ -2,10 +2,7 @@ package alex.controller;
 
 import alex.dao.PermissionDAO;
 import alex.dao.UserDAO;
-import alex.entity.Page;
-import alex.entity.Permission;
-import alex.entity.User;
-import alex.entity.UserGroup;
+import alex.entity.*;
 import alex.service.PageService;
 import alex.service.PermissionService;
 import alex.service.UserService;
@@ -46,8 +43,17 @@ public class UsersController {
         return "redirect:users";
     }
 
+//    @RequestMapping(value = "users", method = RequestMethod.POST)
+//    public String create(@RequestParam User user){
+//        userDAO.saveUser(user);
+//        return "redirect:users";
+//    }
+
     @RequestMapping("users/new")
     public String newUser(ModelMap model){
+        model.addAttribute("userGroups", UserGroup.values());
+//        User user = new User();
+//        model.addAttribute(user);
         return "addUser";
     }
 
