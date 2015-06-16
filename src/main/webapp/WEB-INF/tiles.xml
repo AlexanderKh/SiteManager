@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <!--Basic template-->
+
+    <definition name="BasicTemplate" template="/WEB-INF/layout/layout.jsp">
+        <put-attribute name="title" 	value="Index" />
+        <put-attribute name="include"   value="/WEB-INF/layout/includeBootstrap.jsp" />
+        <put-attribute name="header" 	value="/WEB-INF/layout/header.jsp" />
+        <put-attribute name="sidebar" 	value="/WEB-INF/layout/sidebar.jsp" />
+        <put-attribute name="active" 	value="" />
+        <put-attribute name="body" 		value="" />
+    </definition>
+
+    <!--User JSP-->
+
+    <definition name="users/index" extends="BasicTemplate">
+        <put-attribute name="active"    value="/WEB-INF/users/indexSidebar.jsp" />
+        <put-attribute name="body"      value="/WEB-INF/users/index.jsp" />
+    </definition>
+
+    <definition name="users/new" extends="BasicTemplate">
+        <put-attribute name="active"    value="/WEB-INF/users/newSidebar.jsp" />
+        <put-attribute name="body"      value="/WEB-INF/users/new.jsp" />
+    </definition>
+
+
+    <definition name="users/show" extends="BasicTemplate">
+        <put-attribute name="active"    value="/WEB-INF/users/showSidebar.jsp" />
+        <put-attribute name="body"      value="/WEB-INF/users/show.jsp" />
+    </definition>
+
+    <!--Page JSP-->
+
+    <definition name="pages/index" extends="BasicTemplate">
+        <put-attribute name="active"    value="/WEB-INF/pages/indexSidebar.jsp" />
+        <put-attribute name="body"      value="/WEB-INF/pages/index.jsp" />
+    </definition>
+
+    <definition name="pages/new" extends="BasicTemplate">
+        <put-attribute name="active"    value="/WEB-INF/pages/newSidebar.jsp" />
+        <put-attribute name="body"      value="/WEB-INF/pages/new.jsp" />
+    </definition>
+
+    <definition name="pages/show" extends="BasicTemplate">
+        <put-attribute name="active"    value="/WEB-INF/pages/showSidebar.jsp" />
+        <put-attribute name="body"      value="/WEB-INF/pages/show.jsp" />
+    </definition>
+
+</tiles-definitions>

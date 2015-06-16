@@ -43,17 +43,9 @@ public class UsersController {
         return "redirect:users";
     }
 
-//    @RequestMapping(value = "users", method = RequestMethod.POST)
-//    public String create(@RequestParam User user){
-//        userDAO.saveUser(user);
-//        return "redirect:users";
-//    }
-
     @RequestMapping("users/new")
     public String newUser(ModelMap model){
         model.addAttribute("userGroups", UserGroup.values());
-//        User user = new User();
-//        model.addAttribute(user);
         return "users/new";
     }
 
@@ -64,7 +56,7 @@ public class UsersController {
         User user = userDAO.getUser(userId);
         List<Permission> permissionList = permissionService.getPermissionsVisibleByUser(user);
         modelMap.addAttribute("permissions", permissionList);
-        return "usersAndPermissions";
+        return "users/show";
     }
 
     @RequestMapping("users/{id}/permissions")
