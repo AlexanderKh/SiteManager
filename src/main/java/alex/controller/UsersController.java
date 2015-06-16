@@ -24,10 +24,25 @@ public class UsersController {
     public String index(ModelMap model){
         model.addAttribute("users", userService.getUsers());
 
-        return "users/index";
+        return "/users/index";
     }
 
-    @RequestMapping("/{id}")
+    @RequestMapping(method = RequestMethod.POST)
+    public String createUser(@RequestParam("name") String name,
+                             @RequestParam("userGroup") String userGroup){
+        userService.createUser(name, UserGroup.valueOf(userGroup));
+
+        return "redirect:/users";
+    }
+
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public String newUser(ModelMap model){
+        model.addAttribute("userGroups", UserGroup.values());
+
+        return "/users/new";
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String show(ModelMap modelMap,
                        @PathVariable("id") String userID){
         User user = userService.getUser(Integer.valueOf(userID));
@@ -35,30 +50,25 @@ public class UsersController {
         modelMap.addAttribute("permissions", permissionList);
         modelMap.addAttribute("user", user);
 
-        return "users/show";
+        return "/users/show";
     }
 
-    @RequestMapping("/new")
-    public String newUser(ModelMap model){
-        model.addAttribute("userGroups", UserGroup.values());
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public String createPermission(ModelMap modelMap,
+                                   @PathVariable("id") String userID,
+                                   @RequestParam("user") User user){
+        modelMap.addAttribute("user", user);
 
-        return "users/new";
+        return "/users/show";
     }
 
-    @RequestMapping("/{id}/new")
+    @RequestMapping(value = "/{id}/new", method = RequestMethod.GET)
     public String newPermission(ModelMap model,
                                 @PathVariable("id") String userID){
         User user = userService.getUser(Integer.valueOf(userID));
+        model.addAttribute("user", user);
 
-        return "users/newPermission";
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public String create(@RequestParam("name") String name,
-                         @RequestParam("userGroup") String userGroup){
-        userService.createUser(name, UserGroup.valueOf(userGroup));
-
-        return "redirect:/users";
+        return "/users/newPermission";
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
@@ -67,5 +77,13 @@ public class UsersController {
         userService.deleteUser(user);
 
         return "redirect:/users";
+    }
+
+    @RequestMapping(value = "/{userID}/{permissionID}/delete", method = RequestMethod.POST)
+    public String destroyPermission(@PathVariable("userID") String userID,
+                                    @PathVariable("permissionID") String permissionID) {
+        userService.deletePermission(Integer.valueOf(permissionID));
+
+        return "redirect:/users/" + userID;
     }
 }

@@ -1,0 +1,1 @@
+<a href="/users/new" class="text-center list-group-item list-group-item-success">New user</a>

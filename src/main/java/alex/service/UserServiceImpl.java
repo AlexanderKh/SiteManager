@@ -46,6 +46,11 @@ public class UserServiceImpl implements UserService {
         return permissionDAO.getPermissionsByUser(user);
     }
 
+    public void deletePermission(int id) {
+        Permission permission = permissionDAO.getPermission(id);
+        permissionDAO.deletePermission(permission);
+    }
+
     public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
     }

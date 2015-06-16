@@ -1,5 +1,7 @@
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<a href="/users" class="text-center list-group-item">Back to list</a>
+
 <a href="/users/${user.id}/new"
    class="text-center list-group-item list-group-item-success">
     Add permission

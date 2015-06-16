@@ -34,8 +34,8 @@
     </definition>
 
     <definition name="users/newPermission" extends="BasicTemplate">
-        <put-attribute name="active"    value="/WEB-INF/users/newPermissionSidebar.jsp" />
-        <put-attribute name="body"      value="/WEB-INF/users/newPermission.jsp" />
+        <put-attribute name="active"    value="/WEB-INF/users/permissions/newPermissionSidebar.jsp" />
+        <put-attribute name="body"      value="/WEB-INF/users/permissions/newPermission.jsp" />
     </definition>
 
     <!--Page JSP-->

@@ -19,4 +19,6 @@ public interface UserService {
     void deleteUser(User user);
 
     List<Permission> getPermissions(User user);
+
+    void deletePermission(int id);
 }

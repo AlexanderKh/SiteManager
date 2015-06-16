@@ -23,15 +23,6 @@ public class PagesController {
         return "pages/index";
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String show(@PathVariable("id") String pageID,
-                       ModelMap model){
-        Page page = pageService.getPage(Integer.valueOf(pageID));
-        model.addAttribute("page", page);
-
-        return "pages/show";
-    }
-
     @RequestMapping(method = RequestMethod.POST)
     public String create(@RequestParam("title") String title){
         pageService.createNewPage(title);
@@ -42,6 +33,15 @@ public class PagesController {
     @RequestMapping("/new")
     public String newPage(ModelMap model){
         return "pages/new";
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public String show(@PathVariable("id") String pageID,
+                       ModelMap model){
+        Page page = pageService.getPage(Integer.valueOf(pageID));
+        model.addAttribute("page", page);
+
+        return "pages/show";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)

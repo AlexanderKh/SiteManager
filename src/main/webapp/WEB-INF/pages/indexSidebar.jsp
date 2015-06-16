@@ -1,1 +1,1 @@
-<a href="/pages/new" class="list-group-item list-group-item-success">New page</a>
+<a href="/pages/new" class="text-center list-group-item list-group-item-success">New page</a>
