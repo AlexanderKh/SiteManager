@@ -13,6 +13,17 @@
         <tr>
             <td>${permission.page}</td>
             <td>${permission.type}</td>
+            <td>
+                <form action="/users/${user.id}/${permission.id}/delete"
+                      style="margin-bottom: 0px"
+                      method="post">
+                    <button type="submit"
+                            class="btn btn-xs btn-danger"
+                            onclick="return confirm('Are you sure?')">
+                        Delete
+                    </button>
+                </form>
+            </td>
         </tr>
     </jstl:forEach>
 </table>

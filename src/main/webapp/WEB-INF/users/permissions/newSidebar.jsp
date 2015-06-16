@@ -1,0 +1,1 @@
+<a href="/users/${user.id}" class="text-center list-group-item">Back to user</a>

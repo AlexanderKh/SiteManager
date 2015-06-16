@@ -1,6 +1,9 @@
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
-<h3 >Pages index</h3>
+<h3>
+    Pages index
+</h3>
 <hr>
+
 <table class="table table-condensed table-bordered">
     <tr>
         <th>ID</th>

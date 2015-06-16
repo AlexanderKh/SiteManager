@@ -22,11 +22,13 @@ public interface PageService {
 
     void deletePage(Page page);
 
-    List<Page> getPagesNotVisibleForUser(User user);
+    List<Page> getPagesWithoutUser(User user);
 
     List<Page> getPages();
 
     List<Permission> getPermissions(Page page);
 
     void deletePermission(int id);
+
+    void savePage(Page page);
 }

@@ -7,7 +7,10 @@
 
 <form action="/pages/${page.id}" method="post" class="form-group">
     <textarea name="content" class="form-control">${page.content}</textarea>
-    <input type="submit" value="Update contents">
+    <button type="submit"
+            class="btn btn-warning">
+                Update contents
+    </button>
 </form>
 
 <table class="table table-condensed table-bordered">
@@ -24,7 +27,7 @@
                       style="margin-bottom: 0px"
                       method="post">
                     <button type="submit"
-                            class="btn-xs btn-danger"
+                            class="btn btn-xs btn-danger"
                             onclick="return confirm('Are you sure?')">
                         Delete
                     </button>

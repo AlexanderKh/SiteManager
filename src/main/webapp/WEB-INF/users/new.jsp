@@ -1,5 +1,5 @@
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
-<form action="/users" method="post">
+<form action="/users/new" method="post">
     <table class="table">
         <tr>
             <td>Name</td>

@@ -77,7 +77,7 @@ public class PageServiceImplTest extends AbstractServiceTest {
     public void getPagesNotVisibleForUser() throws Exception {
         User user = new User("Test User", UserGroup.USER);
 
-        pageService.getPagesNotVisibleForUser(user);
+        pageService.getPagesWithoutUser(user);
 
         verify(pageDAO).getPagesWithoutUser(user);
     }

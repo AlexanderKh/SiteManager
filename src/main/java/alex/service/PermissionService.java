@@ -25,4 +25,6 @@ public interface PermissionService {
     List<Permission> getPermissions();
 
     void deletePermission(int id);
+
+    void savePermission(Permission permission);
 }

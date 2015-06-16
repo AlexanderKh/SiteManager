@@ -5,14 +5,13 @@ import alex.entity.Permission;
 import alex.entity.PermissionType;
 import alex.entity.User;
 import alex.service.PageService;
+import alex.service.PermissionService;
 import alex.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +22,8 @@ public class PagesController {
     PageService pageService;
     @Autowired
     UserService userService;
+    @Autowired
+    PermissionService permissionService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(ModelMap model){
@@ -31,16 +32,18 @@ public class PagesController {
         return "pages/index";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String create(@RequestParam("title") String title){
-        pageService.createNewPage(title);
-
-        return "redirect:/pages";
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public String newPage(ModelMap model){
+        Page page = new Page();
+        model.addAttribute("page", page);
+        return "pages/new";
     }
 
-    @RequestMapping("/new")
-    public String newPage(ModelMap model){
-        return "pages/new";
+    @RequestMapping(value = "/new", method = RequestMethod.POST)
+    public String create(@ModelAttribute("page") Page page){
+        pageService.savePage(page);
+
+        return "redirect:/pages";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -73,11 +76,23 @@ public class PagesController {
         Page page = pageService.getPage(Integer.valueOf(pageID));
         List<User> users = userService.getUsersWithoutPage(page);
 
+        Permission permission = new Permission();
+
         model.addAttribute("page", page);
         model.addAttribute("users", users);
         model.addAttribute("types", PermissionType.values());
+        model.addAttribute("permission", permission);
 
         return "pages/newPermission";
+    }
+
+    @RequestMapping(value = "/{id}/new", method = RequestMethod.POST)
+    public String createPermission(@PathVariable("id") String pageID,
+                                   Permission permission,
+                                   BindingResult bindingResult){
+        permissionService.savePermission(permission);
+
+        return "redirect:/pages/" + pageID;
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)

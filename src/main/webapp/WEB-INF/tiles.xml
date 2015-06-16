@@ -6,7 +6,7 @@
 
     <!--Basic template-->
 
-    <definition name="BasicTemplate" template="/WEB-INF/layout/layout.jsp">
+        <definition name="BasicTemplate" template="/WEB-INF/layout/layout.jsp">
         <put-attribute name="title" 	value="Index" />
         <put-attribute name="include"   value="/WEB-INF/layout/includeBootstrap.jsp" />
         <put-attribute name="header" 	value="/WEB-INF/layout/header.jsp" />
@@ -18,46 +18,53 @@
     <!--User JSP-->
 
     <definition name="users/index" extends="BasicTemplate">
+        <put-attribute name="title" 	value="Users index" />
         <put-attribute name="active"    value="/WEB-INF/users/indexSidebar.jsp" />
         <put-attribute name="body"      value="/WEB-INF/users/index.jsp" />
     </definition>
 
     <definition name="users/new" extends="BasicTemplate">
+        <put-attribute name="title" 	value="New user" />
         <put-attribute name="active"    value="/WEB-INF/users/newSidebar.jsp" />
         <put-attribute name="body"      value="/WEB-INF/users/new.jsp" />
     </definition>
 
-
     <definition name="users/show" extends="BasicTemplate">
+        <put-attribute name="title" 	value="User info" />
         <put-attribute name="active"    value="/WEB-INF/users/showSidebar.jsp" />
         <put-attribute name="body"      value="/WEB-INF/users/show.jsp" />
     </definition>
 
     <definition name="users/newPermission" extends="BasicTemplate">
-        <put-attribute name="active"    value="/WEB-INF/users/permissions/newPermissionSidebar.jsp" />
-        <put-attribute name="body"      value="/WEB-INF/users/permissions/newPermission.jsp" />
+        <put-attribute name="title" 	value="New user permission" />
+        <put-attribute name="active"    value="/WEB-INF/users/permissions/newSidebar.jsp" />
+        <put-attribute name="body"      value="/WEB-INF/users/permissions/new.jsp" />
     </definition>
 
     <!--Page JSP-->
 
     <definition name="pages/index" extends="BasicTemplate">
+        <put-attribute name="title" 	value="Pages index" />
         <put-attribute name="active"    value="/WEB-INF/pages/indexSidebar.jsp" />
         <put-attribute name="body"      value="/WEB-INF/pages/index.jsp" />
     </definition>
 
     <definition name="pages/new" extends="BasicTemplate">
+        <put-attribute name="title" 	value="New page" />
         <put-attribute name="active"    value="/WEB-INF/pages/newSidebar.jsp" />
         <put-attribute name="body"      value="/WEB-INF/pages/new.jsp" />
     </definition>
 
     <definition name="pages/show" extends="BasicTemplate">
+        <put-attribute name="title" 	value="Page info" />
         <put-attribute name="active"    value="/WEB-INF/pages/showSidebar.jsp" />
         <put-attribute name="body"      value="/WEB-INF/pages/show.jsp" />
     </definition>
 
     <definition name="pages/newPermission" extends="BasicTemplate">
-        <put-attribute name="active"    value="/WEB-INF/pages/permissions/newPermissionSidebar.jsp" />
-        <put-attribute name="body"      value="/WEB-INF/pages/permissions/newPermission.jsp" />
+        <put-attribute name="title" 	value="New page permission" />
+        <put-attribute name="active"    value="/WEB-INF/pages/permissions/newSidebar.jsp" />
+        <put-attribute name="body"      value="/WEB-INF/pages/permissions/new.jsp" />
     </definition>
 
 </tiles-definitions>

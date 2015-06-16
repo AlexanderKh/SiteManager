@@ -1,16 +1,13 @@
 package alex.controller;
 
-import alex.entity.Permission;
-import alex.entity.User;
-import alex.entity.UserGroup;
+import alex.entity.*;
+import alex.service.PageService;
+import alex.service.PermissionService;
 import alex.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,6 +16,10 @@ import java.util.List;
 public class UsersController {
     @Autowired
     UserService userService;
+    @Autowired
+    PageService pageService;
+    @Autowired
+    PermissionService permissionService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(ModelMap model){
@@ -27,7 +28,7 @@ public class UsersController {
         return "users/index";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/new", method = RequestMethod.POST)
     public String createUser(@RequestParam("name") String name,
                              @RequestParam("userGroup") String userGroup){
         userService.createUser(name, UserGroup.valueOf(userGroup));
@@ -53,22 +54,29 @@ public class UsersController {
         return "users/show";
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public String createPermission(ModelMap modelMap,
-                                   @PathVariable("id") String userID,
-                                   @RequestParam("user") User user){
-        modelMap.addAttribute("user", user);
-
-        return "users/show";
-    }
-
     @RequestMapping(value = "/{id}/new", method = RequestMethod.GET)
     public String newPermission(ModelMap model,
                                 @PathVariable("id") String userID){
         User user = userService.getUser(Integer.valueOf(userID));
+        List<Page> pages = pageService.getPagesWithoutUser(user);
+
+        Permission permission = new Permission();
+
+        model.addAttribute("permission", permission);
         model.addAttribute("user", user);
+        model.addAttribute("pages", pages);
+        model.addAttribute("types", PermissionType.values());
 
         return "users/newPermission";
+    }
+
+    @RequestMapping(value = "/{id}/new", method = RequestMethod.POST)
+    public String createPermission(ModelMap modelMap,
+                                   @PathVariable("id") String userID,
+                                   @ModelAttribute("permission") Permission permission){
+        permissionService.savePermission(permission);
+
+        return "users/show/" + userID;
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
@@ -82,7 +90,7 @@ public class UsersController {
     @RequestMapping(value = "/{userID}/{permissionID}/delete", method = RequestMethod.POST)
     public String destroyPermission(@PathVariable("userID") String userID,
                                     @PathVariable("permissionID") String permissionID) {
-        userService.deletePermission(Integer.valueOf(permissionID));
+        permissionService.deletePermission(Integer.valueOf(permissionID));
 
         return "redirect:/users/" + userID;
     }

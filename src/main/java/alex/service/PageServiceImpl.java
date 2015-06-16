@@ -23,7 +23,7 @@ public class PageServiceImpl implements PageService {
         pageDAO.deletePage(page);
     }
 
-    public List<Page> getPagesNotVisibleForUser(User user) {
+    public List<Page> getPagesWithoutUser(User user) {
         return pageDAO.getPagesWithoutUser(user);
     }
 
@@ -40,6 +40,10 @@ public class PageServiceImpl implements PageService {
     public void deletePermission(int id) {
         Permission permission = permissionDAO.getPermission(id);
         permissionDAO.deletePermission(permission);
+    }
+
+    public void savePage(Page page) {
+        pageDAO.savePage(page);
     }
 
     public void setPageContent(Page page, String content) {

@@ -21,7 +21,5 @@ public interface UserService {
 
     List<Permission> getPermissions(User user);
 
-    void deletePermission(int id);
-
     List<User> getUsersWithoutPage(Page page);
 }

@@ -1,9 +1,10 @@
 package alex.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Permission {
+public class Permission implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private int id;

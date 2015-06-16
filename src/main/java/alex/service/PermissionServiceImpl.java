@@ -1,5 +1,6 @@
 package alex.service;
 
+import alex.dao.PageDAO;
 import alex.dao.PermissionDAO;
 import alex.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,8 @@ import java.util.List;
 
 @Service
 public class PermissionServiceImpl implements PermissionService {
-
+    @Autowired
+    PageDAO pageDAO;
     @Autowired
     private PermissionDAO permissionDAO;
 
@@ -46,10 +48,13 @@ public class PermissionServiceImpl implements PermissionService {
         return permissionDAO.getPermissions();
     }
 
-    @Override
     public void deletePermission(int id) {
         Permission permission = permissionDAO.getPermission(id);
         permissionDAO.deletePermission(permission);
+    }
+
+    public void savePermission(Permission permission) {
+        permissionDAO.savePermission(permission);
     }
 
 }
