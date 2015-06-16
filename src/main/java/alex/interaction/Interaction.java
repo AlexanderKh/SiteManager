@@ -129,7 +129,7 @@ public class Interaction {
 
     private void createNewUser() {
         out.print("Enter name of new user: ");
-        currentUser = userService.register(in.next());
+        currentUser = userService.createUser(in.next(), UserGroup.USER);
     }
 
     private void login() {

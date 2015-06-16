@@ -1,10 +1,8 @@
 package alex.controller;
 
-import alex.dao.PermissionDAO;
-import alex.dao.UserDAO;
-import alex.entity.*;
-import alex.service.PageService;
-import alex.service.PermissionService;
+import alex.entity.Permission;
+import alex.entity.User;
+import alex.entity.UserGroup;
 import alex.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,63 +15,57 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
+@RequestMapping("users")
 public class UsersController {
     @Autowired
     UserService userService;
-    @Autowired
-    PermissionService permissionService;
-    @Autowired
-    UserDAO userDAO;
-    @Autowired
-    PermissionDAO permissionDAO;
-    @Autowired
-    PageService pageService;
 
-    @RequestMapping(value = "users", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String index(ModelMap model){
         model.addAttribute("users", userService.getUsers());
+
         return "users/index";
     }
 
-    @RequestMapping(value = "users", method = RequestMethod.POST)
-    public String create(@RequestParam("name") String name,
-                         @RequestParam("usergroup") String userGroup){
-        User user = new User(name, UserGroup.valueOf(userGroup));
-        userDAO.saveUser(user);
-        return "redirect:users";
-    }
-
-    @RequestMapping("users/new")
-    public String newUser(ModelMap model){
-        model.addAttribute("userGroups", UserGroup.values());
-        return "users/new";
-    }
-
-    @RequestMapping("users/{id}")
+    @RequestMapping("/{id}")
     public String show(ModelMap modelMap,
-                       @PathVariable("id") String id){
-        int userId = Integer.valueOf(id);
-        User user = userDAO.getUser(userId);
-        List<Permission> permissionList = permissionService.getPermissionsVisibleByUser(user);
+                       @PathVariable("id") String userID){
+        User user = userService.getUser(Integer.valueOf(userID));
+        List<Permission> permissionList = userService.getPermissions(user);
         modelMap.addAttribute("permissions", permissionList);
+        modelMap.addAttribute("user", user);
+
         return "users/show";
     }
 
-    @RequestMapping("users/{id}/permissions")
-    public String index(ModelMap modelMap,
-                        @PathVariable("id") String id){
-        int userId = Integer.valueOf(id);
-        User user = userDAO.getUser(userId);
-        modelMap.addAttribute("permissions", permissionService.getUserPermissions(user));
-        return "permissions";
+    @RequestMapping("/new")
+    public String newUser(ModelMap model){
+        model.addAttribute("userGroups", UserGroup.values());
+
+        return "users/new";
     }
 
-    @RequestMapping(value = "users/{id}/delete", method = RequestMethod.POST)
-    public String destroy(@PathVariable("id") String pageID) {
-        int id = Integer.valueOf(pageID);
-        User user = userDAO.getUser(id);
-        permissionDAO.deleteByUser(user);
-        userDAO.deleteUser(user);
+    @RequestMapping("/{id}/new")
+    public String newPermission(ModelMap model,
+                                @PathVariable("id") String userID){
+        User user = userService.getUser(Integer.valueOf(userID));
+
+        return "users/newPermission";
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String create(@RequestParam("name") String name,
+                         @RequestParam("userGroup") String userGroup){
+        userService.createUser(name, UserGroup.valueOf(userGroup));
+
+        return "redirect:/users";
+    }
+
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
+    public String destroy(@PathVariable("id") String userID) {
+        User user = userService.getUser(Integer.valueOf(userID));
+        userService.deleteUser(user);
+
         return "redirect:/users";
     }
 }

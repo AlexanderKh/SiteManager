@@ -11,14 +11,7 @@
             <td>${page.id}</td>
             <td>${page.title}</td>
             <td>
-                <form action="/pages/${page.id}" method="get">
-                    <input type="submit" value="Edit">
-                </form>
-            </td>
-            <td>
-                <form action="/pages/${page.id}/delete" method="post">
-                    <input type="submit" value="Delete">
-                </form>
+                <a href="<jstl:url value="/pages/${page.id}"/>" class="btn btn-xs btn-info">Show</a>
             </td>
         </tr>
     </jstl:forEach>

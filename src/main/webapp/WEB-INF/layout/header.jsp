@@ -1,3 +1,3 @@
 <div class="page-header">
-  <h1>Site Manager</h1>
+  <h2>Site Manager</h2>
 </div>

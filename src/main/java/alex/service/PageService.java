@@ -9,6 +9,8 @@ import java.util.List;
 public interface PageService {
     List<Page> getVisiblePages(User currentUser);
 
+    Page getPage(int id);
+
     Page getPageToEdit(User currentUser, int id);
 
     void setPageContent(Page page, String content);

@@ -1,7 +1,5 @@
 package alex.controller;
 
-import alex.dao.PageDAO;
-import alex.dao.PermissionDAO;
 import alex.entity.Page;
 import alex.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +15,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PagesController {
     @Autowired
     PageService pageService;
-    @Autowired
-    PageDAO pageDAO;
-    @Autowired
-    PermissionDAO permissionDAO;
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(ModelMap model){
         model.addAttribute("pages", pageService.getPages());
+
         return "pages/index";
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public String show(@PathVariable("id") String pageID,
+                       ModelMap model){
+        Page page = pageService.getPage(Integer.valueOf(pageID));
+        model.addAttribute("page", page);
+
+        return "pages/show";
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String create(@RequestParam("title") String title){
+        pageService.createNewPage(title);
+
+        return "redirect:/pages";
     }
 
     @RequestMapping("/new")
@@ -33,38 +44,21 @@ public class PagesController {
         return "pages/new";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String create(@RequestParam("title") String title){
-        pageService.createNewPage(title);
-        return "redirect:pages";
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String show(@PathVariable("id") String pageID,
-                       ModelMap model){
-        int id = Integer.valueOf(pageID);
-        Page page = pageDAO.getPage(id);
-        model.addAttribute("page", page);
-        return "pages/edit";
-    }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public String update(@PathVariable("id") String pageID,
                          @RequestParam("content") String content,
                          ModelMap model){
-        int id = Integer.valueOf(pageID);
-        Page page = pageDAO.getPage(id);
+        Page page = pageService.getPage(Integer.valueOf(pageID));
         pageService.setPageContent(page, content);
         model.addAttribute("page", page);
-        return "redirect:";
+
+        return "redirect:/pages";
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public String destroy(@PathVariable("id") String pageID) {
-        int id = Integer.valueOf(pageID);
-        Page page = pageDAO.getPage(id);
-        permissionDAO.deleteByPage(page);
-        pageDAO.deletePage(page);
+        Page page = pageService.getPage(Integer.valueOf(pageID));
+        pageService.deletePage(page);
 
         return "redirect:/pages";
     }

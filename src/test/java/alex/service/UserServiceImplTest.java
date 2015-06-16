@@ -36,7 +36,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void register() throws Exception {
-        User actualUser = userService.register("Test");
+        User actualUser = userService.createUser("Test", UserGroup.USER);
 
         assertThat(actualUser.getName(), is("Test"));
         assertThat(actualUser.getUserGroup(), is(UserGroup.USER));

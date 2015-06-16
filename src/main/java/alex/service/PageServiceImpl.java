@@ -48,6 +48,10 @@ public class PageServiceImpl implements PageService {
             return pageDAO.getPagesByUser(currentUser.getId());
     }
 
+    public Page getPage(int id) {
+        return pageDAO.getPage(id);
+    }
+
     public void changePageName(Page page, String input) {
         page.setTitle(input);
         pageDAO.updatePage(page);
@@ -58,7 +62,6 @@ public class PageServiceImpl implements PageService {
         page.setTitle(title);
         pageDAO.savePage(page);
     }
-
 
     public void setPageDAO(PageDAO pageDAO) {
         this.pageDAO = pageDAO;

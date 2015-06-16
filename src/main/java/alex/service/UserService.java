@@ -1,6 +1,8 @@
 package alex.service;
 
+import alex.entity.Permission;
 import alex.entity.User;
+import alex.entity.UserGroup;
 
 import java.util.List;
 
@@ -8,9 +10,13 @@ public interface UserService {
 
     List<User> getUsers();
 
-    User getUserByName(String input);
+    User getUser(int id);
 
-    User register(String userName);
+    User getUserByName(String name);
 
-    void deleteUser(User currentUser);
+    User createUser(String userName, UserGroup userGroup);
+
+    void deleteUser(User user);
+
+    List<Permission> getPermissions(User user);
 }
