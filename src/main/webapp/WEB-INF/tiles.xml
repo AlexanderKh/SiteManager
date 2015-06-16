@@ -55,4 +55,9 @@
         <put-attribute name="body"      value="/WEB-INF/pages/show.jsp" />
     </definition>
 
+    <definition name="pages/newPermission" extends="BasicTemplate">
+        <put-attribute name="active"    value="/WEB-INF/pages/permissions/newPermissionSidebar.jsp" />
+        <put-attribute name="body"      value="/WEB-INF/pages/permissions/newPermission.jsp" />
+    </definition>
+
 </tiles-definitions>

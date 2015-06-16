@@ -1,7 +1,6 @@
 package alex.dao;
 
 import alex.entity.Page;
-import alex.entity.Permission;
 import alex.entity.User;
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
@@ -45,6 +44,14 @@ public class UserDAOImpl implements UserDAO {
     @Transactional
     public User getUser(int id) {
         return (User) sessionFactory.getCurrentSession().get(User.class, id);
+    }
+
+    @Transactional
+    public List<User> getUsersWithoutPage(Page page) {
+        Session session = sessionFactory.getCurrentSession();
+        SQLQuery sqlQuery = session.createSQLQuery("SELECT USER.* FROM USER LEFT JOIN PERMISSION ON USER.ID = PERMISSION.USER_ID " +
+                "WHERE (PERMISSION.PAGE_ID <> :pageID) OR (PERMISSION.PAGE_ID IS NULL)").addEntity(User.class);
+        return sqlQuery.setParameter("pageID", page.getId()).list();
     }
 
 }

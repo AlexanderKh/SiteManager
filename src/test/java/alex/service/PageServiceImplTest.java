@@ -79,6 +79,6 @@ public class PageServiceImplTest extends AbstractServiceTest {
 
         pageService.getPagesNotVisibleForUser(user);
 
-        verify(pageDAO).getPagesNotVisibleForUser(user);
+        verify(pageDAO).getPagesWithoutUser(user);
     }
 }

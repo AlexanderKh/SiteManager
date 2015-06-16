@@ -24,7 +24,7 @@ public class PageServiceImpl implements PageService {
     }
 
     public List<Page> getPagesNotVisibleForUser(User user) {
-        return pageDAO.getPagesNotVisibleForUser(user);
+        return pageDAO.getPagesWithoutUser(user);
     }
 
     public List<Page> getPages() {

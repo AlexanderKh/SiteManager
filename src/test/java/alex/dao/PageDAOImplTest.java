@@ -1,18 +1,8 @@
 package alex.dao;
 
-import alex.config.AppConfig;
 import alex.entity.*;
-import org.hamcrest.Matchers;
-import org.hibernate.SessionFactory;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.hasItem;
@@ -76,7 +66,7 @@ public class PageDAOImplTest extends AbstractDAOTest {
 
     @Test
     public void getPagesNotVisibleForUser() throws Exception {
-        List<Page> actualPages = pageDAO.getPagesNotVisibleForUser(user);
+        List<Page> actualPages = pageDAO.getPagesWithoutUser(user);
 
         assertThat(actualPages,not(hasItem(page)));
     }

@@ -19,5 +19,5 @@ public interface PageDAO {
 
     void savePage(Page page);
 
-    List<Page> getPagesNotVisibleForUser(User user);
+    List<Page> getPagesWithoutUser(User user);
 }

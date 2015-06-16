@@ -58,7 +58,7 @@ public class PageDAOImpl implements PageDAO {
     }
 
     @Transactional
-    public List<Page> getPagesNotVisibleForUser(User user) {
+    public List<Page> getPagesWithoutUser(User user) {
         Session session = sessionFactory.getCurrentSession();
         SQLQuery sqlQuery = session.createSQLQuery("SELECT PAGE.* FROM PAGE LEFT JOIN PERMISSION ON PAGE.ID = PERMISSION.PAGE_ID " +
                 "WHERE (PERMISSION.USER_ID <> :userID) OR (PERMISSION.USER_ID IS NULL)").addEntity(Page.class);

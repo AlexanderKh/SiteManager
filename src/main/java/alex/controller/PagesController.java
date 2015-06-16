@@ -2,7 +2,10 @@ package alex.controller;
 
 import alex.entity.Page;
 import alex.entity.Permission;
+import alex.entity.PermissionType;
+import alex.entity.User;
 import alex.service.PageService;
+import alex.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,6 +21,8 @@ import java.util.List;
 public class PagesController {
     @Autowired
     PageService pageService;
+    @Autowired
+    UserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(ModelMap model){
@@ -60,6 +65,19 @@ public class PagesController {
         model.addAttribute("page", page);
 
         return "redirect:/pages";
+    }
+
+    @RequestMapping(value = "/{id}/new", method = RequestMethod.GET)
+    public String newPermission(ModelMap model,
+                                @PathVariable("id") String pageID){
+        Page page = pageService.getPage(Integer.valueOf(pageID));
+        List<User> users = userService.getUsersWithoutPage(page);
+
+        model.addAttribute("page", page);
+        model.addAttribute("users", users);
+        model.addAttribute("types", PermissionType.values());
+
+        return "pages/newPermission";
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)

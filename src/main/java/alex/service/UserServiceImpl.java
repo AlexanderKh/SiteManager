@@ -2,6 +2,7 @@ package alex.service;
 
 import alex.dao.PermissionDAO;
 import alex.dao.UserDAO;
+import alex.entity.Page;
 import alex.entity.Permission;
 import alex.entity.User;
 import alex.entity.UserGroup;
@@ -49,6 +50,10 @@ public class UserServiceImpl implements UserService {
     public void deletePermission(int id) {
         Permission permission = permissionDAO.getPermission(id);
         permissionDAO.deletePermission(permission);
+    }
+
+    public List<User> getUsersWithoutPage(Page page) {
+        return userDAO.getUsersWithoutPage(page);
     }
 
     public void setUserDAO(UserDAO userDAO) {

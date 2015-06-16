@@ -1,5 +1,8 @@
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<h3>Add new permission for page: ${page.title}</h3>
+<hr>
+
 <form action="/permissions" method="post">
     <table class="table">
         <tr>
@@ -13,20 +16,10 @@
             </td>
         </tr>
         <tr>
-            <td>Page</td>
-            <td>
-                <select name="page">
-                    <jstl:forEach var="page" items="${pages}">
-                        <option value="${page.id}">${page.title}</option>
-                    </jstl:forEach>
-                </select>
-            </td>
-        </tr>
-        <tr>
             <td>Type</td>
             <td>
                 <select name="type">
-                    <jstl:forEach var="type" items="${permissionTypes}">
+                    <jstl:forEach var="type" items="${types}">
                         <option value="${type.name()}">${type.name()}</option>
                     </jstl:forEach>
                 </select>
