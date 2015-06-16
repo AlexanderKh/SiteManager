@@ -24,7 +24,7 @@ public class UsersController {
     public String index(ModelMap model){
         model.addAttribute("users", userService.getUsers());
 
-        return "/users/index";
+        return "users/index";
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -39,7 +39,7 @@ public class UsersController {
     public String newUser(ModelMap model){
         model.addAttribute("userGroups", UserGroup.values());
 
-        return "/users/new";
+        return "users/new";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -50,7 +50,7 @@ public class UsersController {
         modelMap.addAttribute("permissions", permissionList);
         modelMap.addAttribute("user", user);
 
-        return "/users/show";
+        return "users/show";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
@@ -59,7 +59,7 @@ public class UsersController {
                                    @RequestParam("user") User user){
         modelMap.addAttribute("user", user);
 
-        return "/users/show";
+        return "users/show";
     }
 
     @RequestMapping(value = "/{id}/new", method = RequestMethod.GET)
@@ -68,7 +68,7 @@ public class UsersController {
         User user = userService.getUser(Integer.valueOf(userID));
         model.addAttribute("user", user);
 
-        return "/users/newPermission";
+        return "users/newPermission";
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)

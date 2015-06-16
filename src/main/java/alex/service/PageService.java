@@ -1,6 +1,7 @@
 package alex.service;
 
 import alex.entity.Page;
+import alex.entity.Permission;
 import alex.entity.PermissionType;
 import alex.entity.User;
 
@@ -24,4 +25,8 @@ public interface PageService {
     List<Page> getPagesNotVisibleForUser(User user);
 
     List<Page> getPages();
+
+    List<Permission> getPermissions(Page page);
+
+    void deletePermission(int id);
 }

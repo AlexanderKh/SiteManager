@@ -1,7 +1,9 @@
 package alex.service;
 
 import alex.dao.PageDAO;
+import alex.dao.PermissionDAO;
 import alex.entity.Page;
+import alex.entity.Permission;
 import alex.entity.User;
 import alex.entity.UserGroup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,11 @@ import java.util.List;
 public class PageServiceImpl implements PageService {
     @Autowired
     private PageDAO pageDAO;
+    @Autowired
+    private PermissionDAO permissionDAO;
 
     public void deletePage(Page page) {
+        permissionDAO.deleteByPage(page);
         pageDAO.deletePage(page);
     }
 
@@ -24,6 +29,17 @@ public class PageServiceImpl implements PageService {
 
     public List<Page> getPages() {
         return pageDAO.getPages();
+    }
+
+    @Override
+    public List<Permission> getPermissions(Page page) {
+        return permissionDAO.getPermissionsByPage(page);
+    }
+
+    @Override
+    public void deletePermission(int id) {
+        Permission permission = permissionDAO.getPermission(id);
+        permissionDAO.deletePermission(permission);
     }
 
     public void setPageContent(Page page, String content) {
