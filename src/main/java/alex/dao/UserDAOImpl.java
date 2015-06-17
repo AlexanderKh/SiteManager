@@ -49,8 +49,10 @@ public class UserDAOImpl implements UserDAO {
     @Transactional
     public List<User> getUsersWithoutPage(Page page) {
         Session session = sessionFactory.getCurrentSession();
-        SQLQuery sqlQuery = session.createSQLQuery("SELECT USER.* FROM USER LEFT JOIN PERMISSION ON USER.ID = PERMISSION.USER_ID " +
-                "WHERE (PERMISSION.PAGE_ID <> :pageID) OR (PERMISSION.PAGE_ID IS NULL)").addEntity(User.class);
+        SQLQuery sqlQuery = session.createSQLQuery("SELECT USER.* FROM USER LEFT JOIN\n" +
+                "(SELECT DISTINCT PERMISSION.USER_ID FROM PERMISSION WHERE PERMISSION.PAGE_ID = :pageID) AS PERM\n" +
+                "ON PERM.USER_ID = USER.ID\n" +
+                "WHERE PERM.USER_ID IS NULL").addEntity(User.class);
         return sqlQuery.setParameter("pageID", page.getId()).list();
     }
 

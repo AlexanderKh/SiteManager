@@ -62,9 +62,6 @@ public class UsersController {
         User user = userService.getUser(Integer.valueOf(userID));
         List<Page> pages = pageService.getPagesWithoutUser(user);
 
-        Permission permission = new Permission();
-
-        model.addAttribute("permission", permission);
         model.addAttribute("user", user);
         model.addAttribute("pages", pages);
         model.addAttribute("types", PermissionType.values());
@@ -73,12 +70,15 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/{id}/new", method = RequestMethod.POST)
-    public String createPermission(ModelMap modelMap,
-                                   @PathVariable("id") String userID,
-                                   @ModelAttribute("permission") Permission permission){
-        permissionService.savePermission(permission);
+    public String createPermission(@PathVariable("id") String userID,
+                                   @RequestParam("page") String pageID,
+                                   @RequestParam("type") PermissionType type){
+        User user = userService.getUser(Integer.valueOf(userID));
+        Page page = pageService.getPage(Integer.valueOf(pageID));
 
-        return "users/show/" + userID;
+        permissionService.addNewPermission(user, page, type);
+
+        return "redirect:/users/" + userID;
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)

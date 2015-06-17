@@ -4,21 +4,21 @@
 <h3>Add new permission for user: ${user.name}</h3>
 <hr>
 
-<form:form action="/users/${user.id}/new" method="post"
-           modelAttribute="permission"
-           commandName="permission"
-           class="form-horizontal">
+<form action="/users/${user.id}/new" method="post"
+      class="form-horizontal">
 
-    <form:hidden path="user"/>
-
-    <form:select path="page" cssClass="form-control">
+    <select name="page" class="form-control">
         <jstl:forEach var="page" items="${pages}">
-            <form:option value="${page}">${page.title}</form:option>
+            <option value="${page.id}">${page.title}</option>
         </jstl:forEach>
-    </form:select>
+    </select>
 
-    <form:select path="type" cssClass="form-control" items="${types}"/>
+    <select name="type" class="form-control">
+        <jstl:forEach var="type" items="${types}">
+            <option value="${type}">${type}</option>
+        </jstl:forEach>
+    </select>
 
-    <form:button type="submit" class="btn btn-success">Add permission</form:button>
+    <button type="submit" class="btn btn-success">Add permission</button>
 
-</form:form>
+</form>

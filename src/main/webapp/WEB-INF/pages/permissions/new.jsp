@@ -1,24 +1,23 @@
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <h3>Add new permission for page: ${page.title}</h3>
 <hr>
 
-<form:form action="/pages/${page.id}/new" method="post"
-           modelAttribute="permission"
-           commandName="permission"
+<form action="/pages/${page.id}/new" method="post"
            class="form-horizontal">
 
-    <form:hidden path="page"/>
-
-    <form:select path="user" cssClass="form-control">
+    <select name="user" class="form-control">
         <jstl:forEach var="user" items="${users}">
-            <form:option value="${user}">${user.name}</form:option>
+            <option value="${user.id}">${user.name}</option>
         </jstl:forEach>
-    </form:select>
+    </select>
 
-    <form:select path="type" cssClass="form-control" items="${types}"/>
+    <select name="type" class="form-control">
+        <jstl:forEach var="type" items="${types}">
+            <option value="${type}">${type}</option>
+        </jstl:forEach>
+    </select>
 
-    <form:button type="submit" class="btn btn-success">Add permission</form:button>
+    <button type="submit" class="btn btn-success">Add permission</button>
 
-</form:form>
+</form>

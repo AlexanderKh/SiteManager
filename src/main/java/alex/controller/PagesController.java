@@ -9,6 +9,7 @@ import alex.service.PermissionService;
 import alex.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -76,21 +77,21 @@ public class PagesController {
         Page page = pageService.getPage(Integer.valueOf(pageID));
         List<User> users = userService.getUsersWithoutPage(page);
 
-        Permission permission = new Permission();
-
         model.addAttribute("page", page);
         model.addAttribute("users", users);
         model.addAttribute("types", PermissionType.values());
-        model.addAttribute("permission", permission);
 
         return "pages/newPermission";
     }
 
     @RequestMapping(value = "/{id}/new", method = RequestMethod.POST)
     public String createPermission(@PathVariable("id") String pageID,
-                                   Permission permission,
-                                   BindingResult bindingResult){
-        permissionService.savePermission(permission);
+                                   @RequestParam("user") String userID,
+                                   @RequestParam("type") PermissionType type){
+        User user = userService.getUser(Integer.valueOf(userID));
+        Page page = pageService.getPage(Integer.valueOf(pageID));
+
+        permissionService.addNewPermission(user, page, type);
 
         return "redirect:/pages/" + pageID;
     }
