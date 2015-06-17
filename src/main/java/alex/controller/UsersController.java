@@ -28,19 +28,21 @@ public class UsersController {
         return "users/index";
     }
 
-    @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public String createUser(@RequestParam("name") String name,
-                             @RequestParam("userGroup") String userGroup){
-        userService.createUser(name, UserGroup.valueOf(userGroup));
-
-        return "redirect:/users";
-    }
-
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newUser(ModelMap model){
+        User user = new User();
+
+        model.addAttribute("user", user);
         model.addAttribute("userGroups", UserGroup.values());
 
         return "users/new";
+    }
+
+    @RequestMapping(value = "/new", method = RequestMethod.POST)
+    public String createUser(@ModelAttribute("user") User user){
+        userService.saveUser(user);
+
+        return "redirect:/users";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

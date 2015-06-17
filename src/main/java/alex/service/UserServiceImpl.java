@@ -56,6 +56,10 @@ public class UserServiceImpl implements UserService {
         return userDAO.getUsersWithoutPage(page);
     }
 
+    public void saveUser(User user) {
+        userDAO.saveUser(user);
+    }
+
     public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
     }

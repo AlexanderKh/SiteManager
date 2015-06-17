@@ -22,4 +22,6 @@ public interface UserService {
     List<Permission> getPermissions(User user);
 
     List<User> getUsersWithoutPage(Page page);
+
+    void saveUser(User user);
 }

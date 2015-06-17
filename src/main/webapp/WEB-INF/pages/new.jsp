@@ -6,11 +6,13 @@
 <hr>
 
 <form:form action="/pages/new" method="post"
-           modelAttribute="page">
+           modelAttribute="page"
+           cssClass="form-horizontal">
 
     <form:input path="title" value=""
                 placeholder="Title"
                 cssClass="form-control"/>
-    <button type="submit" class = "btn">Add page</button>
+
+    <form:button type="submit" class = "btn btn-success">Add page</form:button>
 
 </form:form>

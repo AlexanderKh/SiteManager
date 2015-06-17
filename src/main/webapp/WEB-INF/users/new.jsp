@@ -1,22 +1,21 @@
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
-<form action="/users/new" method="post">
-    <table class="table">
-        <tr>
-            <td>Name</td>
-            <td>
-                <input name="name" value="">
-            </td>
-        </tr>
-        <tr>
-            <td>User Group</td>
-            <td>
-                <select name="usergroup">
-                    <jstl:forEach var="userGroup" items="${userGroups}">
-                        <option value="${userGroup.name()}">${userGroup.name()}</option>
-                    </jstl:forEach>
-                </select>
-            </td>
-        </tr>
-    </table>
-    <input type="submit" value="Add user">
-</form>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<form:form action="/users/new" method="post"
+           modelAttribute="user"
+           cssClass="form-horizontal">
+
+    <form:input path="name" value=""
+                placeholder="Username"
+                cssClass="form-control"/>
+
+    <form:select path="userGroup"
+                 cssClass="form-control">
+        <jstl:forEach var="userGroup" items="${userGroups}">
+            <form:option value="${userGroup}">${userGroup.name()}</form:option>
+        </jstl:forEach>
+    </form:select>
+
+    <form:button type="submit" class = "btn btn-success">Add user</form:button>
+
+</form:form>

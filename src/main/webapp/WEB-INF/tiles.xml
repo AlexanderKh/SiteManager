@@ -8,7 +8,7 @@
 
         <definition name="BasicTemplate" template="/WEB-INF/layout/layout.jsp">
         <put-attribute name="title" 	value="Index" />
-        <put-attribute name="include"   value="/WEB-INF/layout/includeBootstrap.jsp" />
+        <put-attribute name="include"   value="/WEB-INF/layout/include.jsp" />
         <put-attribute name="header" 	value="/WEB-INF/layout/header.jsp" />
         <put-attribute name="sidebar" 	value="/WEB-INF/layout/sidebar.jsp" />
         <put-attribute name="active" 	value="" />
