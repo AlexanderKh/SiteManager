@@ -56,4 +56,11 @@ public class UserDAOImpl implements UserDAO {
         return sqlQuery.setParameter("pageID", page.getId()).list();
     }
 
+    @Override
+    public List<User> searchUsersByName(String name) {
+        Session session = sessionFactory.getCurrentSession();
+        SQLQuery sqlQuery = session.createSQLQuery("SELECT * FROM USER WHERE NAME LIKE :name").addEntity(User.class);
+        return sqlQuery.setParameter("name", "%" + name + "%").list();
+    }
+
 }

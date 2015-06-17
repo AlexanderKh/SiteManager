@@ -41,6 +41,12 @@
         <put-attribute name="body"      value="/WEB-INF/users/permissions/new.jsp" />
     </definition>
 
+    <definition name="users/search" extends="BasicTemplate">
+        <put-attribute name="title" 	value="Search" />
+        <put-attribute name="active"    value="/WEB-INF/users/index.jsp" />
+        <put-attribute name="body"      value="/WEB-INF/users/search.jsp" />
+    </definition>
+
     <!--Page JSP-->
 
     <definition name="pages/index" extends="BasicTemplate">

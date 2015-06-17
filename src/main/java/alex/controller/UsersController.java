@@ -96,4 +96,14 @@ public class UsersController {
 
         return "redirect:/users/" + userID;
     }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String searchUsersPage(ModelMap model){
+        return "users/search";
+    }
+
+    @RequestMapping(value = "/searchE", headers="Accept=application/json")
+    public @ResponseBody List<User> searchUsers(@RequestParam String name){
+        return userService.searchUsersByName(name);
+    }
 }

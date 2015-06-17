@@ -21,4 +21,6 @@ public interface UserDAO {
     User getUser(int id);
 
     List<User> getUsersWithoutPage(Page page);
+
+    List<User> searchUsersByName(String name);
 }

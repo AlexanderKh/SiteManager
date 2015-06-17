@@ -13,6 +13,8 @@ public interface UserService {
 
     User getUser(int id);
 
+    List<User> searchUsersByName(String name);
+
     User getUserByName(String name);
 
     User createUser(String userName, UserGroup userGroup);
