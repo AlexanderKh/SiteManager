@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("pages")
+@RequestMapping("admin/pages")
 public class PagesController {
     @Autowired
     PageService pageService;
@@ -37,6 +37,7 @@ public class PagesController {
     public String newPage(ModelMap model){
         Page page = new Page();
         model.addAttribute("page", page);
+
         return "pages/new";
     }
 

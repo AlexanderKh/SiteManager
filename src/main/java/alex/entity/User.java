@@ -9,10 +9,9 @@ public class User {
     @GeneratedValue
     private int id;
     private String name;
+    private String password;
     @Enumerated(value = EnumType.STRING)
     private UserGroup userGroup;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Permission> permissions;
 
     public User(){};
 
@@ -58,20 +57,20 @@ public class User {
         this.name = name;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public UserGroup getUserGroup() {
         return userGroup;
     }
 
     public void setUserGroup(UserGroup userGroup) {
         this.userGroup = userGroup;
-    }
-
-    public List<Permission> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(List<Permission> permissions) {
-        this.permissions = permissions;
     }
 
     @Override
