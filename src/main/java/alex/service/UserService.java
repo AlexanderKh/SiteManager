@@ -5,6 +5,7 @@ import alex.entity.Permission;
 import alex.entity.User;
 import alex.entity.UserGroup;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface UserService {
@@ -26,4 +27,6 @@ public interface UserService {
     List<User> getUsersWithoutPage(Page page);
 
     void saveUser(User user);
+
+    User getUserByPrincipal(Principal principal);
 }

@@ -20,4 +20,6 @@ public interface PageDAO {
     void savePage(Page page);
 
     List<Page> getPagesWithoutUser(User user);
+
+    List<Page> getPublicPages();
 }

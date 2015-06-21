@@ -11,6 +11,7 @@ public class Page {
     private int id;
     private String content;
     private String title;
+    private boolean publicPage;
 
     public Page(){}
 
@@ -59,6 +60,14 @@ public class Page {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public boolean isPublicPage() {
+        return publicPage;
+    }
+
+    public void setPublicPage(boolean publicPage) {
+        this.publicPage = publicPage;
     }
 
     @Override

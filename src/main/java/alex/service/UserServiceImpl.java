@@ -9,6 +9,7 @@ import alex.entity.UserGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -63,6 +64,11 @@ public class UserServiceImpl implements UserService {
 
     public void saveUser(User user) {
         userDAO.saveUser(user);
+    }
+
+    public User getUserByPrincipal(Principal principal) {
+        String userName = principal.getName();
+        return userDAO.getUser(userName);
     }
 
     public void setUserDAO(UserDAO userDAO) {

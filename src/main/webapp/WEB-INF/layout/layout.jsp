@@ -10,11 +10,11 @@
 <tiles:insertAttribute name="header" />
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <div class="list-group">
+            <div class="list-group nav sidebar-nav">
                 <tiles:insertAttribute name="sidebar" />
             </div>
             <hr>
-            <div class="list-group">
+            <div class="list-group nav sidebar-nav">
                 <tiles:insertAttribute name="active" />
             </div>
         </div>

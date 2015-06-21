@@ -14,10 +14,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping("admin/pages")
+@RequestMapping("pages")
 public class PagesController {
     @Autowired
     PageService pageService;

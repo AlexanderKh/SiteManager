@@ -6,11 +6,16 @@ import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.management.Query;
 import javax.transaction.Transactional;
 import java.util.List;
+
+import static org.hibernate.criterion.Restrictions.eq;
+
 
 @Repository
 public class PageDAOImpl implements PageDAO {
@@ -65,5 +70,13 @@ public class PageDAOImpl implements PageDAO {
                 "ON PERM.PAGE_ID = PAGE.ID\n" +
                 "WHERE PERM.PAGE_ID IS NULL").addEntity(Page.class);
         return sqlQuery.setParameter("userID", user.getId()).list();
+    }
+
+    @Transactional
+    public List<Page> getPublicPages() {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Page.class);
+        criteria.add(Restrictions.eq("publicPage", true));
+        return criteria.list();
     }
 }

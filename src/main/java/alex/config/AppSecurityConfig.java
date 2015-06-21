@@ -27,10 +27,13 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-        .antMatchers("/admin**").access("hasRole('ROLE_ADMIN')")
+        http.csrf().disable().authorizeRequests()
+        .antMatchers("/pages**").hasAuthority("ADMIN")
+        .antMatchers("/users**").hasAuthority("ADMIN")
+        .antMatchers("/userPages**").hasAuthority("ADMIN")
+        .antMatchers("/userPages**").hasAuthority("USER")
         .and()
         .formLogin()
-        .defaultSuccessUrl("/");
+        .defaultSuccessUrl("/userPages");
     }
 }
