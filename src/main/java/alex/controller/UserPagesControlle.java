@@ -30,9 +30,11 @@ public class UserPagesControlle {
     public String index(ModelMap model, Principal principal){
         User user = userService.getUserByPrincipal(principal);
         List<Permission> permissions = permissionService.getUserPermissions(user);
+        List<Page> publicPages = pageService.getPublicPages();
 
         model.addAttribute("user", user);
         model.addAttribute("permissions", permissions);
+        model.addAttribute("publicPages", publicPages);
 
         return "userPages/index";
     }

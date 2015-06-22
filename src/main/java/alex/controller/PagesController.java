@@ -63,10 +63,13 @@ public class PagesController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public String update(@PathVariable("id") String pageID,
-                         @RequestParam("content") String content,
+                         @ModelAttribute("page") Page page,
+//                         @RequestParam("content") String content,
+//                         @RequestParam("public") Boolean publicPage,
                          ModelMap model){
-        Page page = pageService.getPage(Integer.valueOf(pageID));
-        pageService.setPageContent(page, content);
+//        Page page = pageService.getPage(Integer.valueOf(pageID));
+//        pageService.setPageContent(page, content);
+        pageService.updatePage(page);
 
         model.addAttribute("page", page);
 

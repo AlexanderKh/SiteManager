@@ -33,7 +33,7 @@ public class PageDAOImpl implements PageDAO {
     public List<Page> getPagesByUser(int userID) {
         Session session = sessionFactory.getCurrentSession();
         SQLQuery sqlQuery = session.createSQLQuery("SELECT PAGE.* FROM PAGE INNER JOIN PERMISSION ON PAGE.ID = PERMISSION.PAGE_ID " +
-                "WHERE PERMISSION.USER_ID = :userID");
+                "WHERE PERMISSION.USER_ID = :userID OR PAGE.PUBLICPAGE");
         return sqlQuery.addEntity(Page.class).setParameter("userID", userID).list();
     }
 

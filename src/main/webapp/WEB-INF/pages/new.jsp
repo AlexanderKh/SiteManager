@@ -13,6 +13,8 @@
                 placeholder="Title"
                 cssClass="form-control"/>
 
+    <form:checkbox path="publicPage" cssClass="form-control" />
+
     <form:button type="submit" class = "btn btn-success">Add page</form:button>
 
 </form:form>

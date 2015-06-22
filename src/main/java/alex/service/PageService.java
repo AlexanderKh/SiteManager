@@ -31,4 +31,8 @@ public interface PageService {
     void deletePermission(int id);
 
     void savePage(Page page);
+
+    void updatePage(Page page);
+
+    List<Page> getPublicPages();
 }

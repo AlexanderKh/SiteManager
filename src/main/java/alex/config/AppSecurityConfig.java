@@ -30,8 +30,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
         .antMatchers("/pages**").hasAuthority("ADMIN")
         .antMatchers("/users**").hasAuthority("ADMIN")
-        .antMatchers("/userPages**").hasAuthority("ADMIN")
-        .antMatchers("/userPages**").hasAuthority("USER")
+        .antMatchers("/userPages**").hasAnyAuthority("ADMIN", "USER")
         .and()
         .formLogin()
         .defaultSuccessUrl("/userPages");

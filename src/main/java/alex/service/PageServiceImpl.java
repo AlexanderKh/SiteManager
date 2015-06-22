@@ -46,6 +46,16 @@ public class PageServiceImpl implements PageService {
         pageDAO.savePage(page);
     }
 
+    @Override
+    public void updatePage(Page page) {
+        pageDAO.updatePage(page);
+    }
+
+    @Override
+    public List<Page> getPublicPages() {
+        return pageDAO.getPublicPages();
+    }
+
     public void setPageContent(Page page, String content) {
         page.setContent(content);
         pageDAO.updatePage(page);
