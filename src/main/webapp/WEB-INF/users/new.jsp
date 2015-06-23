@@ -3,10 +3,14 @@
 
 <form:form action="/users/new" method="post"
            modelAttribute="user"
-           cssClass="form-horizontal">
+           cssClass="form-group">
 
     <form:input path="name" value=""
                 placeholder="Username"
+                cssClass="form-control"/>
+
+    <form:input path="password"
+                placeholder="Password"
                 cssClass="form-control"/>
 
     <form:select path="userGroup"
