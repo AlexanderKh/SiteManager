@@ -67,6 +67,15 @@ public class PageServiceImplTest extends AbstractServiceTest {
     }
 
     @Test
+    public void getPageByID() throws Exception {
+        int id = 0;
+
+        pageService.getPageByID(id);
+
+        verify(pageDAO).getPage(id);
+    }
+
+    @Test
     public void getPagesNotVisibleForUser() throws Exception {
         User user = new User("Test User", UserGroup.USER);
 

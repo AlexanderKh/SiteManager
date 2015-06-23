@@ -92,7 +92,7 @@ public class UsersController {
     @RequestMapping(value = "/{userID}/{permissionID}/delete", method = RequestMethod.POST)
     public String destroyPermission(@PathVariable("userID") String userID,
                                     @PathVariable("permissionID") String permissionID) {
-        permissionService.deletePermission(Integer.valueOf(permissionID));
+        permissionService.deletePermissionByID(Integer.valueOf(permissionID));
 
         return "redirect:/users/" + userID;
     }

@@ -46,7 +46,7 @@ public class PermissionServiceImpl implements PermissionService {
         permissionDAO.savePermission(permission);
     }
 
-    public void deletePermission(int id) {
+    public void deletePermissionByID(int id) {
         Permission permission = permissionDAO.getPermission(id);
         permissionDAO.deletePermission(permission);
     }

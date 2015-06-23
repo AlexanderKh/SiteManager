@@ -24,7 +24,7 @@ public interface PermissionService {
 
     void changePermissionType(Permission permission, PermissionType newType);
 
-    void deletePermission(int id);
+    void deletePermissionByID(int id);
 
     void savePermission(Permission permission);
 }
