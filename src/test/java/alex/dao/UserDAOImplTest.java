@@ -28,6 +28,26 @@ public class UserDAOImplTest extends AbstractDAOTest {
     }
 
     @Test
+    public void searchUsersByName() throws Exception {
+        User vetal = new User("Vitaliy", UserGroup.USER);
+        User viktor = new User("Viktor", UserGroup.USER);
+        User pavel = new User("Pavel", UserGroup.USER);
+        userDAO.saveUser(vetal);
+        userDAO.saveUser(viktor);
+        userDAO.saveUser(pavel);
+        flush();
+        evict(vetal);
+        evict(viktor);
+        evict(pavel);
+
+        List<User> actualUsers = userDAO.searchUsersByName("Vi");
+
+        assertThat(actualUsers, hasItem(vetal));
+        assertThat(actualUsers, hasItem(viktor));
+        assertThat(actualUsers, not(hasItem(pavel)));
+    }
+
+    @Test
     public void getUser() throws Exception {
         User actualUser = userDAO.getUser(user.getName());
 
@@ -63,6 +83,8 @@ public class UserDAOImplTest extends AbstractDAOTest {
     public void updateUser() throws Exception{
         user.setName("Update");
         userDAO.updateUser(user);
+        flush();
+        evict(user);
 
         List<User> actualUsers = userDAO.getUsers();
 

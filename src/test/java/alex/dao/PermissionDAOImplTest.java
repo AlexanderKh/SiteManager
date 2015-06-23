@@ -1,25 +1,24 @@
 package alex.dao;
 
-import alex.config.AppConfig;
-import alex.entity.*;
-import org.hibernate.SessionFactory;
-import org.junit.Before;
+import alex.entity.Permission;
+import alex.entity.PermissionType;
+import alex.entity.User;
+import alex.entity.UserGroup;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 public class PermissionDAOImplTest extends AbstractDAOTest {
+
+    @Test
+    public void getPermission() throws Exception {
+        Permission actualPermission = permissionDAO.getPermission(permission.getId());
+
+        assertThat(actualPermission, is(permission));
+    }
 
     @Test
     public void getPermissions() throws Exception {
@@ -73,5 +72,17 @@ public class PermissionDAOImplTest extends AbstractDAOTest {
         actualPermission = permissionDAO.getPermission(user, page);
 
         assertThat(actualPermission.getType(), is(PermissionType.EDIT));
+    }
+
+    @Test
+    public void getPermissionsAndUsers() throws Exception {
+        User pavel = new User("Pavel", UserGroup.USER);
+        userDAO.saveUser(pavel);
+        flush();
+        evict(pavel);
+
+        List<Permission> actualPermissions = permissionDAO.getPermissionsAndUsers();
+
+        assertThat(actualPermissions, hasItem(permission));
     }
 }
