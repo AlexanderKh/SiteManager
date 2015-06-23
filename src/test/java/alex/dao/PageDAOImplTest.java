@@ -1,6 +1,7 @@
 package alex.dao;
 
 import alex.entity.*;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.util.List;
@@ -17,6 +18,28 @@ public class PageDAOImplTest extends AbstractDAOTest {
     @Test
     public void getPages() throws Exception {
         List<Page> actualPages = pageDAO.getPages();
+
+        assertThat(actualPages, hasItem(page));
+    }
+
+    @Test
+    public void getPagesByUser() throws Exception {
+        List<Page> actualPages = pageDAO.getPagesByUser(user.getId());
+
+        assertThat(actualPages, hasItem(page));
+    }
+
+    @Test
+    public void getPublicPages() throws Exception {
+        List<Page> actualPages = pageDAO.getPublicPages();
+
+        assertThat(actualPages, not(hasItem(page)));
+
+        page.setPublicPage(true);
+        pageDAO.updatePage(page);
+        flush();
+
+        actualPages = pageDAO.getPublicPages();
 
         assertThat(actualPages, hasItem(page));
     }

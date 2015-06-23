@@ -28,7 +28,6 @@ public class Page {
 
         if (content != null ? !content.equals(page.content) : page.content != null) return false;
         return !(title != null ? !title.equals(page.title) : page.title != null);
-
     }
 
     @Override

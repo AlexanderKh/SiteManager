@@ -20,6 +20,14 @@ import static org.junit.Assert.assertThat;
 public class UserDAOImplTest extends AbstractDAOTest {
 
     @Test
+    public void getUsersWithoutPage() throws Exception {
+        List<User> actualUsers = userDAO.getUsersWithoutPage(page);
+
+        assertThat(actualUsers, not(hasItem(user)));
+
+    }
+
+    @Test
     public void getUser() throws Exception {
         User actualUser = userDAO.getUser(user.getName());
 
