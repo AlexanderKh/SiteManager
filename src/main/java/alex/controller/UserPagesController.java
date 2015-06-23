@@ -16,7 +16,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("userPages")
-public class UserPagesControlle {
+public class UserPagesController {
     @Autowired
     PermissionService permissionService;
     @Autowired
