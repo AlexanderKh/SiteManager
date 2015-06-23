@@ -33,13 +33,6 @@ public class PageServiceImplTest extends AbstractServiceTest {
         verify(pageDAO).updatePage(testPage);
     }
 
-    @Test
-    public void getPageToEdit() throws Exception {
-        User testUser = new User("Test User", UserGroup.USER);
-
-        pageService.getPageToEdit(testUser, 0);
-        verify(pageDAO).getPage(0);
-    }
 
     @Test
     public void getVisiblePages() throws Exception {

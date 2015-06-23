@@ -1,10 +1,11 @@
 package alex.service;
 
-import alex.config.AppConfig;
 import alex.config.AppTestConfig;
 import alex.dao.PageDAO;
 import alex.dao.PermissionDAO;
 import alex.dao.UserDAO;
+import alex.service.impl.PageServiceImpl;
+import alex.service.impl.UserServiceImpl;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;

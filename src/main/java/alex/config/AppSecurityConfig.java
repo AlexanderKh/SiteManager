@@ -33,6 +33,9 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/userPages**").hasAnyAuthority("ADMIN", "USER")
         .and()
         .formLogin()
-        .defaultSuccessUrl("/userPages");
+        .defaultSuccessUrl("/userPages")
+        .and()
+        .logout()
+        .logoutUrl("/logout");
     }
 }

@@ -6,9 +6,7 @@ import alex.entity.User;
 import alex.service.PageService;
 import alex.service.PermissionService;
 import alex.service.UserService;
-import com.sun.javafx.sg.prism.NGShape;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +40,7 @@ public class UserPagesControlle {
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public String show(ModelMap modelMap,
                        @PathVariable("id") Integer pageID){
-        Page page = pageService.getPage(pageID);
+        Page page = pageService.getPageByID(pageID);
 
         modelMap.addAttribute("page", page);
 
@@ -52,7 +50,7 @@ public class UserPagesControlle {
     @RequestMapping(value = "{id}/edit", method = RequestMethod.GET)
     public String edit(ModelMap modelMap,
                        @PathVariable("id") Integer pageID){
-        Page page = pageService.getPage(pageID);
+        Page page = pageService.getPageByID(pageID);
 
         modelMap.addAttribute("page", page);
 
@@ -63,7 +61,7 @@ public class UserPagesControlle {
     public String update(@PathVariable("id") Integer pageID,
                          @RequestParam("content") String content,
                          ModelMap modelMap){
-        Page page = pageService.getPage(pageID);
+        Page page = pageService.getPageByID(pageID);
         pageService.setPageContent(page, content);
         return "redirect:/userPages";
     }

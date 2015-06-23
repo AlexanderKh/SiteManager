@@ -12,7 +12,9 @@ public interface PermissionService {
 
     void setPermissionDAO(PermissionDAO permissionDAO);
 
-    List<Permission> getPermissionsVisibleByUser(User user);
+    List<Permission> getPermissionsByUser(User user);
+
+    List<Permission> getPermissionsByUser(Page page);
 
     List<Permission> getUserPermissions(User user);
 
@@ -21,8 +23,6 @@ public interface PermissionService {
     void addNewPermission(User user, Page page, PermissionType type);
 
     void changePermissionType(Permission permission, PermissionType newType);
-
-    List<Permission> getPermissions();
 
     void deletePermission(int id);
 

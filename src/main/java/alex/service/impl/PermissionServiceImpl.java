@@ -1,8 +1,9 @@
-package alex.service;
+package alex.service.impl;
 
 import alex.dao.PageDAO;
 import alex.dao.PermissionDAO;
 import alex.entity.*;
+import alex.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,12 @@ public class PermissionServiceImpl implements PermissionService {
     @Autowired
     private PermissionDAO permissionDAO;
 
-    public void setPermissionDAO(PermissionDAO permissionDAO) {
-        this.permissionDAO = permissionDAO;
+    public List<Permission> getPermissionsByUser(User user) {
+        return permissionDAO.getPermissionsByUser(user);
     }
 
-    public List<Permission> getPermissionsVisibleByUser(User user) {
-        if (user.getUserGroup() == UserGroup.ADMIN)
-            return permissionDAO.getPermissionsAndUsers();
-        else
-            return permissionDAO.getPermissionsByUser(user);
+    public List<Permission> getPermissionsByUser(Page page) {
+        return permissionDAO.getPermissionsByPage(page);
     }
 
     public List<Permission> getUserPermissions(User user) {
@@ -44,8 +42,8 @@ public class PermissionServiceImpl implements PermissionService {
         permissionDAO.updatePermission(permission);
     }
 
-    public List<Permission> getPermissions() {
-        return permissionDAO.getPermissions();
+    public void savePermission(Permission permission) {
+        permissionDAO.savePermission(permission);
     }
 
     public void deletePermission(int id) {
@@ -53,8 +51,8 @@ public class PermissionServiceImpl implements PermissionService {
         permissionDAO.deletePermission(permission);
     }
 
-    public void savePermission(Permission permission) {
-        permissionDAO.savePermission(permission);
+    public void setPermissionDAO(PermissionDAO permissionDAO) {
+        this.permissionDAO = permissionDAO;
     }
 
 }

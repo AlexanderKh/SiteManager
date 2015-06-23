@@ -22,12 +22,24 @@ import static org.junit.Assert.*;
 public class PermissionDAOImplTest extends AbstractDAOTest {
 
     @Test
-    public void deletePermission() throws Exception {
-        permissionDAO.deletePermission(permission);
-
+    public void getPermissions() throws Exception {
         List<Permission> actualPermissions = permissionDAO.getPermissions();
 
-        assertThat(actualPermissions, not(hasItem(permission)));
+        assertThat(actualPermissions, hasItem(permission));
+    }
+
+    @Test
+    public void getPermissionsByUser() throws Exception {
+        List<Permission> actualPermissions = permissionDAO.getPermissionsByUser(user);
+
+        assertThat(actualPermissions.get(0).getUser(), is(user));
+    }
+
+    @Test
+    public void getPermissionsByPage() throws Exception {
+        List<Permission> actualPermissions = permissionDAO.getPermissionsByPage(page);
+
+        assertThat(actualPermissions.get(0).getPage(), is(page));
     }
 
     @Test
@@ -38,10 +50,12 @@ public class PermissionDAOImplTest extends AbstractDAOTest {
     }
 
     @Test
-    public void getPermissions() throws Exception {
+    public void deletePermission() throws Exception {
+        permissionDAO.deletePermission(permission);
+
         List<Permission> actualPermissions = permissionDAO.getPermissions();
 
-        assertThat(actualPermissions, hasItem(permission));
+        assertThat(actualPermissions, not(hasItem(permission)));
     }
 
     @Test
@@ -59,19 +73,5 @@ public class PermissionDAOImplTest extends AbstractDAOTest {
         actualPermission = permissionDAO.getPermission(user, page);
 
         assertThat(actualPermission.getType(), is(PermissionType.EDIT));
-    }
-
-    @Test
-    public void getPermissionsByUser() throws Exception {
-        List<Permission> actualPermissions = permissionDAO.getPermissionsByUser(user);
-
-        assertThat(actualPermissions.get(0).getUser(), is(user));
-    }
-
-    @Test
-    public void getPermissionsByPage() throws Exception {
-        List<Permission> actualPermissions = permissionDAO.getPermissionsByPage(page);
-
-        assertThat(actualPermissions.get(0).getPage(), is(page));
     }
 }

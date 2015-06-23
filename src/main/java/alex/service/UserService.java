@@ -12,21 +12,19 @@ public interface UserService {
 
     List<User> getUsers();
 
-    User getUser(int id);
+    User getUserByID(int id);
 
-    List<User> searchUsersByName(String name);
+    User getUserByPrincipal(Principal principal);
 
     User getUserByName(String name);
 
+    List<User> searchUsersByName(String name);
+
     User createUser(String userName, UserGroup userGroup);
-
-    void deleteUser(User user);
-
-    List<Permission> getPermissions(User user);
-
-    List<User> getUsersWithoutPage(Page page);
 
     void saveUser(User user);
 
-    User getUserByPrincipal(Principal principal);
+    void deleteUser(User user);
+
+    List<User> getUsersWithoutPage(Page page);
 }

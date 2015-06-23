@@ -48,8 +48,8 @@ public class UsersController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String show(ModelMap modelMap,
                        @PathVariable("id") String userID){
-        User user = userService.getUser(Integer.valueOf(userID));
-        List<Permission> permissionList = userService.getPermissions(user);
+        User user = userService.getUserByID(Integer.valueOf(userID));
+        List<Permission> permissionList = permissionService.getPermissionsByUser(user);
         modelMap.addAttribute("permissions", permissionList);
         modelMap.addAttribute("user", user);
 
@@ -59,7 +59,7 @@ public class UsersController {
     @RequestMapping(value = "/{id}/new", method = RequestMethod.GET)
     public String newPermission(ModelMap model,
                                 @PathVariable("id") String userID){
-        User user = userService.getUser(Integer.valueOf(userID));
+        User user = userService.getUserByID(Integer.valueOf(userID));
         List<Page> pages = pageService.getPagesWithoutUser(user);
 
         model.addAttribute("user", user);
@@ -73,8 +73,8 @@ public class UsersController {
     public String createPermission(@PathVariable("id") String userID,
                                    @RequestParam("page") String pageID,
                                    @RequestParam("type") PermissionType type){
-        User user = userService.getUser(Integer.valueOf(userID));
-        Page page = pageService.getPage(Integer.valueOf(pageID));
+        User user = userService.getUserByID(Integer.valueOf(userID));
+        Page page = pageService.getPageByID(Integer.valueOf(pageID));
 
         permissionService.addNewPermission(user, page, type);
 
@@ -83,7 +83,7 @@ public class UsersController {
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public String destroy(@PathVariable("id") String userID) {
-        User user = userService.getUser(Integer.valueOf(userID));
+        User user = userService.getUserByID(Integer.valueOf(userID));
         userService.deleteUser(user);
 
         return "redirect:/users";

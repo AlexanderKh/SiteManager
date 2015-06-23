@@ -31,18 +31,6 @@ public class PermissionServiceImplTest extends AbstractServiceTest {
     }
 
     @Test
-    public void getPermissionsVisibleByUser() throws Exception{
-        User firstUser = new User("First User", UserGroup.USER);
-        User admin = new User("Admin", UserGroup.ADMIN);
-
-        permissionService.getPermissionsVisibleByUser(firstUser);
-        verify(permissionDAO).getPermissionsByUser(firstUser);
-
-        permissionService.getPermissionsVisibleByUser(admin);
-        verify(permissionDAO).getPermissionsAndUsers();
-    }
-
-    @Test
     public void changePermissionType() throws Exception {
         User user = new User("Test User", UserGroup.USER);
         Page page = new Page("Test Page");

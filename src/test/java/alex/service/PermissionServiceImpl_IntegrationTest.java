@@ -40,30 +40,6 @@ public class PermissionServiceImpl_IntegrationTest {
     }
 
     @Test
-    public void getPermissionsVisibleByUser() throws Exception{
-        User firstUser = new User("First User", UserGroup.USER);
-        userDAO.saveUser(firstUser);
-        User secondUser = new User("Second User", UserGroup.USER);
-        userDAO.saveUser(secondUser);
-        User admin = new User("Admin", UserGroup.ADMIN);
-        userDAO.saveUser(admin);
-        Page page = new Page("Page");
-        pageDAO.savePage(page);
-        Permission firstUsersPage = new Permission(firstUser, page, PermissionType.EDIT);
-        permissionDAO.savePermission(firstUsersPage);
-        List<Permission> actualPermissions;
-
-        actualPermissions = service.getPermissionsVisibleByUser(firstUser);
-        assertThat(actualPermissions, hasItem(firstUsersPage));
-
-        actualPermissions = service.getPermissionsVisibleByUser(secondUser);
-        assertThat(actualPermissions, not(hasItem(firstUsersPage)));
-
-        actualPermissions = service.getPermissionsVisibleByUser(admin);
-        assertThat(actualPermissions, hasItem(firstUsersPage));
-    }
-
-    @Test
     public void getUserPermissions() throws Exception {
         User firstUser = new User("First User", UserGroup.USER);
         userDAO.saveUser(firstUser);

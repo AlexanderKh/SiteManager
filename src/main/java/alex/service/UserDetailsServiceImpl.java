@@ -14,7 +14,6 @@ import java.util.HashSet;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-
     @Autowired
     UserDAO userDAO;
 

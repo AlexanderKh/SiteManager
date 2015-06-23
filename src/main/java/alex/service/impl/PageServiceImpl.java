@@ -1,4 +1,4 @@
-package alex.service;
+package alex.service.impl;
 
 import alex.dao.PageDAO;
 import alex.dao.PermissionDAO;
@@ -6,6 +6,7 @@ import alex.entity.Page;
 import alex.entity.Permission;
 import alex.entity.User;
 import alex.entity.UserGroup;
+import alex.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,14 @@ public class PageServiceImpl implements PageService {
     @Autowired
     private PermissionDAO permissionDAO;
 
+    public List<Page> getPages() {
+        return pageDAO.getPages();
+    }
+
+    public List<Page> getPublicPages() {
+        return pageDAO.getPublicPages();
+    }
+
     public void deletePage(Page page) {
         permissionDAO.deleteByPage(page);
         pageDAO.deletePage(page);
@@ -27,16 +36,6 @@ public class PageServiceImpl implements PageService {
         return pageDAO.getPagesWithoutUser(user);
     }
 
-    public List<Page> getPages() {
-        return pageDAO.getPages();
-    }
-
-    @Override
-    public List<Permission> getPermissions(Page page) {
-        return permissionDAO.getPermissionsByPage(page);
-    }
-
-    @Override
     public void deletePermission(int id) {
         Permission permission = permissionDAO.getPermission(id);
         permissionDAO.deletePermission(permission);
@@ -46,14 +45,8 @@ public class PageServiceImpl implements PageService {
         pageDAO.savePage(page);
     }
 
-    @Override
     public void updatePage(Page page) {
         pageDAO.updatePage(page);
-    }
-
-    @Override
-    public List<Page> getPublicPages() {
-        return pageDAO.getPublicPages();
     }
 
     public void setPageContent(Page page, String content) {
@@ -61,15 +54,6 @@ public class PageServiceImpl implements PageService {
         pageDAO.updatePage(page);
     }
 
-    public Page getPageToEdit(User currentUser, int id) {
-        Page result = pageDAO.getPage(id);
-        if (result == null)
-            return null;
-        if (currentUser.getUserGroup() == UserGroup.ADMIN)
-            return result;
-
-        return result;
-    }
 
     public List<Page> getVisiblePages(User currentUser) {
         if (currentUser.getUserGroup() == UserGroup.ADMIN)
@@ -78,12 +62,12 @@ public class PageServiceImpl implements PageService {
             return pageDAO.getPagesByUser(currentUser.getId());
     }
 
-    public Page getPage(int id) {
+    public Page getPageByID(int id) {
         return pageDAO.getPage(id);
     }
 
-    public void changePageName(Page page, String input) {
-        page.setTitle(input);
+    public void changePageName(Page page, String title) {
+        page.setTitle(title);
         pageDAO.updatePage(page);
     }
 

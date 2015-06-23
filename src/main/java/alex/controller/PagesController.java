@@ -9,12 +9,9 @@ import alex.service.PermissionService;
 import alex.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -52,8 +49,8 @@ public class PagesController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String show(@PathVariable("id") String pageID,
                        ModelMap model){
-        Page page = pageService.getPage(Integer.valueOf(pageID));
-        List<Permission> permissions = pageService.getPermissions(page);
+        Page page = pageService.getPageByID(Integer.valueOf(pageID));
+        List<Permission> permissions = permissionService.getPermissionsByUser(page);
 
         model.addAttribute("page", page);
         model.addAttribute("permissions", permissions);
@@ -64,11 +61,7 @@ public class PagesController {
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public String update(@PathVariable("id") String pageID,
                          @ModelAttribute("page") Page page,
-//                         @RequestParam("content") String content,
-//                         @RequestParam("public") Boolean publicPage,
                          ModelMap model){
-//        Page page = pageService.getPage(Integer.valueOf(pageID));
-//        pageService.setPageContent(page, content);
         pageService.updatePage(page);
 
         model.addAttribute("page", page);
@@ -79,7 +72,7 @@ public class PagesController {
     @RequestMapping(value = "/{id}/new", method = RequestMethod.GET)
     public String newPermission(ModelMap model,
                                 @PathVariable("id") String pageID){
-        Page page = pageService.getPage(Integer.valueOf(pageID));
+        Page page = pageService.getPageByID(Integer.valueOf(pageID));
         List<User> users = userService.getUsersWithoutPage(page);
 
         model.addAttribute("page", page);
@@ -93,8 +86,8 @@ public class PagesController {
     public String createPermission(@PathVariable("id") String pageID,
                                    @RequestParam("user") String userID,
                                    @RequestParam("type") PermissionType type){
-        User user = userService.getUser(Integer.valueOf(userID));
-        Page page = pageService.getPage(Integer.valueOf(pageID));
+        User user = userService.getUserByID(Integer.valueOf(userID));
+        Page page = pageService.getPageByID(Integer.valueOf(pageID));
 
         permissionService.addNewPermission(user, page, type);
 
@@ -103,7 +96,7 @@ public class PagesController {
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public String destroy(@PathVariable("id") String pageID) {
-        Page page = pageService.getPage(Integer.valueOf(pageID));
+        Page page = pageService.getPageByID(Integer.valueOf(pageID));
         pageService.deletePage(page);
 
         return "redirect:/pages";
