@@ -105,7 +105,7 @@ public class PagesController {
     @RequestMapping(value = "/{pageID}/{permissionID}/delete", method = RequestMethod.POST)
     public String destroyPermission(@PathVariable("pageID") String pageID,
                                     @PathVariable("permissionID") String permissionID) {
-        pageService.deletePermission(Integer.valueOf(permissionID));
+        permissionService.deletePermissionByID(Integer.valueOf(permissionID));
 
         return "redirect:/pages/" + pageID;
     }

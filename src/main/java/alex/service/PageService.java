@@ -24,8 +24,6 @@ public interface PageService {
 
     List<Page> getPagesWithoutUser(User user);
 
-    void deletePermission(int id);
-
     void savePage(Page page);
 
     void updatePage(Page page);

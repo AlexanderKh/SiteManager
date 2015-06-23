@@ -18,7 +18,7 @@ public interface UserDAO {
 
     void updateUser(User user);
 
-    User getUser(int id);
+    User getUserByID(int id);
 
     List<User> getUsersWithoutPage(Page page);
 

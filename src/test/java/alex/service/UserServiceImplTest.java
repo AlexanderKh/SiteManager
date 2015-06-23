@@ -43,6 +43,15 @@ public class UserServiceImplTest extends AbstractServiceTest {
     }
 
     @Test
+    public void searchUsersByName() throws Exception {
+        String name = "Mary";
+
+        userService.searchUsersByName(name);
+
+        verify(userDAO).searchUsersByName(name);
+    }
+
+    @Test
     public void deleteUser() throws Exception {
         User testUser = new User();
 

@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User getUserByID(int id) {
-        return userDAO.getUser(id);
+        return userDAO.getUserByID(id);
     }
 
     public User getUserByName(String name) {

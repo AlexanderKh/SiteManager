@@ -36,11 +36,6 @@ public class PageServiceImpl implements PageService {
         return pageDAO.getPagesWithoutUser(user);
     }
 
-    public void deletePermission(int id) {
-        Permission permission = permissionDAO.getPermission(id);
-        permissionDAO.deletePermission(permission);
-    }
-
     public void savePage(Page page) {
         pageDAO.savePage(page);
     }

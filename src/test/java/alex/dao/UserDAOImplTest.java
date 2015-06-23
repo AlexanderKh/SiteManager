@@ -80,6 +80,13 @@ public class UserDAOImplTest extends AbstractDAOTest {
     }
 
     @Test
+    public void getUserByID() throws Exception {
+        User actualUser = userDAO.getUserByID(user.getId());
+
+        assertThat(actualUser, is(user));
+    }
+
+    @Test
     public void updateUser() throws Exception{
         user.setName("Update");
         userDAO.updateUser(user);

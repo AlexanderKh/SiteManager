@@ -42,7 +42,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Transactional
-    public User getUser(int id) {
+    public User getUserByID(int id) {
         return (User) sessionFactory.getCurrentSession().get(User.class, id);
     }
 

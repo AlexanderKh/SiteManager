@@ -9,6 +9,7 @@ import org.mockito.Matchers;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
 public class PageServiceImplTest extends AbstractServiceTest {
@@ -64,6 +65,38 @@ public class PageServiceImplTest extends AbstractServiceTest {
         pageService.createNewPage("Test Title");
 
         verify(pageDAO).savePage(Matchers.any(Page.class));
+    }
+
+    @Test
+    public void getPages() throws Exception {
+        pageService.getPages();
+
+        verify(pageDAO).getPages();
+    }
+
+    @Test
+    public void getPublicPages() throws Exception {
+        pageService.getPublicPages();
+
+        verify(pageDAO).getPublicPages();
+    }
+
+    @Test
+    public void savePage() throws Exception {
+        Page page = new Page("Test Page");
+
+        pageService.savePage(page);
+
+        verify(pageDAO).savePage(page);
+    }
+
+    @Test
+    public void updatePage() throws Exception {
+        Page page = new Page("Test Page");
+
+        pageService.updatePage(page);
+
+        verify(pageDAO).updatePage(page);
     }
 
     @Test
