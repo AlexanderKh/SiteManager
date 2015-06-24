@@ -50,7 +50,7 @@ public class PagesController {
     public String show(@PathVariable("id") String pageID,
                        ModelMap model){
         Page page = pageService.getPageByID(Integer.valueOf(pageID));
-        List<Permission> permissions = permissionService.getPermissionsByUser(page);
+        List<Permission> permissions = permissionService.getPermissionsByPage(page);
 
         model.addAttribute("page", page);
         model.addAttribute("permissions", permissions);

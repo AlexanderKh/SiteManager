@@ -14,7 +14,7 @@ public interface PermissionService {
 
     List<Permission> getPermissionsByUser(User user);
 
-    List<Permission> getPermissionsByUser(Page page);
+    List<Permission> getPermissionsByPage(Page page);
 
     List<Permission> getUserPermissions(User user);
 

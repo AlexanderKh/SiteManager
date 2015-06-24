@@ -20,7 +20,7 @@ public class PermissionServiceImpl implements PermissionService {
         return permissionDAO.getPermissionsByUser(user);
     }
 
-    public List<Permission> getPermissionsByUser(Page page) {
+    public List<Permission> getPermissionsByPage(Page page) {
         return permissionDAO.getPermissionsByPage(page);
     }
 

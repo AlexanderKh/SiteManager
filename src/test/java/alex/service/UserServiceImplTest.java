@@ -1,5 +1,6 @@
 package alex.service;
 
+import alex.entity.Page;
 import alex.entity.User;
 import alex.entity.UserGroup;
 import org.junit.Test;
@@ -49,6 +50,33 @@ public class UserServiceImplTest extends AbstractServiceTest {
         userService.searchUsersByName(name);
 
         verify(userDAO).searchUsersByName(name);
+    }
+
+    @Test
+    public void getUserByID() throws Exception {
+        int id = 0;
+
+        userService.getUserByID(id);
+
+        verify(userDAO).getUserByID(id);
+    }
+
+    @Test
+    public void saveUser() throws Exception {
+        User user = new User("Test User", UserGroup.USER);
+
+        userService.saveUser(user);
+
+        verify(userDAO).saveUser(user);
+    }
+
+    @Test
+    public void getUsersWithoutPage() throws Exception {
+        Page page = new Page("Test Page");
+
+        userService.getUsersWithoutPage(page);
+
+        verify(userDAO).getUsersWithoutPage(page);
     }
 
     @Test

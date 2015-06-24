@@ -31,6 +31,24 @@ public class PermissionServiceImplTest extends AbstractServiceTest {
     }
 
     @Test
+    public void getPermissionsByUser() throws Exception {
+        User user = new User("Test User", UserGroup.USER);
+
+        permissionService.getPermissionsByUser(user);
+
+        verify(permissionDAO).getPermissionsByUser(user);
+    }
+
+    @Test
+    public void getPermissionsByPage() throws Exception {
+        Page page = new Page("Test Page");
+
+        permissionService.getPermissionsByPage(page);
+
+        verify(permissionDAO).getPermissionsByPage(page);
+    }
+
+    @Test
     public void savePermission() throws Exception {
         User user = new User("Test User", UserGroup.USER);
         Page page = new Page("Test Page");
